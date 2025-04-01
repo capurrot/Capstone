@@ -1,0 +1,62 @@
+{
+  "choose_mood": "Scegli tra i mood più ricercati",
+  "mood": {
+    "energized": "Energico",
+    "creative": "Creativo",
+    "anxious": "Ansioso",
+    "sad": "Triste",
+    "spiritual": "Spirituale",
+    "overwhelmed": "Sopraffatto",
+    "grateful": "Grato",
+    "confused": "Confuso",
+    "happy": "Felice",
+    "focus": "Concentrato",
+    "peaceful": "Sereno",
+    "curious": "Curioso",
+    "determined": "Determinato",
+    "seeking-inspiration": "In cerca di ispirazione",
+    "reflective": "Riflessivo",
+    "at-peace": "In pace",
+    "romantic": "Romantico",
+    "celebratory": "Festoso",
+    "active": "Sportivo",
+    "playful": "Giocoso",
+    "calm": "Calmo"
+  },
+  "desc": {
+    "energized": "Hai carica e voglia di fare, muoverti, agire.",
+    "creative": "Ti senti ispirato, pieno di idee e voglia di esprimerti.",
+    "anxious": "Senti una certa agitazione o preoccupazione dentro di te.",
+    "sad": "Hai bisogno di consolazione e spazio emotivo.",
+    "spiritual": "Cerchi connessione con Dio o uno spazio per riflettere.",
+    "overwhelmed": "Troppi pensieri. Hai bisogno di rallentare.",
+    "grateful": "Senti un profondo senso di riconoscenza.",
+    "confused": "Hai bisogno di chiarezza e direzione.",
+    "happy": "Ti senti sollevato, sorridente, positivo.",
+    "focus": "Hai bisogno di mantenere l'attenzione su un obiettivo.",
+    "peaceful": "Senti una calma profonda e leggerezza dentro.",
+    "curious": "Hai voglia di scoprire, imparare qualcosa di nuovo.",
+    "determined": "Hai uno scopo chiaro e vuoi raggiungerlo.",
+    "seeking-inspiration": "Vuoi riaccendere le idee o ritrovare la motivazione.",
+    "reflective": "Hai bisogno di uno spazio mentale per pensare e ascoltarti.",
+    "at-peace": "Senti un senso di armonia con te stesso e ciò che ti circonda.",
+    "romantic": "Hai voglia di amore, bellezza e connessione emotiva.",
+    "celebratory": "Hai voglia di festeggiare, stare in compagnia, gioire.",
+    "active": "È il momento di muoversi: allenamento, camminata, energia fisica.",
+    "playful": "Hai voglia di leggerezza, gioco, divertimento.",
+    "calm": "Hai bisogno di pazienza e tranquillità."
+  },
+  "hero": {
+    "title": "Ritrova il tuo equilibrio mentale",
+    "subtitle": "Scrivi come ti senti. FocusField+ farà il resto.",
+    "placeholder": "Es.: cerco un ambiente ideale per concentrarmi...",
+    "not_found": "Nessun mood riconosciuto. Riprova con un'altra descrizione."
+  },
+  "navbar": {
+    "home": "Home",
+    "history": "Storico",
+    "settings": "Impostazioni",
+    "profile": "Profilo utente",
+    "preferences": "Impostazioni"
+  }
+}

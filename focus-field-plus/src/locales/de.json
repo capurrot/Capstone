@@ -1,0 +1,62 @@
+{
+  "choose_mood": "Wähle aus den beliebtesten Stimmungen",
+  "mood": {
+    "energized": "Energiegeladen",
+    "creative": "Kreativ",
+    "anxious": "Ängstlich",
+    "sad": "Traurig",
+    "spiritual": "Spirituell",
+    "overwhelmed": "Überfordert",
+    "grateful": "Dankbar",
+    "confused": "Verwirrt",
+    "happy": "Glücklich",
+    "focus": "Konzentriert",
+    "peaceful": "Friedlich",
+    "curious": "Neugierig",
+    "determined": "Entschlossen",
+    "seeking-inspiration": "Auf der Suche nach Inspiration",
+    "reflective": "Nachdenklich",
+    "at-peace": "In Frieden",
+    "romantic": "Romantisch",
+    "celebratory": "Feierlich",
+    "active": "Aktiv",
+    "playful": "Verspielt",
+    "calm": "Ruhig"
+  },
+  "desc": {
+    "energized": "Du hast Energie und Lust, dich zu bewegen, zu handeln, aktiv zu sein.",
+    "creative": "Du fühlst dich inspiriert, voller Ideen und möchtest dich ausdrücken.",
+    "anxious": "Du verspürst innere Unruhe oder Sorgen.",
+    "sad": "Du brauchst Trost und emotionalen Raum.",
+    "spiritual": "Du suchst Verbindung zu Gott oder einen Moment der Reflexion.",
+    "overwhelmed": "Zu viele Gedanken. Du musst entschleunigen.",
+    "grateful": "Du fühlst tiefe Dankbarkeit.",
+    "confused": "Du brauchst Klarheit und Orientierung.",
+    "happy": "Du fühlst dich erleichtert, lächelnd, positiv.",
+    "focus": "Du musst deine Aufmerksamkeit auf ein Ziel richten.",
+    "peaceful": "Du verspürst tiefe Ruhe und innere Leichtigkeit.",
+    "curious": "Du hast Lust, Neues zu entdecken und zu lernen.",
+    "determined": "Du hast ein klares Ziel und willst es erreichen.",
+    "seeking-inspiration": "Du möchtest Ideen neu entfachen oder Motivation finden.",
+    "reflective": "Du brauchst einen mentalen Raum zum Nachdenken und Zuhören.",
+    "at-peace": "Du spürst Harmonie mit dir selbst und deiner Umgebung.",
+    "romantic": "Du sehnst dich nach Liebe, Schönheit und emotionaler Verbindung.",
+    "celebratory": "Du möchtest feiern, Gemeinschaft erleben und Freude teilen.",
+    "active": "Jetzt ist es Zeit, dich zu bewegen: Sport, Spaziergang, körperliche Energie.",
+    "playful": "Du willst Leichtigkeit, Spiel und Spaß erleben.",
+    "calm": "Du brauchst Geduld und Ruhe."
+  },
+  "hero": {
+    "title": "Finde dein mentales Gleichgewicht",
+    "subtitle": "Schreibe, wie du dich fühlst. FocusField+ übernimmt den Rest.",
+    "placeholder": "Z. B.: Ich suche eine ideale Umgebung zum Konzentrieren...",
+    "not_found": "Keine Stimmung erkannt. Versuche eine andere Beschreibung."
+  },
+  "navbar": {
+    "home": "Startseite",
+    "history": "Verlauf",
+    "settings": "Einstellungen",
+    "profile": "Benutzerprofil",
+    "preferences": "Voreinstellungen"
+  }
+}

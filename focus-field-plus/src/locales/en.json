@@ -1,0 +1,62 @@
+{
+  "choose_mood": "Choose from the most popular moods",
+  "mood": {
+    "energized": "Energized",
+    "creative": "Creative",
+    "anxious": "Anxious",
+    "sad": "Sad",
+    "spiritual": "Spiritual",
+    "overwhelmed": "Overwhelmed",
+    "grateful": "Grateful",
+    "confused": "Confused",
+    "happy": "Happy",
+    "focus": "Focused",
+    "peaceful": "Peaceful",
+    "curious": "Curious",
+    "determined": "Determined",
+    "seeking-inspiration": "Seeking Inspiration",
+    "reflective": "Reflective",
+    "at-peace": "At Peace",
+    "romantic": "Romantic",
+    "celebratory": "Celebratory",
+    "active": "Active",
+    "playful": "Playful",
+    "calm": "Calm"
+  },
+  "desc": {
+    "energized": "You feel full of energy and ready to move, act, and get things done.",
+    "creative": "You're inspired, full of ideas, and eager to express yourself.",
+    "anxious": "You feel a sense of restlessness or inner worry.",
+    "sad": "You need comfort and emotional space.",
+    "spiritual": "You're seeking connection with God or a moment to reflect.",
+    "overwhelmed": "Too many thoughts. You need to slow down.",
+    "grateful": "You're feeling a deep sense of gratitude.",
+    "confused": "You need clarity and direction.",
+    "happy": "You're feeling uplifted, smiling, and positive.",
+    "focus": "You need to keep your attention on a goal.",
+    "peaceful": "You feel deep calm and inner lightness.",
+    "curious": "You're eager to explore and learn something new.",
+    "determined": "You have a clear purpose and want to achieve it.",
+    "seeking-inspiration": "You want to reignite ideas or find motivation.",
+    "reflective": "You need mental space to think and listen to yourself.",
+    "at-peace": "You feel a sense of harmony with yourself and your surroundings.",
+    "romantic": "You're longing for love, beauty, and emotional connection.",
+    "celebratory": "You're in the mood to celebrate, connect, and enjoy.",
+    "active": "It's time to move: workout, walk, physical energy.",
+    "playful": "You're in the mood for lightness, play, and fun.",
+    "calm": "You need patience and calmness."
+  },
+  "hero": {
+    "title": "Find your mental balance",
+    "subtitle": "Write how you feel. FocusField+ will take care of the rest.",
+    "placeholder": "E.g.: I'm looking for the ideal environment to focus...",
+    "not_found": "No mood recognized. Try another description."
+  },
+  "navbar": {
+    "home": "Home",
+    "history": "History",
+    "settings": "Settings",
+    "profile": "User Profile",
+    "preferences": "Preferences"
+  }
+}

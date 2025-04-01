@@ -1,0 +1,62 @@
+{
+  "choose_mood": "Choisissez parmi les états d'esprit les plus recherchés",
+  "mood": {
+    "energized": "Énergique",
+    "creative": "Créatif",
+    "anxious": "Anxieux",
+    "sad": "Triste",
+    "spiritual": "Spirituel",
+    "overwhelmed": "Débordé",
+    "grateful": "Reconnaissant",
+    "confused": "Confus",
+    "happy": "Heureux",
+    "focus": "Concentré",
+    "peaceful": "Paisible",
+    "curious": "Curieux",
+    "determined": "Déterminé",
+    "seeking-inspiration": "En quête d'inspiration",
+    "reflective": "Réfléchi",
+    "at-peace": "En paix",
+    "romantic": "Romantique",
+    "celebratory": "Festif",
+    "active": "Actif",
+    "playful": "Joueur",
+    "calm": "Calme"
+  },
+  "desc": {
+    "energized": "Tu as de l'énergie et envie de bouger, d'agir, de faire.",
+    "creative": "Tu te sens inspiré, plein d'idées et envie de t'exprimer.",
+    "anxious": "Tu ressens une certaine agitation ou inquiétude intérieure.",
+    "sad": "Tu as besoin de réconfort et d’espace émotionnel.",
+    "spiritual": "Tu cherches une connexion avec Dieu ou un moment de réflexion.",
+    "overwhelmed": "Trop de pensées. Tu as besoin de ralentir.",
+    "grateful": "Tu ressens une profonde gratitude.",
+    "confused": "Tu as besoin de clarté et de direction.",
+    "happy": "Tu te sens soulagé, souriant, positif.",
+    "focus": "Tu as besoin de maintenir ton attention sur un objectif.",
+    "peaceful": "Tu ressens un calme profond et une légèreté intérieure.",
+    "curious": "Tu as envie de découvrir et d’apprendre quelque chose de nouveau.",
+    "determined": "Tu as un objectif clair et tu veux l’atteindre.",
+    "seeking-inspiration": "Tu veux rallumer des idées ou retrouver de la motivation.",
+    "reflective": "Tu as besoin d’un espace mental pour réfléchir et t’écouter.",
+    "at-peace": "Tu ressens une harmonie avec toi-même et ce qui t’entoure.",
+    "romantic": "Tu as envie d’amour, de beauté et de connexion émotionnelle.",
+    "celebratory": "Tu veux célébrer, être entouré et te réjouir.",
+    "active": "C’est le moment de bouger : sport, marche, énergie physique.",
+    "playful": "Tu veux de la légèreté, du jeu, du divertissement.",
+    "calm": "Tu as besoin de patience et de tranquillité."
+  },
+  "hero": {
+    "title": "Retrouve ton équilibre mental",
+    "subtitle": "Écris ce que tu ressens. FocusField+ s’occupe du reste.",
+    "placeholder": "Ex. : je cherche un environnement idéal pour me concentrer...",
+    "not_found": "Aucune humeur reconnue. Essaie une autre description."
+  },
+  "navbar": {
+    "home": "Accueil",
+    "history": "Historique",
+    "settings": "Paramètres",
+    "profile": "Profil utilisateur",
+    "preferences": "Préférences"
+  }
+}
