@@ -101,7 +101,7 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: brightness(0.1);
+  filter: brightness(0.2);
 }
 
 /* .card-img-container::after {
