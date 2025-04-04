@@ -110,6 +110,10 @@ body {
   padding-bottom: 5rem;
 }
 
+.cookie-message {
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+}
+
 @media (min-width: 768px) {
   .border-md-none {
     border-bottom: none !important;

@@ -130,5 +130,16 @@
     "title": "Essayez-le vous aussi",
     "text": "Découvrez comment FocusField+ peut vous aider à améliorer votre concentration.",
     "button": "Commencer"
+  },
+  "cookie": {
+    "title": "Votre vie privée est importante",
+    "message": "Nous utilisons des cookies pour personnaliser le contenu et les annonces, offrir des fonctionnalités de médias sociaux et analyser notre trafic. Vous pouvez accepter tous les cookies ou gérer vos préférences.",
+    "buttons": {
+      "accept": "Tout accepter",
+      "reject": "Refuser",
+      "manage": "Gérer les préférences"
+    },
+    "linkText": "Lisez notre politique relative aux cookies",
+    "linkUrl": "/cookie-policy"
   }
 }

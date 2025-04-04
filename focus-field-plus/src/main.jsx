@@ -4,9 +4,12 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store/index.js";
 import "./i18n";
+import { BrowserRouter } from "react-router";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
