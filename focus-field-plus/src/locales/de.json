@@ -125,5 +125,10 @@
         "desc": "Fördere deine Konzentration durch deinen Glauben."
       }
     ]
+  },
+  "try": {
+    "title": "Probiere es selbst aus",
+    "text": "Entdecke, wie dir FocusField+ helfen kann, dich besser zu konzentrieren.",
+    "button": "Jetzt starten"
   }
 }

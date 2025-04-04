@@ -125,5 +125,10 @@
         "desc": "Nurture focus through your faith."
       }
     ]
+  },
+  "try": {
+    "title": "Try it yourself",
+    "text": "Discover how FocusField+ can help you improve your focus.",
+    "button": "Get started"
   }
 }

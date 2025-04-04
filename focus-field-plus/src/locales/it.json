@@ -125,5 +125,10 @@
         "desc": "Coltiva la concentrazione anche attraverso la tua fede."
       }
     ]
+  },
+  "try": {
+    "title": "Prova anche tu",
+    "text": "Scopri come FocusField+ può aiutarti a migliorare la concentrazione.",
+    "button": "Inizia ora"
   }
 }

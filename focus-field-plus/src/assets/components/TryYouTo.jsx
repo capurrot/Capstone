@@ -1,12 +1,15 @@
 import { Container, Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const TryYouTo = () => {
+  const { t } = useTranslation();
+
   return (
-    <section className="try-yoy-to text-white text-center">
+    <section className="try-you-to text-white text-center">
       <Container>
-        <h2>Prova anche tu</h2>
-        <p>Scopri come FocusField+ può aiutarti a migliorare la concentrazione.</p>
-        <Button variant="light">Inizia ora</Button>
+        <h2>{t("try.title")}</h2>
+        <p>{t("try.text")}</p>
+        <Button variant="light">{t("try.button")}</Button>
       </Container>
     </section>
   );
