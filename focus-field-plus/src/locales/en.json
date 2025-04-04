@@ -58,5 +58,55 @@
     "settings": "Settings",
     "profile": "User Profile",
     "preferences": "Preferences"
+  },
+  "testimonials": {
+    "title": "What users are saying",
+    "items": [
+      {
+        "name": "Luca R.",
+        "role": "University student",
+        "text": "FocusField+ helped me concentrate better during study sessions. The spiritual mode has been a true blessing!"
+      },
+      {
+        "name": "Giulia M.",
+        "role": "Freelance illustrator",
+        "text": "The music recommendations are always spot-on. It feels like the app really understands how I feel!"
+      },
+      {
+        "name": "Davide P.",
+        "role": "Web Developer",
+        "text": "An innovative app. I can enter the flow state much more easily thanks to the personalized suggestions."
+      },
+      {
+        "name": "Marco T.",
+        "role": "Teacher",
+        "text": "The reflective mode helped me prepare lessons more mindfully. It's a one-of-a-kind tool."
+      },
+      {
+        "name": "Serena C.",
+        "role": "Musician",
+        "text": "I love how the app senses my mood and creates the perfect sound environment for composing."
+      },
+      {
+        "name": "Alessio V.",
+        "role": "Theology student",
+        "text": "The spiritual suggestions help me stay centered and deeply focused."
+      },
+      {
+        "name": "Elena B.",
+        "role": "Motivational coach",
+        "text": "A powerful tool for training focus and inner awareness."
+      },
+      {
+        "name": "Riccardo N.",
+        "role": "UX Designer",
+        "text": "A well-designed user experience. It guides me in my most creative moments."
+      },
+      {
+        "name": "Anna F.",
+        "role": "Volunteer",
+        "text": "I appreciate the respect for spiritual values. It's rare to find apps this thoughtful and helpful."
+      }
+    ]
   }
 }

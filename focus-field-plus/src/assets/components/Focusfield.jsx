@@ -1,6 +1,7 @@
 import Focuscards from "./Focuscards";
 import Focushero from "./Focushero";
 import Focusnavbar from "./Focusnavbar";
+import HowTo from "./HowTo";
 import Testimonials from "./Testimonials";
 
 const Focusfield = () => {
@@ -10,6 +11,7 @@ const Focusfield = () => {
       <Focushero />
       <Focuscards />
       <Testimonials />
+      <HowTo />
     </>
   );
 };

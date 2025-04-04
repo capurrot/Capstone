@@ -58,5 +58,55 @@
     "settings": "Paramètres",
     "profile": "Profil utilisateur",
     "preferences": "Préférences"
+  },
+  "testimonials": {
+    "title": "Ce que disent les utilisateurs",
+    "items": [
+      {
+        "name": "Luca R.",
+        "role": "Étudiant universitaire",
+        "text": "FocusField+ m’a aidé à mieux me concentrer pendant mes sessions d’étude. Le mode spirituel a été une vraie bénédiction !"
+      },
+      {
+        "name": "Giulia M.",
+        "role": "Illustratrice freelance",
+        "text": "Les recommandations musicales sont toujours parfaites. On dirait que l’app comprend vraiment comment je me sens !"
+      },
+      {
+        "name": "Davide P.",
+        "role": "Développeur Web",
+        "text": "Une application innovante. J’entre dans l’état de flow beaucoup plus facilement grâce aux suggestions personnalisées."
+      },
+      {
+        "name": "Marco T.",
+        "role": "Enseignant",
+        "text": "Le mode réflexion m’a aidé à mieux préparer mes cours. Un outil unique en son genre."
+      },
+      {
+        "name": "Serena C.",
+        "role": "Musicienne",
+        "text": "J’adore comment l’app ressent mon humeur et crée l’environnement sonore idéal pour composer."
+      },
+      {
+        "name": "Alessio V.",
+        "role": "Étudiant en théologie",
+        "text": "Les suggestions spirituelles m’aident à rester centré et concentré en profondeur."
+      },
+      {
+        "name": "Elena B.",
+        "role": "Coach motivationnelle",
+        "text": "Un outil puissant pour développer la concentration et la conscience intérieure."
+      },
+      {
+        "name": "Riccardo N.",
+        "role": "Designer UX",
+        "text": "Une expérience utilisateur bien pensée. Elle m’accompagne dans mes moments de créativité."
+      },
+      {
+        "name": "Anna F.",
+        "role": "Bénévole",
+        "text": "J’apprécie le respect des valeurs spirituelles. C’est rare de trouver une app aussi sensible et utile."
+      }
+    ]
   }
 }
