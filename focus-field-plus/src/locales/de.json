@@ -108,5 +108,22 @@
         "text": "Ich schätze den Respekt gegenüber spirituellen Werten. Es ist selten, solch achtsame und hilfreiche Apps zu finden."
       }
     ]
+  },
+  "howto": {
+    "title": "So funktioniert's",
+    "steps": [
+      {
+        "title": "✍️ Frei schreiben",
+        "desc": "Die App analysiert deine Worte und versteht, wie du dich fühlst."
+      },
+      {
+        "title": "🎵 Vorschläge erhalten",
+        "desc": "Musik, Umgebung und ideale Dauer, um in den Flow zu kommen."
+      },
+      {
+        "title": "🙏 Spiritueller Modus",
+        "desc": "Fördere deine Konzentration durch deinen Glauben."
+      }
+    ]
   }
 }

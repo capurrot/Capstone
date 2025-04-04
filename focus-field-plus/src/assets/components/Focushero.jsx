@@ -14,7 +14,7 @@ const Focushero = () => {
   const selectedMood = useSelector((state) => state.mood.selectedMood);
   const allMoods = useSelector((state) => state.mood.allMoods);
 
-  const testMoodSlug = "spiritual"; // test iniziale
+  const testMoodSlug = "calm"; // test iniziale
 
   useEffect(() => {
     if (allMoods.length > 0) {

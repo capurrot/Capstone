@@ -108,5 +108,22 @@
         "text": "I appreciate the respect for spiritual values. It's rare to find apps this thoughtful and helpful."
       }
     ]
+  },
+  "howto": {
+    "title": "How it works",
+    "steps": [
+      {
+        "title": "✍️ Write freely",
+        "desc": "The app analyzes your words and understands how you feel."
+      },
+      {
+        "title": "🎵 Get suggestions",
+        "desc": "Music, environment, and ideal duration to enter the flow."
+      },
+      {
+        "title": "🙏 Spiritual mode",
+        "desc": "Nurture focus through your faith."
+      }
+    ]
   }
 }
