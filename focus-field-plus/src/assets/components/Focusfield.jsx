@@ -3,6 +3,7 @@ import Focushero from "./Focushero";
 import Focusnavbar from "./Focusnavbar";
 import HowTo from "./HowTo";
 import Testimonials from "./Testimonials";
+import TryYouTo from "./TryYouTo";
 
 const Focusfield = () => {
   return (
@@ -10,8 +11,9 @@ const Focusfield = () => {
       <Focusnavbar />
       <Focushero />
       <Focuscards />
-      <Testimonials />
       <HowTo />
+      <TryYouTo />
+      <Testimonials />
     </>
   );
 };

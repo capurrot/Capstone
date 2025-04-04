@@ -12,14 +12,14 @@ const TestimonialsCarousel = () => {
   }
 
   return (
-    <Container className="mt-5 pb-5">
+    <Container className="pb-5" style={{ marginTop: "6rem" }}>
       <h2 className="text-center mb-4">{t("testimonials.title")}</h2>
       <Carousel indicators={false} interval={8000}>
         {groupedTestimonials.map((group, index) => (
           <Carousel.Item key={index}>
             <div className="row justify-content-center">
               {group.map((t, idx) => (
-                <div className="col-md-4 mb-3 d-flex" key={idx} style={{ height: "12rem" }}>
+                <div className="col-md-4 mb-3 d-flex" key={idx} style={{ height: "13rem" }}>
                   <div className="card shadow-sm h-100 p-4 border-0 rounded-4">
                     <p className="text-muted mb-4">“{t.text}”</p>
                     <div className="mt-auto">

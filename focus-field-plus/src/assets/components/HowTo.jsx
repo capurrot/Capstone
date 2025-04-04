@@ -10,14 +10,18 @@ const HowTo = () => {
       <Container>
         <h2 className="text-center mb-4">{t("howto.title")}</h2>
         <div className="row text-center">
-          {steps.map((step, index) => (
-            <div className="col-md-4 mb-4" key={index}>
-              <div className="p-4 shadow-sm h-100">
-                <h3>{step.title}</h3>
-                <p>{step.desc}</p>
+          {steps.map((step, index) => {
+            const cardClass = index !== 2 ? "p-4 border-bottom border-md-none h-100" : "p-4 border-md-none h-100";
+
+            return (
+              <div className="col-md-4 mb-4" key={index}>
+                <div className={cardClass}>
+                  <h3>{step.title}</h3>
+                  <p>{step.desc}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </Container>
     </section>

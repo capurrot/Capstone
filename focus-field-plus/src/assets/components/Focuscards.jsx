@@ -14,7 +14,7 @@ const Focuscards = () => {
   const moodsToDisplay = [...moods.filter((mood) => !mood.slug.includes(selectedMood.slug))].slice(0, 8);
 
   return (
-    <Container fluid className="mt-4 px-5">
+    <Container fluid className="mt-5 px-md-5 pb-5">
       <h2 className="text-center mb-4 fw-bold fs-1">{t("choose_mood")}</h2>
       <Row>
         {moodsToDisplay.map((mood) => (
