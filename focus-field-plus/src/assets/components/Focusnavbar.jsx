@@ -25,7 +25,15 @@ function Focusnavbar() {
     <Navbar className={scroll > 76 ? "navbar scrolled sticky-top navbar" : "sticky-top navbar"} expand="md">
       <Container fluid>
         <Navbar.Brand href="#home">
-          <img src={Logo} className="logo" alt="logo" />
+          <img
+            src={Logo}
+            className="logo"
+            alt="logo"
+            style={{
+              transform: `rotate(${scroll * 0.3}deg)`,
+              transition: "transform 0.1s linear",
+            }}
+          />
           <span className="ms-2 fw-bold">FocusField+</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
