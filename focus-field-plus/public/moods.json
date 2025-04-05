@@ -7,7 +7,8 @@
     "image": "https://images.unsplash.com/photo-1518365658347-c4906efc5636?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1080&auto=format",
     "tag": ["attività", "movimento"],
-    "colors": ["#b9e100", "#3C3C3C", "#0000FF", "#FFFFFF"]
+    "colors": ["#b9e100", "#3C3C3C", "#0000FF", "#FFFFFF"],
+    "icon": "bi-lightning-fill"
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "image": "https://plus.unsplash.com/premium_photo-1692650759189-3f0546fc917e??w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1080&auto=format",
     "tag": ["idee", "energia"],
-    "colors": ["#000000", "#FFFFFF", "#0000FF", "#FF0000"]
+    "colors": ["#000000", "#FFFFFF", "#0000FF", "#FF0000"],
+    "icon": "bi-brush"
   },
   {
     "id": 3,
@@ -27,7 +29,8 @@
     "image": "https://images.unsplash.com/photo-1644428239740-b8295bfef42f?q=80?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1080&auto=format",
     "tag": ["agitazione", "respiro"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-exclamation-circle"
   },
   {
     "id": 4,
@@ -37,7 +40,8 @@
     "image": "https://images.unsplash.com/photo-1495558685573-aba7573d9c01?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1495558685573-aba7573d9c01?w=1080&auto=format",
     "tag": ["riflessione", "dolcezza"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-emoji-frown"
   },
   {
     "id": 5,
@@ -47,7 +51,8 @@
     "image": "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["preghiera", "fede", "riflessione"],
-    "colors": ["#72909A", "#FFFFFF", "#0000FF", "#FFFFFF"]
+    "colors": ["#72909A", "#FFFFFF", "#0000FF", "#FFFFFF"],
+    "icon": "bi-stars"
   },
   {
     "id": 6,
@@ -57,7 +62,8 @@
     "image": "https://plus.unsplash.com/premium_photo-1682608388937-26eadd2ddfe9?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["rilascio", "pausa"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-cloud-fog"
   },
   {
     "id": 7,
@@ -67,7 +73,8 @@
     "image": "https://plus.unsplash.com/premium_photo-1682097440558-16f332f4528a?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["positività", "riconoscenza"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-heart-fill"
   },
   {
     "id": 8,
@@ -77,7 +84,8 @@
     "image": "https://images.unsplash.com/photo-1618498390344-445c804f2ac5?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["guida", "chiarezza"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-question-circle"
   },
   {
     "id": 9,
@@ -87,7 +95,8 @@
     "image": "https://plus.unsplash.com/premium_photo-1679865370855-5a367b828f9a?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["gioia", "luce"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-emoji-smile"
   },
   {
     "id": 10,
@@ -97,7 +106,8 @@
     "image": "https://source.unsplash.com/featured/?energy,action,sports",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["produttività", "attenzione"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-bullseye"
   },
   {
     "id": 11,
@@ -107,7 +117,8 @@
     "image": "https://source.unsplash.com/featured/?peaceful,calm,nature",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["respiro", "rilassamento"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-cloud-sun"
   },
   {
     "id": 12,
@@ -116,7 +127,8 @@
     "description": "Hai voglia di scoprire, imparare qualcosa di nuovo.",
     "image": "https://source.unsplash.com/featured/?curiosity,books,explore",
     "tag": ["scoperta", "apprendimento"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-search"
   },
   {
     "id": 13,
@@ -126,7 +138,8 @@
     "image": "https://source.unsplash.com/featured/?determination,goal,drive",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["azione", "focalizzazione"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-flag-fill"
   },
   {
     "id": 14,
@@ -136,7 +149,8 @@
     "image": "https://source.unsplash.com/featured/?inspiration,light,motivation",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["stimolo", "input"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-lightbulb"
   },
   {
     "id": 15,
@@ -146,7 +160,8 @@
     "image": "https://source.unsplash.com/featured/?reflection,quiet,notebook",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["pensiero", "ascolto"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-journal"
   },
   {
     "id": 16,
@@ -156,7 +171,8 @@
     "image": "https://source.unsplash.com/featured/?zen,peace,simplicity",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["armonia", "benessere"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-flower1"
   },
   {
     "id": 17,
@@ -166,7 +182,8 @@
     "image": "https://source.unsplash.com/featured/?romance,flowers,love",
     "background": "https://images.unsplash.com/photo-1513279922550-250c2129b13a?w=1080&auto=format",
     "tag": ["amore", "cuore"],
-    "colors": ["#700000", "#FFFFFF", "#0000FF", "#FFFFFF"]
+    "colors": ["#700000", "#FFFFFF", "#0000FF", "#FFFFFF"],
+    "icon": "bi-heart"
   },
   {
     "id": 18,
@@ -176,7 +193,8 @@
     "image": "https://source.unsplash.com/featured/?celebration,party,happy",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["compagnia", "socialità"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-stars"
   },
   {
     "id": 19,
@@ -186,7 +204,8 @@
     "image": "https://source.unsplash.com/featured/?fitness,training,activity",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["palestra", "movimento"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-person-running"
   },
   {
     "id": 20,
@@ -196,7 +215,8 @@
     "image": "https://source.unsplash.com/featured/?fun,playfulness,color",
     "background": "https://images.unsplash.com/photo-1510339025691-429f8be4fb38?w=1080&auto=format",
     "tag": ["sorriso", "bambino interiore"],
-    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"]
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
+    "icon": "bi-emoji-laughing"
   },
   {
     "id": 21,
@@ -206,6 +226,7 @@
     "image": "https://source.unsplash.com/featured/?calm,relax,serenity",
     "background": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1080&auto=format",
     "tag": ["pazienza", "rilassamento"],
-    "colors": ["#27417A", "#FFFFFF", "#0000FF", "#FFFFFF"]
+    "colors": ["#27417A", "#FFFFFF", "#0000FF", "#FFFFFF"],
+    "icon": "bi-droplet"
   }
 ]

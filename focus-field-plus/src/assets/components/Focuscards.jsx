@@ -20,15 +20,18 @@ const Focuscards = () => {
         {moodsToDisplay.map((mood) => (
           <Col key={mood.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
             <div className="card-container">
-              <Card className="h-100" style={{ border: "none" }}>
+              <Card className="h-100 shadow-sm border-0">
                 <div className="card-img-container">
                   <Card.Img src={mood.image} alt={t(`mood.${mood.slug}`)} className="card-img-top-full" />
                   <div className="card-img-overlay"></div>
                 </div>
                 <Card.Body className="d-flex flex-column justify-content-between">
-                  <Card.Title className="display-6 pb-4">{t(`mood.${mood.slug}`)}</Card.Title>
+                  <Card.Title className="pb-2 d-flex flex-column align-items-center gap-2">
+                    <span className="display-5">{t(`mood.${mood.slug}`)}</span>
+                    {mood.icon && <i className={`bi ${mood.icon} fs-1 text-secondary`}></i>}
+                  </Card.Title>
                   <Card.Text className="card-desc">{t(`desc.${mood.slug}`)}</Card.Text>
-                  {/* <Button className="button-card">{t("explore")}</Button> */}
+                  <a href={`/mood/${mood.slug}`} className="stretched-link"></a>
                 </Card.Body>
               </Card>
             </div>
