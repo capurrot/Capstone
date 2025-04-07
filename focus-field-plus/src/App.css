@@ -111,6 +111,12 @@ body {
   padding-bottom: 5rem;
 }
 
+.try-button {
+  background-color: var(--mood-bg);
+  border: var(--mood-bg);
+  color: var(--mood-text);
+}
+
 .cookie-message {
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
 }

@@ -19,7 +19,7 @@ const TryYouTo = () => {
         </div>
         <h2 className="display-6 fw-bold mb-3">{t("try.title")}</h2>
         <p className="lead mb-4">{t("try.text")}</p>
-        <Button variant="light" size="lg">
+        <Button variant="light" size="lg" className="try-button">
           {t("try.button")}
         </Button>
       </Container>
