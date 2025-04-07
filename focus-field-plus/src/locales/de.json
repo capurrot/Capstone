@@ -141,5 +141,24 @@
     },
     "linkText": "Lies unsere Cookie-Richtlinie",
     "linkUrl": "/cookie-policy"
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "q1": {
+      "title": "Ist es kostenlos?",
+      "body": "Ja! FocusField+ ist während der Einführungsphase kostenlos. Zukünftig könnten Premium-Pläne angeboten werden, wobei eine Basisversion immer zugänglich bleibt."
+    },
+    "q2": {
+      "title": "Muss ich ein Konto erstellen?",
+      "body": "Nein, du kannst sofort loslegen. Wenn du deine Einstellungen speichern möchtest, kannst du ein Profil erstellen."
+    },
+    "q3": {
+      "title": "Wie funktioniert der spirituelle Modus?",
+      "body": "Er wurde entwickelt, um dir zu helfen, dich zu konzentrieren und gleichzeitig eine respektvolle Verbindung zu Gott aufrechtzuerhalten – mit Musik, geführten Stillemomenten und aufbauenden Inhalten."
+    },
+    "q4": {
+      "title": "Kann ich es auch mobil nutzen?",
+      "body": "Ja! FocusField+ ist für Mobilgeräte optimiert und eine App ist in Kürze verfügbar."
+    }
   }
 }

@@ -1,4 +1,5 @@
 import CookieMessage from "./CookieMessage";
+import Faq from "./Faq";
 import Focuscards from "./Focuscards";
 import Focushero from "./Focushero";
 import Focusnavbar from "./Focusnavbar";
@@ -15,6 +16,7 @@ const Focusfield = () => {
       <HowTo />
       <TryYouTo />
       <Testimonials />
+      <Faq />
       <CookieMessage />
     </>
   );
