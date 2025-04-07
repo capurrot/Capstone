@@ -160,5 +160,14 @@
       "title": "Posso usarlo anche su mobile?",
       "body": "Sì! FocusField+ è ottimizzato per mobile e presto arriverà anche l'app dedicata."
     }
+  },
+  "footer": {
+    "rights": "Tutti i diritti riservati.",
+    "links": {
+      "home": "Home",
+      "how": "Come funziona",
+      "faq": "FAQ",
+      "contact": "Contatti"
+    }
   }
 }

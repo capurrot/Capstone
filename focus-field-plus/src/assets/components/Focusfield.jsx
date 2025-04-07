@@ -3,6 +3,7 @@ import Faq from "./Faq";
 import Focuscards from "./Focuscards";
 import Focushero from "./Focushero";
 import Focusnavbar from "./Focusnavbar";
+import Footer from "./Footer";
 import HowTo from "./HowTo";
 import Testimonials from "./Testimonials";
 import TryYouTo from "./TryYouTo";
@@ -17,6 +18,7 @@ const Focusfield = () => {
       <TryYouTo />
       <Testimonials />
       <Faq />
+      <Footer />
       <CookieMessage />
     </>
   );
