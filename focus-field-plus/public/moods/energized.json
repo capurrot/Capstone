@@ -1,0 +1,32 @@
+{
+  "mood": "Energico",
+  "description": "Accendi la tua motivazione e preparati ad agire con energia e determinazione.",
+  "music": {
+    "title": "Power Boost",
+    "tags": ["energetic"]
+  },
+  "breathing": {
+    "technique": "Respiro attivo",
+    "instructions": ["Inspira rapidamente 2s", "Espira forte 2s", "Ripeti senza pausa"],
+    "duration": "3 min"
+  },
+  "journal": {
+    "prompt": "Scrivi un obiettivo che vuoi raggiungere oggi e il primo passo per iniziare.",
+    "optional": true
+  },
+  "spiritual": {
+    "enabled": true,
+    "verse": "Filippesi 4:13",
+    "text": "Posso ogni cosa grazie a colui che mi dà forza.",
+    "type": "versetto"
+  },
+  "environment": {
+    "backgroundImage": "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=2040&auto=format&fit=crop",
+    "soundscape": ["battiti intensi", "bassi elettronici", "rumore urbano"]
+  },
+  "durationSuggestion": "10-15 min",
+  "cta": {
+    "text": "Inizia la tua carica di energia",
+    "action": "/session/start"
+  }
+}

@@ -49,7 +49,7 @@ body {
 }
 
 .main-container {
-  background-color: var(--mood-bg);
+  background: var(--mood-bg);
   color: var(--mood-text);
   transition: background-color 0.4s ease, color 0.4s ease;
 }
@@ -121,20 +121,39 @@ body {
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.testimonials-container {
-  background-image: "url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')";
-  background-size: "cover";
-  background-position: "bottom center";
-  padding: "5rem 0";
-  position: "relative";
+.mood-section {
+  background-color: var(--mood-bg);
 }
-.testimonials-overlay {
-  position: "absolute";
-  top: 0;
-  left: 0;
-  width: "100%";
-  height: "100%";
-  background-color: "rgba(0, 0, 0, 0.5)";
+
+.rhap_container {
+  background-color: var(--mood-bg) !important;
+  border-radius: 10px;
+}
+
+.rhap_main-controls-button {
+  color: var(--mood-text) !important;
+}
+
+.rhap_main-controls-button:hover {
+  color: var(--mood-accent) !important;
+}
+
+.rhap_progress-bar-show-download {
+  background-color: var(--mood-text) !important;
+}
+
+.rhap_time {
+  color: var(--mood-text) !important;
+}
+
+.active-track {
+  background-color: #0d6efd !important; /* bg-primary */
+  color: white !important;
+}
+
+.inactive-track {
+  background-color: #212529; /* bg-dark */
+  color: white;
 }
 
 @media (min-width: 768px) {

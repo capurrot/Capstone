@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 
 const Focuscards = () => {
   const { t } = useTranslation();
@@ -31,7 +32,7 @@ const Focuscards = () => {
                     {mood.icon && <i className={`bi ${mood.icon} fs-1 text-secondary`}></i>}
                   </Card.Title>
                   <Card.Text className="card-desc">{t(`desc.${mood.slug}`)}</Card.Text>
-                  <a href={`/mood/${mood.slug}`} className="stretched-link"></a>
+                  <Link to={`/mood/${mood.slug}`} className="stretched-link"></Link>
                 </Card.Body>
               </Card>
             </div>

@@ -3,8 +3,7 @@
   "description": "Ti aiuteremo a ritrovare calma e centratura.",
   "music": {
     "title": "Deep Calm",
-    "playlistUrl": "https://...",
-    "tags": ["rilassante", "ambiente", "battito lento"]
+    "tags": ["relaxing", "ambient", "slowbeat"]
   },
   "breathing": {
     "technique": "Box Breathing",
@@ -22,7 +21,7 @@
     "type": "versetto"
   },
   "environment": {
-    "backgroundImage": "forest_mist.jpg",
+    "backgroundImage": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?q=80&w=2041&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "soundscape": ["pioggia", "vento tra gli alberi"]
   },
   "durationSuggestion": "15-20 min",
