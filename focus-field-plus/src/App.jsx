@@ -9,6 +9,8 @@ import Focusfield from "./assets/components/Focusfield.jsx";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_ALL_MOODS, SET_MOOD } from "./redux/actions/index.js";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
+import MoodPageWrapper from "./assets/components/MoodPageWrapper.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,7 +49,10 @@ function App() {
         "--mood-text-card": colors[3],
       }}
     >
-      <Focusfield />
+      <Routes>
+        <Route path="/" element={<Focusfield />} />
+        <Route path="/mood/:moodName" element={<MoodPageWrapper />} />
+      </Routes>
     </div>
   );
 }
