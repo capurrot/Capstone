@@ -30,8 +30,8 @@ function Focusnavbar() {
             className="logo"
             alt="logo"
             style={{
-              transform: `rotate(${scroll * 0.3}deg)`,
-              transition: "transform 0.1s linear",
+              transform: `rotate(${scroll * 0.1}deg)`,
+              transition: "transform 0.05s linear",
             }}
           />
           <span className="ms-2 fw-bold">FocusField+</span>

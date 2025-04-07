@@ -1,6 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./App.css";
 import Focusfield from "./assets/components/Focusfield.jsx";
 import { useEffect } from "react";
@@ -25,14 +27,12 @@ function App() {
     fetchMoods();
   }, [dispatch]);
 
-  // imposto un mood per test
   useEffect(() => {
     if (mood === null) {
       dispatch({ type: SET_MOOD, payload: "focus" });
     }
   }, [dispatch, mood]);
 
-  // fallback ai colori standard
   const colors = mood?.colors || ["#4e495d", "#ffffff", "#6c5ce7"];
   const slug = mood?.slug || "standard";
 
