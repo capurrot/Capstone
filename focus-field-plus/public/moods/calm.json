@@ -1,0 +1,33 @@
+{
+  "mood": "Calma",
+  "description": "Ti aiuteremo a ritrovare la tranquillità e a rilassare la mente.",
+  "music": {
+    "title": "Peaceful Flow",
+    "playlistUrl": "https://api.audius.co/v1/playlists/wEa2p5",
+    "tags": ["rilassante", "ambient", "lento", "calmante"]
+  },
+  "breathing": {
+    "technique": "Respiro Profondo",
+    "instructions": ["Inspira profondamente 4s", "Trattieni il respiro 4s", "Espira lentamente 6s"],
+    "duration": "5 min"
+  },
+  "journal": {
+    "prompt": "Scrivi cosa ti sta turbando e cosa puoi fare per lasciare andare quella tensione.",
+    "optional": true
+  },
+  "spiritual": {
+    "enabled": true,
+    "verse": "Salmo 4:8",
+    "text": "In pace mi coricherò e subito dormirò, perché tu solo, o Geova, mi fai abitare al sicuro.",
+    "type": "versetto"
+  },
+  "environment": {
+    "backgroundImage": "calm_lake_evening.jpg",
+    "soundscape": ["suono dell'acqua", "cicale", "brezza leggera"]
+  },
+  "durationSuggestion": "10-20 min",
+  "cta": {
+    "text": "Inizia il tuo momento di calma",
+    "action": "/session/start"
+  }
+}

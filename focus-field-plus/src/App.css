@@ -121,175 +121,164 @@ body {
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.rhap_container {
-  background: rgba(255, 255, 255, 0.1) !important; /* vetroso chiaro */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); /* per Safari */
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: background-color 0.3s ease;
+.player {
+  background: linear-gradient(to right, #313234, #2f3031);
+  box-shadow: 0 1rem 5rem rgba(0, 0, 0, 0.4);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
 }
 
-.rhap_controls-section {
+.player-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0.2rem solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  background-color: #2b2c2e;
+  color: #a8a9ab;
+  box-shadow: 0.5rem 0.5rem 2rem -0.1rem rgba(0, 0, 0, 0.5), -0.4rem -0.4rem 2rem -0.1rem rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.player-btn:active {
+  transform: translateY(0.2rem);
+}
+
+.player-top span {
+  font-size: 1.3rem;
+  color: #a8a9ab;
+}
+
+.player-body {
+  width: 100%;
+  height: 55%;
   display: flex;
   justify-content: center;
-}
-
-.rhap_main-controls-button,
-.rhap_volume-bar,
-.rhap_progress-indicator {
-  color: white !important;
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
-}
-
-.rhap_main-controls-button:hover {
-  color: var(--mood-bg) !important;
-}
-
-.rhap_progress-bar {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  height: 6px;
-}
-
-.rhap_progress-filled {
-  background-color: var(--mood-bg) !important;
-}
-
-.rhap_time {
-  color: white !important;
-}
-
-.active-track {
-  background-color: var(--mood-bg) !important;
-  color: var(--mood-text) !important;
-
-  h4,
-  p {
-    color: var(--mood-text) !important;
-  }
-}
-
-.inactive-track {
-  background-color: #212529; /* bg-dark */
-  color: white;
-}
-
-/* Contenitore principale */
-.audius-player-container {
-  background-color: #121212;
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  margin: 0 auto;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-/* Dettaglio della traccia in esecuzione */
-.track-details-container {
-  display: flex;
   align-items: center;
-  margin-bottom: 20px;
 }
 
-.track-details-container .album-art {
-  width: 80px;
-  height: 80px;
-  margin-right: 15px;
+.current-song {
+  width: 18rem;
+  height: 18rem;
+  border: 0.5rem solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  box-shadow: 0.6rem 0.6rem 4rem -0.1rem rgba(0, 0, 0, 0.9), -0.6rem -0.6rem 4rem -0.2rem rgba(255, 255, 255, 0.4);
+  position: relative;
+  transform: rotateZ(-15deg);
 }
 
-.track-info {
+.cover {
+  width: 100%;
+  height: 100%;
+  background-color: #101112;
+  border-radius: 50%;
+}
+
+.song-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.song-details {
   display: flex;
   flex-direction: column;
 }
 
-.track-title {
-  font-size: 1.5em;
-  font-weight: bold;
+.song-name {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #fff;
 }
 
-.track-title-list {
-  font-size: 1em;
-  font-weight: 500;
+.song-artist {
+  font-size: 1rem;
+  color: #a8a9ab;
 }
 
-.artist-name {
-  color: #aaa;
-  font-size: 1.2em;
+.song-info i {
+  font-size: 2rem;
+  background: linear-gradient(to right, #3baa7b, #62bc68);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.artist-name-list {
-  color: #aaa;
-  font-size: 0.9em;
-}
-
-.audio-player-container {
-  margin-bottom: 20px;
-}
-
-.audio-player {
+.song-time {
   width: 100%;
-  background-color: #333;
-  border-radius: 5px;
-  padding: 10px;
-}
-
-.track-list-container {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.track-item {
-  display: flex;
-  align-items: center;
-  padding: 2px 5px;
+  height: 0.25rem;
+  background-color: #0c0c0d;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0.2rem 0.2rem 0.2rem rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  transition: background-color 0.2s;
-  border-bottom: 1px solid #444;
-}
-
-.track-item:hover {
-  background-color: #6dc48b;
-  color: var(--mood-text-card);
-
-  p {
-    color: white;
-  }
-}
-
-.track-item .album-art {
-  width: 30px;
-  height: 30px;
-  margin-right: 15px;
-}
-
-.track-item .track-title {
-  font-weight: bold;
-}
-
-.track-item .artist-name {
-  color: #aaa;
-}
-
-.track-index {
-  width: 30px;
-  text-align: center;
-  margin-right: 15px;
   position: relative;
 }
 
-.track-item .play-icon {
-  color: #fff;
-  font-size: 1.5em;
+.song-progress {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  visibility: hidden;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  /*   background: linear-gradient(to right, #3baa7b, #62bc68); */
+  background-color: var(--mood-bg);
+  border-radius: 0.5rem;
 }
 
-.track-item:hover .play-icon {
-  visibility: visible;
+.time {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.time span {
+  font-size: 1.2rem;
+  color: #a8a9ab;
+}
+
+.controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.play-pause {
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--mood-bg);
+  color: var(--mood-text);
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.5), -6px -6px 6px rgba(255, 255, 255, 0.1);
+}
+
+.player-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.player-footer i {
+  font-size: 1.8rem;
+  color: #a8a9ab;
+}
+
+.player-footer span {
+  font-size: 1.2rem;
+  color: #a8a9ab;
 }
 
 @media (min-width: 768px) {

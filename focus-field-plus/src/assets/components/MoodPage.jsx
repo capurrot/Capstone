@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import "react-h5-audio-player/lib/styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_MOOD } from "../../redux/actions";
-import AudiusMoodPlayer from "./AudiusMoodPlayer";
+import FocusPlayer from "./FocusPlayer";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
@@ -52,7 +51,7 @@ function MoodPage({ moodName }) {
 
       <section className="mood-section music p-4 mt-5 rounded bg-dark">
         <h2 className="text-white mb-3">🎵 Musica</h2>
-        <AudiusMoodPlayer playlistUrl={moodData.music.playlistUrl} />
+        <FocusPlayer playlistUrl={moodData.music.playlistUrl} />
       </section>
 
       <section className="mood-section breathing p-4">
