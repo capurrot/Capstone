@@ -7,7 +7,7 @@
     "image": "https://images.unsplash.com/photo-1518365658347-c4906efc5636?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1080&auto=format",
     "tag": ["attività", "movimento"],
-    "colors": ["#b9e100", "#3C3C3C", "#FFFFFF", "#FFFFFF"],
+    "colors": ["#b9e100", "#3C3C3C", "#0000FF", "#FFFFFF"],
     "icon": "bi-lightning-fill"
   },
   {
@@ -29,7 +29,7 @@
     "image": "https://images.unsplash.com/photo-1644428239740-b8295bfef42f?q=80?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1080&auto=format",
     "tag": ["agitazione", "respiro"],
-    "colors": ["#FF0000", "#00FF00", "#FFFFFF", "#FFFFFF"],
+    "colors": ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF"],
     "icon": "bi-exclamation-circle"
   },
   {

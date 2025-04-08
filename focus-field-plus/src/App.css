@@ -49,7 +49,7 @@ body {
 }
 
 .main-container {
-  background: var(--mood-bg);
+  background-color: var(--mood-bg);
   color: var(--mood-text);
   transition: background-color 0.4s ease, color 0.4s ease;
 }
@@ -121,9 +121,14 @@ body {
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.mood-section {
-  background-color: var(--mood-bg);
+.testimonials-container {
+  background-image: "url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')";
+  background-size: "cover";
+  background-position: "bottom center";
+  padding: "5rem 0";
+  position: "relative";
 }
+<<<<<<< HEAD
 
 .rhap_container {
   background: rgba(255, 255, 255, 0.1) !important; /* vetroso chiaro */
@@ -172,6 +177,15 @@ body {
 .inactive-track {
   background-color: #212529; /* bg-dark */
   color: white;
+=======
+.testimonials-overlay {
+  position: "absolute";
+  top: 0;
+  left: 0;
+  width: "100%";
+  height: "100%";
+  background-color: "rgba(0, 0, 0, 0.5)";
+>>>>>>> parent of 9cf560c (player)
 }
 
 @media (min-width: 768px) {
