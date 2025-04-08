@@ -121,15 +121,6 @@ body {
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.testimonials-container {
-  background-image: "url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')";
-  background-size: "cover";
-  background-position: "bottom center";
-  padding: "5rem 0";
-  position: "relative";
-}
-<<<<<<< HEAD
-
 .rhap_container {
   background: rgba(255, 255, 255, 0.1) !important; /* vetroso chiaro */
   backdrop-filter: blur(12px);
@@ -172,20 +163,133 @@ body {
 .active-track {
   background-color: var(--mood-bg) !important;
   color: var(--mood-text) !important;
+
+  h4,
+  p {
+    color: var(--mood-text) !important;
+  }
 }
 
 .inactive-track {
   background-color: #212529; /* bg-dark */
   color: white;
-=======
-.testimonials-overlay {
-  position: "absolute";
-  top: 0;
-  left: 0;
-  width: "100%";
-  height: "100%";
-  background-color: "rgba(0, 0, 0, 0.5)";
->>>>>>> parent of 9cf560c (player)
+}
+
+/* Contenitore principale */
+.audius-player-container {
+  background-color: #121212;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 0 auto;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Dettaglio della traccia in esecuzione */
+.track-details-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.track-details-container .album-art {
+  width: 80px;
+  height: 80px;
+  margin-right: 15px;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.track-title-list {
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.artist-name {
+  color: #aaa;
+  font-size: 1.2em;
+}
+
+.artist-name-list {
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+.audio-player-container {
+  margin-bottom: 20px;
+}
+
+.audio-player {
+  width: 100%;
+  background-color: #333;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.track-list-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.track-item {
+  display: flex;
+  align-items: center;
+  padding: 2px 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-bottom: 1px solid #444;
+}
+
+.track-item:hover {
+  background-color: #6dc48b;
+  color: var(--mood-text-card);
+
+  p {
+    color: white;
+  }
+}
+
+.track-item .album-art {
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+}
+
+.track-item .track-title {
+  font-weight: bold;
+}
+
+.track-item .artist-name {
+  color: #aaa;
+}
+
+.track-index {
+  width: 30px;
+  text-align: center;
+  margin-right: 15px;
+  position: relative;
+}
+
+.track-item .play-icon {
+  color: #fff;
+  font-size: 1.5em;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+}
+
+.track-item:hover .play-icon {
+  visibility: visible;
 }
 
 @media (min-width: 768px) {

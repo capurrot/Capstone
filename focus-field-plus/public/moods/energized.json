@@ -1,0 +1,33 @@
+{
+  "mood": "Energetico",
+  "description": "Ti aiuteremo a ricaricarti e a sentirti pieno di energia.",
+  "music": {
+    "title": "High Energy Beats",
+    "playlistUrl": "https://api.audius.co/v1/playlists/qEg9m",
+    "tags": ["energetico", "motivazionale", "ritmo veloce"]
+  },
+  "breathing": {
+    "technique": "Rapid Breathing",
+    "instructions": ["Inspira rapidamente 2s", "Espira rapidamente 2s"],
+    "duration": "3 min"
+  },
+  "journal": {
+    "prompt": "Scrivi 3 obiettivi da raggiungere oggi e come ti sentirai una volta completati.",
+    "optional": true
+  },
+  "spiritual": {
+    "enabled": true,
+    "verse": "Filippesi 4:13",
+    "text": "Tutto posso in colui che mi fortifica.",
+    "type": "versetto"
+  },
+  "environment": {
+    "backgroundImage": "sunrise_mountains.jpg",
+    "soundscape": ["canti degli uccelli", "vento tra le montagne"]
+  },
+  "durationSuggestion": "10-15 min",
+  "cta": {
+    "text": "Avvia la tua sessione",
+    "action": "/session/start"
+  }
+}

@@ -43,7 +43,7 @@ const TestimonialsCarousel = () => {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
           zIndex: 1,
         }}
       />

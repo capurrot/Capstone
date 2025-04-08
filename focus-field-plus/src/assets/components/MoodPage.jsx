@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import "react-h5-audio-player/lib/styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_MOOD } from "../../redux/actions";
-import SpotifyMoodPlayer from "./SpotifyMoodPlayer";
+import AudiusMoodPlayer from "./AudiusMoodPlayer";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
@@ -14,11 +14,11 @@ function MoodPage({ moodName }) {
   useEffect(() => {
     const loadMood = async () => {
       try {
-        const res = await fetch("/moods/" + moodName + ".json");
+        const res = await fetch(`/moods/${moodName}.json`);
         const data = await res.json();
         setMoodData(data);
 
-        // Cerca il mood completo da allMoods (con colors, icon, ecc.)
+        // Cerca il mood completo da allMoods (con colori, icone, ecc.)
         const fullMood = allMoods.find((m) => m.slug === moodName);
         if (fullMood) {
           dispatch({ type: SET_MOOD, payload: fullMood });
@@ -38,9 +38,9 @@ function MoodPage({ moodName }) {
   if (!moodData) return <p>Mood non trovato.</p>;
 
   return (
-    <div className="mood-page">
+    <Container className="mood-page">
       <header
-        className="mood-hero text-white p-5"
+        className="mood-hero text-white p-5 text-center"
         style={{
           backgroundImage: `url(/assets/bg/${moodData.environment.backgroundImage})`,
           backgroundSize: "cover",
@@ -52,7 +52,7 @@ function MoodPage({ moodName }) {
 
       <section className="mood-section music p-4 mt-5 rounded bg-dark">
         <h2 className="text-white mb-3">🎵 Musica</h2>
-        <SpotifyMoodPlayer moodData={moodData} />
+        <AudiusMoodPlayer playlistUrl={moodData.music.playlistUrl} />
       </section>
 
       <section className="mood-section breathing p-4">
@@ -88,7 +88,7 @@ function MoodPage({ moodName }) {
       <footer className="p-4 text-center">
         <button className="btn btn-primary btn-lg">{moodData.cta.text}</button>
       </footer>
-    </div>
+    </Container>
   );
 }
 
