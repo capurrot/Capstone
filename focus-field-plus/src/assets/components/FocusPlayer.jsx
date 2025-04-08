@@ -12,6 +12,11 @@ const FocusPlayer = ({ playlistUrl }) => {
   const [currentTime, setCurrentTime] = useState("0:00"); // Stato per il tempo corrente
   const [duration, setDuration] = useState("0:00"); // Stato per la durata totale
   const [streamUrl, setStreamUrl] = useState(""); // Stato per lo stream URL
+  const [isListVisible, setIsListVisible] = useState(false); // Stato per la visibilità della lista
+
+  const toggleList = () => {
+    setIsListVisible((prevState) => !prevState); // Alterna la visibilità della lista
+  };
 
   const fetchPlaylist = async () => {
     try {
@@ -193,10 +198,39 @@ const FocusPlayer = ({ playlistUrl }) => {
           </div>
         </div>
 
-        <div className="player-footer">
-          <i className="fa-solid fa-music"></i>
-          <span>Listen to Spotify Music</span>
-          <i className="fa-solid fa-list"></i>
+        {/* ✅ Lista tracce toggle */}
+        {isListVisible && (
+          <div className="song-list-scroll bg-trasparent mt-3">
+            <h6 className="mb-2">Playlist</h6>
+            <ListGroup className="song-list-group">
+              {tracks.map((track, index) => (
+                <ListGroup.Item
+                  key={index}
+                  action
+                  active={songIndex === index}
+                  onClick={() => {
+                    setSongIndex(index);
+                    loadSong(index);
+                  }}
+                  className="py-2 px-3"
+                  style={{ backgroundColor: "transparent", border: "none" }}
+                >
+                  <strong>{track.data.title}</strong>
+                  <br />
+                  <small>{track.data.user.name}</small>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </div>
+        )}
+
+        {/* Icona per alternare la visibilità */}
+        <div className="player-footer pt-3 pb-0">
+          <i className="fs-5 fa-solid fa-music d-flex"></i>
+          <span>Listen to Audius Music</span>
+          <button onClick={toggleList} className="list-toggle-btn">
+            <i className={`fs-5 fa-solid ${isListVisible ? "fa-arrow-up" : "fa-list"}`}></i>
+          </button>
         </div>
       </div>
 
@@ -207,26 +241,6 @@ const FocusPlayer = ({ playlistUrl }) => {
         onLoadedData={handleLoadedData}
         onEnded={handleAudioEnd}
       />
-
-      {/* Lista dei brani */}
-      <div className="song-list mt-4">
-        <h5>Track List</h5>
-        <ListGroup>
-          {tracks.map((track, index) => (
-            <ListGroup.Item
-              key={index}
-              action
-              active={songIndex === index}
-              onClick={() => {
-                setSongIndex(index);
-                loadSong(index); // Carica il brano selezionato
-              }}
-            >
-              {track.data.title} - {track.data.user.name}
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </div>
     </Container>
   );
 };

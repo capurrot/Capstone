@@ -235,6 +235,10 @@ body {
   border-radius: 0.5rem;
 }
 
+.song-list-group {
+  background: transparent;
+}
+
 .time {
   width: 100%;
   display: flex;
@@ -279,6 +283,19 @@ body {
 .player-footer span {
   font-size: 1.2rem;
   color: #a8a9ab;
+}
+
+.list-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.2em;
+  transition: transform 0.3s ease;
+}
+
+.list-toggle-btn:hover {
+  transform: scale(1.2);
 }
 
 @media (min-width: 768px) {
