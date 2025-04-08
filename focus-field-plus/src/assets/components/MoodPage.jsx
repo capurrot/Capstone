@@ -1,20 +1,38 @@
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import "react-h5-audio-player/lib/styles.css";
-import AudiusPlaylistPlayer from "./AudiusPlaylistPlayer";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_MOOD } from "../../redux/actions";
+import SpotifyMoodPlayer from "./SpotifyMoodPlayer";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const allMoods = useSelector((state) => state.mood.allMoods);
 
   useEffect(() => {
-    fetch("/moods/" + moodName + ".json")
-      .then((res) => res.json())
-      .then((data) => {
+    const loadMood = async () => {
+      try {
+        const res = await fetch("/moods/" + moodName + ".json");
+        const data = await res.json();
         setMoodData(data);
+
+        // Cerca il mood completo da allMoods (con colors, icon, ecc.)
+        const fullMood = allMoods.find((m) => m.slug === moodName);
+        if (fullMood) {
+          dispatch({ type: SET_MOOD, payload: fullMood });
+        }
+
         setLoading(false);
-      });
-  }, [moodName]);
+      } catch (err) {
+        console.error("Errore nel caricamento mood:", err);
+        setLoading(false);
+      }
+    };
+
+    loadMood();
+  }, [moodName, dispatch, allMoods]);
 
   if (loading) return <p>Caricamento in corso...</p>;
   if (!moodData) return <p>Mood non trovato.</p>;
@@ -48,8 +66,8 @@ function MoodPage({ moodName }) {
         </header>
 
         <section className="mood-section music p-4 mt-5 rounded bg-dark">
-          <h2 className="text-white mb-3">🎵 Musica da Audius</h2>
-          <AudiusPlaylistPlayer moodData={moodData} />
+          <h2 className="text-white mb-3">🎵 Musica</h2>
+          <SpotifyMoodPlayer moodData={moodData} />
         </section>
 
         {/* Breathing Section */}

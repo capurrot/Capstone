@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SET_ALL_MOODS, SET_MOOD } from "./redux/actions/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import MoodPageWrapper from "./assets/components/MoodPageWrapper.jsx";
+import SpotifyAuth from "./assets/components/SpotifyAuth.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ function App() {
     >
       <Routes>
         <Route path="/" element={<Focusfield />} />
+        <Route path="/callback" element={<SpotifyAuth />} />
         <Route path="/mood/:moodName" element={<MoodPageWrapper />} />
       </Routes>
     </div>
