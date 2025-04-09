@@ -53,7 +53,7 @@ function MoodPage({ moodName }) {
           <p className="lead">{moodData.description}</p>
         </header>
 
-        <section className="mood-section music py-4 px-lg-4 mt-5 rounded">
+        <section className="mood-section music py-4 px-lg-4 rounded">
           <h2 className="mood-text mb-3 ps-3">🎵 Musica</h2>
           <FocusPlayer playlistUrl={moodData.music.playlistUrl} />
         </section>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Container, Image, Button, ListGroup } from "react-bootstrap";
-import { Repeat, Repeat1, Slash } from "react-bootstrap-icons";
+import { Repeat, Repeat1, Shuffle, Slash } from "react-bootstrap-icons";
+import { MdShuffle, MdRepeat, MdRepeatOne, MdPlayArrow, MdPause } from "react-icons/md";
 
 const FocusPlayer = ({ playlistUrl }) => {
   const [songIndex, setSongIndex] = useState(0);
@@ -20,6 +21,7 @@ const FocusPlayer = ({ playlistUrl }) => {
   const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
   const [repeatMode, setRepeatMode] = useState("off");
+  const [isShuffled, setIsShuffled] = useState(false);
 
   const audioRef = useRef(null);
 
@@ -135,11 +137,16 @@ const FocusPlayer = ({ playlistUrl }) => {
   };
 
   const nextSongPlay = () => {
-    setSongIndex((prevIndex) => {
-      const newIndex = prevIndex === tracks.length - 1 ? 0 : prevIndex + 1;
-      resetAudio();
-      return newIndex;
-    });
+    if (isShuffled) {
+      const randomIndex = Math.floor(Math.random() * tracks.length);
+      setSongIndex(randomIndex);
+    } else {
+      setSongIndex((prevIndex) => {
+        const newIndex = prevIndex === tracks.length - 1 ? 0 : prevIndex + 1;
+        resetAudio();
+        return newIndex;
+      });
+    }
   };
 
   const resetAudio = () => {
@@ -170,7 +177,7 @@ const FocusPlayer = ({ playlistUrl }) => {
 
   const handleProgressClick = (e) => {
     const progressWidth = e.target.clientWidth;
-    const clickedOffsetX = e.nativeEvent.offsetX; // usa nativeEvent per React
+    const clickedOffsetX = e.nativeEvent.offsetX;
     const audioElement = audioRef.current;
     const songDuration = audioElement.duration;
     audioElement.currentTime = (clickedOffsetX / progressWidth) * songDuration;
@@ -254,16 +261,33 @@ const FocusPlayer = ({ playlistUrl }) => {
             onChange={handleVolumeChange}
             className="volume-slider"
           />
-          <button className="player-btn" type="button" onClick={toggleLoop}>
-            {repeatMode === "off" && (
-              <span className="position-relative d-inline-block">
-                <Repeat className="fs-5 pb-1" />
-                <Slash className="position-absolute top-0 slash" />
-              </span>
-            )}
-            {repeatMode === "all" && <Repeat className="fs-5 pb-1" />}
-            {repeatMode === "one" && <Repeat1 className="fs-5 pb-1" />}
-          </button>
+          {repeatMode === "off" && (
+            <button className="player-btn" type="button" onClick={toggleLoop}>
+              <MdRepeat className="fs-5" />
+            </button>
+          )}
+          {repeatMode === "all" && (
+            <button className="player-btn btn-enabled" type="button" onClick={toggleLoop}>
+              <MdRepeat className="fs-5" />
+            </button>
+          )}
+          {repeatMode === "one" && (
+            <button className="player-btn btn-enabled" type="button" onClick={toggleLoop}>
+              <MdRepeatOne className="fs-5" />
+            </button>
+          )}
+
+          {isShuffled ? (
+            <>
+              <button className="player-btn btn-enabled" type="button" onClick={() => setIsShuffled(!isShuffled)}>
+                <MdShuffle className="fs-5" />
+              </button>
+            </>
+          ) : (
+            <button className="player-btn" type="button" onClick={() => setIsShuffled(!isShuffled)}>
+              <MdShuffle className="fs-5" />
+            </button>
+          )}
         </div>
         <div className={`song-list-scroll ${isListVisible ? "expanded" : "collapsed"}`}>
           <ListGroup className="song-list-group">

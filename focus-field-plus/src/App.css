@@ -177,6 +177,9 @@ body {
   color: #a8a9ab;
   box-shadow: 0.5rem 0.5rem 2rem -0.1rem rgba(0, 0, 0, 0.5), -0.4rem -0.4rem 2rem -0.1rem rgba(255, 255, 255, 0.2);
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .player-btn:active {
@@ -421,6 +424,8 @@ body {
 
 .volume-slider {
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   width: 15rem;
   height: 0.25rem;
   background: #ddd;
@@ -441,14 +446,27 @@ body {
   transition: background 0.3s;
 }
 
+.volume-slider::-moz-range-thumb {
+  width: 32px;
+  height: 16px;
+  border-radius: 50rem;
+  background-color: var(--mood-bg);
+  border: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s;
+}
+
+.volume-slider::-moz-range-thumb:hover {
+  background-color: var(--mood-accent);
+}
+
 .volume-slider::-webkit-slider-thumb:hover {
   background-color: var(--mood-accent);
 }
 
-.slash {
-  font-size: 1.5rem;
-  rotate: -30deg;
-  left: -2px;
+.btn-enabled {
+  background-color: var(--mood-bg);
+  color: var(--mood-text);
 }
 
 @media (min-width: 768px) {
