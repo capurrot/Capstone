@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Container, Image, Button, ListGroup } from "react-bootstrap";
+import { Repeat, Repeat1, Slash } from "react-bootstrap-icons";
 
 const FocusPlayer = ({ playlistUrl }) => {
   const [songIndex, setSongIndex] = useState(0);
@@ -15,11 +16,42 @@ const FocusPlayer = ({ playlistUrl }) => {
   const [isListVisible, setIsListVisible] = useState(false);
   const [isBuffering, setIsBuffering] = useState(false);
   const [isFavorited, setIsFavorite] = useState(false);
+  const [isControlsVisible, setIsControlsVisible] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const [isMuted, setIsMuted] = useState(false);
+  const [repeatMode, setRepeatMode] = useState("off");
 
   const audioRef = useRef(null);
 
   const toggleList = () => {
     setIsListVisible((prevState) => !prevState);
+  };
+
+  const toggleControls = () => {
+    setIsControlsVisible((prevState) => !prevState);
+  };
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !audioRef.current.muted;
+      setIsMuted(audioRef.current.muted);
+    }
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+  };
+
+  const toggleLoop = () => {
+    setRepeatMode((prev) => {
+      if (prev === "off") return "all";
+      if (prev === "all") return "one";
+      return "off";
+    });
   };
 
   const fetchPlaylist = async () => {
@@ -152,7 +184,17 @@ const FocusPlayer = ({ playlistUrl }) => {
   };
 
   const handleAudioEnd = () => {
-    nextSongPlay();
+    if (repeatMode === "one") {
+      playSong();
+    } else if (repeatMode === "all") {
+      nextSongPlay();
+    } else if (repeatMode === "off") {
+      if (songIndex < tracks.length - 1) {
+        nextSongPlay();
+      } else {
+        loadSong(0);
+      }
+    }
   };
 
   if (loading) return <p>Caricamento playlist...</p>;
@@ -175,7 +217,6 @@ const FocusPlayer = ({ playlistUrl }) => {
           </div>
           {isFavorited && <i className="fa-solid fa-heart"></i>}
         </div>
-
         <div className="song-duration">
           <div className="song-time" onClick={handleProgressClick} style={isBuffering ? { background: "white" } : {}}>
             <div className="song-progress" style={{ width: `${progress}%` }}></div>
@@ -200,8 +241,31 @@ const FocusPlayer = ({ playlistUrl }) => {
             <span>{duration}</span>
           </div>
         </div>
-
-        <div className={`song-list-scroll mt-3 ${isListVisible ? "expanded" : "collapsed"}`}>
+        <div className={`volume-controls ${isControlsVisible ? "expanded" : "collapsed"}`}>
+          <button className="player-btn volume-btn" type="button" onClick={toggleMute}>
+            {isMuted ? <i className="fa-solid fa-volume-mute"></i> : <i className="fa-solid fa-volume-high"></i>}
+          </button>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="volume-slider"
+          />
+          <button className="player-btn" type="button" onClick={toggleLoop}>
+            {repeatMode === "off" && (
+              <span className="position-relative d-inline-block">
+                <Repeat className="fs-5 pb-1" />
+                <Slash className="position-absolute top-0 slash" />
+              </span>
+            )}
+            {repeatMode === "all" && <Repeat className="fs-5 pb-1" />}
+            {repeatMode === "one" && <Repeat1 className="fs-5 pb-1" />}
+          </button>
+        </div>
+        <div className={`song-list-scroll ${isListVisible ? "expanded" : "collapsed"}`}>
           <ListGroup className="song-list-group">
             {tracks.map((track, index) => (
               <ListGroup.Item
@@ -244,9 +308,10 @@ const FocusPlayer = ({ playlistUrl }) => {
             ))}
           </ListGroup>
         </div>
-
-        <div className="player-footer pt-3 pb-0">
-          <i className="fs-5 fa-solid fa-music d-flex"></i>
+        <div className="player-footer pb-0">
+          <button onClick={toggleControls} className="list-toggle-btn">
+            <i className="fs-5 fa-solid fa-music d-flex"></i>
+          </button>
           <span>
             <a
               href={`https://audius.co${currentTrack.data.permalink}`}
@@ -258,7 +323,7 @@ const FocusPlayer = ({ playlistUrl }) => {
             </a>
           </span>
           <button onClick={toggleList} className="list-toggle-btn">
-            <i className={`fs-5 fa-solid ${isListVisible ? "fa-arrow-up" : "fa-list"}`}></i>
+            <i className="fs-5 fa-solid fa-list"></i>
           </button>
         </div>
       </div>

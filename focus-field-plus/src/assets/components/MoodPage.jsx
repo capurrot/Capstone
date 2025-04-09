@@ -37,56 +37,61 @@ function MoodPage({ moodName }) {
   if (!moodData) return <p>Mood non trovato.</p>;
 
   return (
-    <Container className="mood-page">
-      <header
-        className="mood-hero text-white p-5 text-center"
-        style={{
-          backgroundImage: `url(/assets/bg/${moodData.environment.backgroundImage})`,
-          backgroundSize: "cover",
-        }}
-      >
-        <h1>{moodData.mood}</h1>
-        <p>{moodData.description}</p>
-      </header>
+    <Container
+      fluid
+      className="mood-page"
+      style={{
+        backgroundImage: `url(${moodData.environment.backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <Container>
+        <header className="mood-hero text-white p-5 text-center">
+          <h1 className="display-1">{moodData.mood}</h1>
+          <p className="lead">{moodData.description}</p>
+        </header>
 
-      <section className="mood-section music py-4 px-lg-4 mt-5 rounded bg-dark">
-        <h2 className="text-white mb-3 ps-3">🎵 Musica</h2>
-        <FocusPlayer playlistUrl={moodData.music.playlistUrl} />
-      </section>
-
-      <section className="mood-section breathing p-4">
-        <h2>🧘‍♀️ Respirazione</h2>
-        <ul>
-          {moodData.breathing.instructions.map((step, idx) => (
-            <li key={idx}>{step}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="mood-section journal p-4">
-        <h2>✍️ Journal</h2>
-        <p>{moodData.journal.prompt}</p>
-        <textarea className="form-control" rows="4" />
-      </section>
-
-      {moodData.spiritual?.enabled && (
-        <section className="mood-section spiritual p-4 bg-light">
-          <h2>🕊️ Spunto spirituale</h2>
-          <blockquote>
-            <p>{moodData.spiritual.text}</p>
-            <cite>{moodData.spiritual.verse}</cite>
-          </blockquote>
+        <section className="mood-section music py-4 px-lg-4 mt-5 rounded">
+          <h2 className="mood-text mb-3 ps-3">🎵 Musica</h2>
+          <FocusPlayer playlistUrl={moodData.music.playlistUrl} />
         </section>
-      )}
 
-      <section className="mood-section ambient p-4">
-        <h2>🌄 Ambientazione</h2>
-        <p>Suoni: {moodData.environment.soundscape.join(", ")}</p>
-      </section>
+        <section className="mood-section breathing p-4">
+          <h2 className="mood-text mb-3 ps-3">🧘‍♀️ Respirazione</h2>
+          <ul>
+            {moodData.breathing.instructions.map((step, idx) => (
+              <li key={idx}>{step}</li>
+            ))}
+          </ul>
+        </section>
 
-      <footer className="p-4 text-center">
-        <button className="btn btn-primary btn-lg">{moodData.cta.text}</button>
-      </footer>
+        <section className="mood-section journal p-4">
+          <h2>✍️ Journal</h2>
+          <p>{moodData.journal.prompt}</p>
+          <textarea className="form-control" rows="4" />
+        </section>
+
+        {moodData.spiritual?.enabled && (
+          <section className="mood-section spiritual p-4 bg-light">
+            <h2>🕊️ Spunto spirituale</h2>
+            <blockquote>
+              <p>{moodData.spiritual.text}</p>
+              <cite>{moodData.spiritual.verse}</cite>
+            </blockquote>
+          </section>
+        )}
+
+        <section className="mood-section ambient p-4">
+          <h2>🌄 Ambientazione</h2>
+          <p>Suoni: {moodData.environment.soundscape.join(", ")}</p>
+        </section>
+
+        <footer className="p-4 text-center">
+          <button className="btn btn-primary btn-lg">{moodData.cta.text}</button>
+        </footer>
+      </Container>
     </Container>
   );
 }
