@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Container, Image, Button, ListGroup } from "react-bootstrap";
 
 const FocusPlayer = ({ playlistUrl }) => {
@@ -8,23 +8,23 @@ const FocusPlayer = ({ playlistUrl }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [progress, setProgress] = useState(0); // Stato per il progresso
-  const [currentTime, setCurrentTime] = useState("0:00"); // Stato per il tempo corrente
-  const [duration, setDuration] = useState("0:00"); // Stato per la durata totale
-  const [streamUrl, setStreamUrl] = useState(""); // Stato per lo stream URL
-  const [isListVisible, setIsListVisible] = useState(false); // Stato per la visibilità della lista
+  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState("0:00");
+  const [duration, setDuration] = useState("0:00");
+  const [streamUrl, setStreamUrl] = useState("");
+  const [isListVisible, setIsListVisible] = useState(false);
+  const [isBuffering, setIsBuffering] = useState(false);
+
+  const audioRef = useRef(null);
 
   const toggleList = () => {
-    setIsListVisible((prevState) => !prevState); // Alterna la visibilità della lista
+    setIsListVisible((prevState) => !prevState);
   };
 
   const fetchPlaylist = async () => {
     try {
       const response = await fetch(playlistUrl);
-
-      if (!response.ok) {
-        throw new Error("Errore nel recupero della playlist.");
-      }
+      if (!response.ok) throw new Error("Errore nel recupero della playlist.");
 
       const data = await response.json();
 
@@ -34,9 +34,7 @@ const FocusPlayer = ({ playlistUrl }) => {
         const trackDetails = await Promise.all(
           trackIds.map(async (trackId) => {
             const trackResponse = await fetch(`https://api.audius.co/v1/tracks/${trackId}`);
-            if (!trackResponse.ok) {
-              throw new Error(`Errore nel recupero della traccia ${trackId}`);
-            }
+            if (!trackResponse.ok) throw new Error(`Errore nel recupero della traccia ${trackId}`);
             const trackData = await trackResponse.json();
             return trackData;
           })
@@ -57,44 +55,38 @@ const FocusPlayer = ({ playlistUrl }) => {
   const loadSong = (index) => {
     const song = tracks[index];
     const streamUrl = `https://discoveryprovider.audius.co/v1/tracks/${song.data.id}/stream`;
-    setStreamUrl(streamUrl); // Impostiamo lo streamUrl
+    setStreamUrl(streamUrl);
   };
 
   useEffect(() => {
-    if (playlistUrl) {
-      fetchPlaylist();
-    }
+    if (playlistUrl) fetchPlaylist();
   }, [playlistUrl]);
 
   useEffect(() => {
-    if (tracks.length > 0) {
-      loadSong(songIndex);
-    }
+    if (tracks.length > 0) loadSong(songIndex);
   }, [songIndex, tracks]);
 
   useEffect(() => {
-    if (streamUrl) {
-      playSong(); // Avvia la riproduzione ogni volta che il streamUrl cambia
+    if (streamUrl && isPlaying) {
+      setIsBuffering(false);
+      setTimeout(() => {
+        setIsBuffering(true);
+        playSong();
+      }, 500);
     }
-  }, [streamUrl]); // Usa `streamUrl` come dipendenza
-
-  if (loading) return <p>Caricamento playlist...</p>;
-  if (error) return <p>{error}</p>;
-  if (tracks.length === 0) return <p>Nessuna traccia trovata nella playlist.</p>;
-
-  const currentTrack = tracks[songIndex];
-  const trackImage = currentTrack.data.artwork["150x150"];
+  }, [streamUrl, isPlaying]);
 
   const playSong = () => {
-    const audioElement = document.getElementById("audioElement");
-    if (audioElement && !isPlaying) {
+    const audioElement = audioRef.current;
+    if (audioElement) {
       audioElement.play();
       setIsPlaying(true);
+      setIsBuffering(true);
     }
   };
 
   const pauseSong = () => {
-    const audioElement = document.getElementById("audioElement");
+    const audioElement = audioRef.current;
     if (audioElement) {
       audioElement.pause();
       setIsPlaying(false);
@@ -105,28 +97,24 @@ const FocusPlayer = ({ playlistUrl }) => {
     setSongIndex((prevIndex) => {
       const newIndex = prevIndex === 0 ? tracks.length - 1 : prevIndex - 1;
       resetAudio();
-      loadSong(newIndex);
       return newIndex;
     });
-    playSong();
   };
 
   const nextSongPlay = () => {
     setSongIndex((prevIndex) => {
       const newIndex = prevIndex === tracks.length - 1 ? 0 : prevIndex + 1;
       resetAudio();
-      loadSong(newIndex);
       return newIndex;
     });
-    playSong();
   };
 
   const resetAudio = () => {
-    const audioElement = document.getElementById("audioElement");
+    const audioElement = audioRef.current;
     if (audioElement) {
-      audioElement.currentTime = 0; // Reset the time to 0
-      setProgress(0); // Reset the progress bar
-      setCurrentTime("0:00"); // Reset the current time display
+      audioElement.currentTime = 0;
+      setProgress(0);
+      setCurrentTime("0:00");
     }
   };
 
@@ -149,15 +137,22 @@ const FocusPlayer = ({ playlistUrl }) => {
 
   const handleProgressClick = (e) => {
     const progressWidth = e.target.clientWidth;
-    const clickedOffsetX = e.offsetX;
-    const audioElement = document.getElementById("audioElement");
+    const clickedOffsetX = e.nativeEvent.offsetX; // usa nativeEvent per React
+    const audioElement = audioRef.current;
     const songDuration = audioElement.duration;
     audioElement.currentTime = (clickedOffsetX / progressWidth) * songDuration;
   };
 
   const handleAudioEnd = () => {
-    nextSongPlay(); // Passa automaticamente alla canzone successiva quando la canzone finisce
+    nextSongPlay();
   };
+
+  if (loading) return <p>Caricamento playlist...</p>;
+  if (error) return <p>{error}</p>;
+  if (tracks.length === 0) return <p>Nessuna traccia trovata nella playlist.</p>;
+
+  const currentTrack = tracks[songIndex];
+  const trackImage = currentTrack.data.artwork["150x150"];
 
   return (
     <Container>
@@ -174,7 +169,7 @@ const FocusPlayer = ({ playlistUrl }) => {
         </div>
 
         <div className="song-duration">
-          <div className="song-time" onClick={handleProgressClick}>
+          <div className="song-time" onClick={handleProgressClick} style={isBuffering ? { background: "white" } : {}}>
             <div className="song-progress" style={{ width: `${progress}%` }}></div>
           </div>
           <div className="time">
@@ -198,33 +193,28 @@ const FocusPlayer = ({ playlistUrl }) => {
           </div>
         </div>
 
-        {/* ✅ Lista tracce toggle */}
-        {isListVisible && (
-          <div className="song-list-scroll bg-trasparent mt-3">
-            <h6 className="mb-2">Playlist</h6>
-            <ListGroup className="song-list-group">
-              {tracks.map((track, index) => (
-                <ListGroup.Item
-                  key={index}
-                  action
-                  active={songIndex === index}
-                  onClick={() => {
-                    setSongIndex(index);
-                    loadSong(index);
-                  }}
-                  className="py-2 px-3"
-                  style={{ backgroundColor: "transparent", border: "none" }}
-                >
-                  <strong>{track.data.title}</strong>
-                  <br />
-                  <small>{track.data.user.name}</small>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </div>
-        )}
+        <div className={`song-list-scroll mt-3 ${isListVisible ? "expanded" : "collapsed"}`}>
+          <h6 className="mb-2">Playlist</h6>
+          <ListGroup className="song-list-group">
+            {tracks.map((track, index) => (
+              <ListGroup.Item
+                key={index}
+                action
+                active={songIndex === index}
+                onClick={() => {
+                  setSongIndex(index);
+                  loadSong(index);
+                }}
+                className="py-2 px-3"
+              >
+                <strong>{track.data.title}</strong>
+                <br />
+                <small>{track.data.user.name}</small>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </div>
 
-        {/* Icona per alternare la visibilità */}
         <div className="player-footer pt-3 pb-0">
           <i className="fs-5 fa-solid fa-music d-flex"></i>
           <span>Listen to Audius Music</span>
@@ -235,8 +225,8 @@ const FocusPlayer = ({ playlistUrl }) => {
       </div>
 
       <audio
-        id="audioElement"
-        src={streamUrl} // Usa streamUrl come sorgente
+        ref={audioRef}
+        src={streamUrl}
         onTimeUpdate={handleTimeUpdate}
         onLoadedData={handleLoadedData}
         onEnded={handleAudioEnd}

@@ -294,8 +294,55 @@ body {
   transition: transform 0.3s ease;
 }
 
+.list-group-item {
+  background-color: transparent;
+  color: #a3a3a3;
+  border-radius: 10px;
+  border: none !important;
+}
+
 .list-toggle-btn:hover {
   transform: scale(1.2);
+}
+
+.list-group-item.active {
+  background-color: var(--mood-bg);
+  color: var(--mood-text);
+  border: none !important;
+}
+
+.song-list-scroll {
+  overflow: auto;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  opacity: 1;
+}
+
+.song-list-scroll.collapsed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.song-list-scroll.expanded {
+  max-height: 300px; /* o quanto basta per mostrare la lista */
+  opacity: 1;
+}
+
+.time span {
+  display: inline-block;
+  min-width: 50px; /* abbastanza per '00:00' */
+  text-align: center;
+}
+
+.buffering-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: #fff;
+  z-index: 10;
+  pointer-events: none;
 }
 
 @media (min-width: 768px) {
