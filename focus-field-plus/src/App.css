@@ -469,6 +469,69 @@ body {
   color: var(--mood-text);
 }
 
+.breathing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: #222;
+  color: #fff;
+  border-radius: 1rem;
+}
+
+.breathing-circle-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.breathing-circle-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  z-index: 1;
+  margin-bottom: 1rem;
+}
+
+.breathing-timer {
+  z-index: 2;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--mood-text);
+  position: relative;
+  pointer-events: none;
+}
+
+.breathing-phase-text {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.breathing-btn {
+  background-color: var(--mood-bg);
+  color: var(--mood-text);
+  border: none;
+  padding: 0.6rem 2.5rem;
+  font-size: 1rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.breathing-instructions {
+  list-style: none;
+  padding: 0;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
 @media (min-width: 768px) {
   .border-md-none {
     border-bottom: none !important;

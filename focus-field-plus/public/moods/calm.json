@@ -7,19 +7,31 @@
     "tags": ["rilassante", "ambient", "lento", "calmante"]
   },
   "breathing": {
-    "technique": "Respiro Profondo",
-    "instructions": ["Inspira profondamente 4s", "Trattieni il respiro 4s", "Espira lentamente 6s"],
-    "duration": "5 min"
+    "enabled": true,
+    "technique": "deep",
+    "phases": {
+      "in": 4,
+      "hold": 4,
+      "out": 6
+    },
+    "rounds": "auto",
+    "duration": 300,
+    "instructions": [
+      "Inspira profondamente per 4 secondi",
+      "Trattieni il respiro per 4 secondi",
+      "Espira lentamente per 6 secondi"
+    ]
   },
   "journal": {
+    "enabled": true,
     "prompt": "Scrivi cosa ti sta turbando e cosa puoi fare per lasciare andare quella tensione.",
     "optional": true
   },
   "spiritual": {
     "enabled": true,
+    "type": "verse",
     "verse": "Salmo 4:8",
-    "text": "In pace mi coricherò e subito dormirò, perché tu solo, o Geova, mi fai abitare al sicuro.",
-    "type": "versetto"
+    "text": "In pace mi coricherò e subito dormirò, perché tu solo, o Geova, mi fai abitare al sicuro."
   },
   "environment": {
     "backgroundImage": "https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

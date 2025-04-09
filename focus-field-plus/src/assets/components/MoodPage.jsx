@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_MOOD } from "../../redux/actions";
 import FocusPlayer from "./FocusPlayer";
+import BreathingExercise from "./BreathingExercise";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
@@ -58,14 +59,16 @@ function MoodPage({ moodName }) {
           <FocusPlayer playlistUrl={moodData.music.playlistUrl} />
         </section>
 
-        <section className="mood-section breathing p-4">
-          <h2 className="mood-text mb-3 ps-3">🧘‍♀️ Respirazione</h2>
-          <ul>
-            {moodData.breathing.instructions.map((step, idx) => (
-              <li key={idx}>{step}</li>
-            ))}
-          </ul>
-        </section>
+        <Row className="mt-4">
+          <Col xs={12} md={4}>
+            {moodData.breathing?.enabled && (
+              <section className="mood-section breathing p-4">
+                <h2 className="mood-text mb-3 ps-3">🧘‍♀️ Respirazione</h2>
+                <BreathingExercise config={moodData.breathing} />
+              </section>
+            )}
+          </Col>
+        </Row>
 
         <section className="mood-section journal p-4">
           <h2>✍️ Journal</h2>

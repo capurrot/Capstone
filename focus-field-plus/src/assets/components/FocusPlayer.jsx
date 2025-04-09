@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from "react";
-import { Container, Image, Button, ListGroup } from "react-bootstrap";
-import { Repeat, Repeat1, Shuffle, Slash } from "react-bootstrap-icons";
-import { MdShuffle, MdRepeat, MdRepeatOne, MdPlayArrow, MdPause } from "react-icons/md";
+import { Container, Image, ListGroup } from "react-bootstrap";
+import { MdShuffle, MdRepeat, MdRepeatOne } from "react-icons/md";
 
 const FocusPlayer = ({ playlistUrl }) => {
   const [songIndex, setSongIndex] = useState(0);
@@ -293,6 +293,7 @@ const FocusPlayer = ({ playlistUrl }) => {
           <ListGroup className="song-list-group">
             {tracks.map((track, index) => (
               <ListGroup.Item
+                as="div"
                 key={index}
                 action
                 active={songIndex === index}

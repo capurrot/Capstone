@@ -7,9 +7,14 @@
     "tags": ["energetico", "motivazionale", "ritmo veloce"]
   },
   "breathing": {
-    "technique": "Rapid Breathing",
-    "instructions": ["Inspira rapidamente 2s", "Espira rapidamente 2s"],
-    "duration": "3 min"
+    "enabled": true,
+    "technique": "rapid",
+    "phases": {
+      "in": 2,
+      "out": 2
+    },
+    "duration": 180,
+    "instructions": ["Inspira rapidamente per 2 secondi", "Espira rapidamente per 2 secondi"]
   },
   "journal": {
     "prompt": "Scrivi 3 obiettivi da raggiungere oggi e come ti sentirai una volta completati.",
