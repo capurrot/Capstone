@@ -299,6 +299,12 @@ body {
   color: #a3a3a3;
   border-radius: 10px;
   border: none !important;
+  transition: background-color 0.1s linear;
+}
+
+.list-group-item:hover {
+  background: #62bc68;
+  color: white;
 }
 
 .list-toggle-btn:hover {
@@ -343,6 +349,21 @@ body {
   color: #fff;
   z-index: 10;
   pointer-events: none;
+}
+
+.hidden-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+
+.fa-heart {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.fa-heart:hover {
+  color: red;
 }
 
 @media (min-width: 768px) {

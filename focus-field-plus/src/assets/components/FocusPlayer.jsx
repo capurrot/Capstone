@@ -7,13 +7,14 @@ const FocusPlayer = ({ playlistUrl }) => {
   const [tracks, setTracks] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [hoveredIndex, setHoveredIndex] = useState(null);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState("0:00");
   const [duration, setDuration] = useState("0:00");
   const [streamUrl, setStreamUrl] = useState("");
   const [isListVisible, setIsListVisible] = useState(false);
   const [isBuffering, setIsBuffering] = useState(false);
+  const [isFavorited, setIsFavorite] = useState(false);
 
   const audioRef = useRef(null);
 
@@ -143,6 +144,13 @@ const FocusPlayer = ({ playlistUrl }) => {
     audioElement.currentTime = (clickedOffsetX / progressWidth) * songDuration;
   };
 
+  const trackDuration = (e) => {
+    const minutes = Math.floor(e / 60);
+    const seconds = e % 60;
+    const trackDuration = `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+    return trackDuration;
+  };
+
   const handleAudioEnd = () => {
     nextSongPlay();
   };
@@ -165,7 +173,7 @@ const FocusPlayer = ({ playlistUrl }) => {
               <p className="m-0 fs-6 song-artist">{currentTrack.data.user.name}</p>
             </div>
           </div>
-          <i className="fa-solid fa-heart"></i>
+          {isFavorited && <i className="fa-solid fa-heart"></i>}
         </div>
 
         <div className="song-duration">
@@ -194,7 +202,6 @@ const FocusPlayer = ({ playlistUrl }) => {
         </div>
 
         <div className={`song-list-scroll mt-3 ${isListVisible ? "expanded" : "collapsed"}`}>
-          <h6 className="mb-2">Playlist</h6>
           <ListGroup className="song-list-group">
             {tracks.map((track, index) => (
               <ListGroup.Item
@@ -205,11 +212,34 @@ const FocusPlayer = ({ playlistUrl }) => {
                   setSongIndex(index);
                   loadSong(index);
                 }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
                 className="py-2 px-3"
               >
-                <strong>{track.data.title}</strong>
-                <br />
-                <small>{track.data.user.name}</small>
+                <div className="d-flex flex-row align-items-center">
+                  <span className="me-2" style={{ minWidth: "30px" }}>
+                    {hoveredIndex === index ? (
+                      <button className="hidden-btn" onClick={() => playSong(index)}>
+                        <i className="fa-solid fa-play"></i>{" "}
+                      </button>
+                    ) : (
+                      `${index + 1}.`
+                    )}
+                  </span>
+                  <Image src={track.data.artwork["150x150"]} alt={track.data.title} width={40} height={40} />
+                  <div className="d-flex flex-column ms-3">
+                    <strong>{track.data.title}</strong>
+                    <small>{track.data.user.name}</small>
+                  </div>
+                  <div className="ms-auto">
+                    <button className="hidden-btn me-2" onClick={() => setIsFavorite(true)}>
+                      <i className="fa-solid fa-heart"></i>
+                    </button>
+                    <span className="d-none d-lg-inline-block me-1" style={{ minWidth: "40px" }}>
+                      {trackDuration(track.data.duration)}
+                    </span>
+                  </div>
+                </div>
               </ListGroup.Item>
             ))}
           </ListGroup>
@@ -217,7 +247,16 @@ const FocusPlayer = ({ playlistUrl }) => {
 
         <div className="player-footer pt-3 pb-0">
           <i className="fs-5 fa-solid fa-music d-flex"></i>
-          <span>Listen to Audius Music</span>
+          <span>
+            <a
+              href={`https://audius.co${currentTrack.data.permalink}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#a8a9ab" }}
+            >
+              Listen to Audius Music
+            </a>
+          </span>
           <button onClick={toggleList} className="list-toggle-btn">
             <i className={`fs-5 fa-solid ${isListVisible ? "fa-arrow-up" : "fa-list"}`}></i>
           </button>
@@ -226,7 +265,7 @@ const FocusPlayer = ({ playlistUrl }) => {
 
       <audio
         ref={audioRef}
-        src={streamUrl}
+        src={streamUrl || null}
         onTimeUpdate={handleTimeUpdate}
         onLoadedData={handleLoadedData}
         onEnded={handleAudioEnd}
