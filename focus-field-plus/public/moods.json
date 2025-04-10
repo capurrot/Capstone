@@ -7,7 +7,7 @@
     "image": "https://images.unsplash.com/photo-1518365658347-c4906efc5636?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1080&auto=format",
     "tag": ["attività", "movimento"],
-    "colors": ["#b9e100", "#3C3C3C", "#0000FF", "#FFFFFF"],
+    "colors": ["#b9e100", "#3C3C3C", "#0000FF", "#FFFFFF", "#b9e100", "#2f3031"],
     "icon": "bi-lightning-fill"
   },
   {
@@ -226,7 +226,7 @@
     "image": "https://source.unsplash.com/featured/?calm,relax,serenity",
     "background": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1080&auto=format",
     "tag": ["pazienza", "rilassamento"],
-    "colors": ["#27417A", "#FFFFFF", "#0000FF", "#FFFFFF"],
+    "colors": ["#27417A", "#FFFFFF", "#64cdff", "#FFFFFF", "#3cc4ff", "#FFFFFF"],
     "icon": "bi-droplet"
   }
 ]

@@ -37,7 +37,7 @@ function App() {
     }
   }, [dispatch, mood]);
 
-  const colors = mood?.colors || ["#4e495d", "#ffffff", "#6c5ce7"];
+  const colors = mood?.colors || ["#4e495d", "#ffffff", "#6c5ce7", "#ffffff", "#ffffff", "#ffffff"];
   const slug = mood?.slug || "standard";
 
   return (
@@ -48,6 +48,8 @@ function App() {
         "--mood-text": colors[1],
         "--mood-accent": colors[2],
         "--mood-text-card": colors[3],
+        "--mood-text-1": colors[4],
+        "--mood-text-2": colors[5],
       }}
     >
       <Routes>

@@ -9,6 +9,7 @@ const BreathingExercise = ({ config }) => {
   const [step, setStep] = useState(0);
   const [phaseSecondsLeft, setPhaseSecondsLeft] = useState(0);
   const [scaleValue, setScaleValue] = useState(1);
+  const [totalTimeLeft, setTotalTimeLeft] = useState(duration || 0);
 
   const steps = useMemo(() => {
     const arr = [];
@@ -71,6 +72,22 @@ const BreathingExercise = ({ config }) => {
     return () => clearTimeout(stopTimer);
   }, [isRunning, duration]);
 
+  useEffect(() => {
+    if (!isRunning || !duration) return;
+
+    const interval = setInterval(() => {
+      setTotalTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isRunning, duration]);
+
   const handleStartStop = () => {
     if (isRunning) {
       setIsRunning(false);
@@ -79,9 +96,11 @@ const BreathingExercise = ({ config }) => {
       setPhaseName("Inspira");
       setPhaseSecondsLeft(0);
       setScaleValue(1);
+      setTotalTimeLeft(duration);
     } else {
       setHasStarted(true);
-      console.log("hasStarted:", hasStarted);
+      console.log("Start", hasStarted);
+      setTotalTimeLeft(duration);
       setIsRunning(true);
     }
   };
@@ -113,12 +132,23 @@ const BreathingExercise = ({ config }) => {
       </button>
 
       {instructions?.length > 0 && (
-        <ul className="breathing-instructions mt-2 text-center pb-2">
-          {instructions.map((step, idx) => (
-            <li key={idx}>{step}</li>
-          ))}
-          {duration && <li className="text-info fw-semibold">Durata: {Math.floor(duration / 60)} min</li>}
-        </ul>
+        <>
+          <ul className="breathing-instructions mt-1 text-center pb-2">
+            {instructions.map((step, idx) => (
+              <li key={idx}>{step}</li>
+            ))}
+          </ul>
+          {duration && (
+            <p
+              className="breathing-instructions fw-semibold mb-0"
+              style={{ position: "absolute", bottom: "25px", color: "var(--mood-text-1)" }}
+            >
+              {hasStarted
+                ? `Durata: ${Math.floor(totalTimeLeft / 60)} min e ${totalTimeLeft % 60} sec`
+                : `Durata: ${Math.floor(duration / 60)} min e ${duration % 60} sec`}
+            </p>
+          )}
+        </>
       )}
     </div>
   );

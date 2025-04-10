@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SET_MOOD } from "../../redux/actions";
 import FocusPlayer from "./FocusPlayer";
 import BreathingExercise from "./BreathingExercise";
+import RelaxBodyExercises from "./RelaxBodyExercises";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
@@ -65,6 +66,14 @@ function MoodPage({ moodName }) {
               <section className="mood-section breathing p-4">
                 <h2 className="mood-text mb-3 ps-3">🧘‍♀️ Respirazione</h2>
                 <BreathingExercise config={moodData.breathing} />
+              </section>
+            )}
+          </Col>
+          <Col xs={12} md={4}>
+            {moodData.relaxBody?.enabled && (
+              <section className="mood-section relax-body p-4">
+                <h2 className="mood-text mb-3 ps-3">🧘‍♀️ Attività motoria</h2>
+                <RelaxBodyExercises config={moodData.relaxBody} />
               </section>
             )}
           </Col>
