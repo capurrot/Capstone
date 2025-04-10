@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Image } from "react-bootstrap";
+import Pause from "../../assets/images/pause.png";
 
 const RelaxBodyExercises = ({ config }) => {
   const { description, exercises } = config;
@@ -21,6 +22,16 @@ const RelaxBodyExercises = ({ config }) => {
     setPauseDuration(5);
   }, []);
 
+  const updateScrollState = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const isScrollable = el.scrollHeight > el.clientHeight;
+    const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+    setShowArrow(isScrollable);
+    setAtBottom(isAtBottom);
+  };
+
   useEffect(() => {
     if (exercises?.length > 0) {
       const total =
@@ -33,6 +44,14 @@ const RelaxBodyExercises = ({ config }) => {
     if (isCompleted) {
       let seconds = 10;
       setRestartCountdown(seconds);
+
+      // Reset freccia scroll
+      setAtBottom(false);
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = 0;
+        updateScrollState();
+      }
+
       const interval = setInterval(() => {
         seconds--;
         setRestartCountdown(seconds);
@@ -49,9 +68,7 @@ const RelaxBodyExercises = ({ config }) => {
 
   useEffect(() => {
     const checkScroll = () => {
-      const el = scrollRef.current;
-      if (el && el.scrollHeight > el.clientHeight) setShowArrow(true);
-      else setShowArrow(false);
+      updateScrollState();
     };
     checkScroll();
     window.addEventListener("resize", checkScroll);
@@ -62,10 +79,7 @@ const RelaxBodyExercises = ({ config }) => {
     const el = scrollRef.current;
     if (!el) return;
     const handleScroll = () => {
-      const isScrollable = el.scrollHeight > el.clientHeight;
-      const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
-      setShowArrow(isScrollable);
-      setAtBottom(isAtBottom);
+      updateScrollState();
     };
     handleScroll();
     el.addEventListener("scroll", handleScroll);
@@ -144,13 +158,18 @@ const RelaxBodyExercises = ({ config }) => {
       {!isRunning && !isCompleted && exercises?.length > 0 && (
         <>
           <div className="scroll-wrapper" ref={scrollRef}>
-            <ul className="relax-list list-unstyled mt-3 text-start d-inline-block px-4 mb-0">
+            <ul className="relax-list list-unstyled mt-3 text-start d-inline-block px-5 mb-0">
               {exercises.map((ex, idx) => (
                 <li key={idx} className="mb-3 d-flex flex-column">
                   <strong className="mb-2">
                     {idx + 1}. {ex.name} – {ex.duration}s
                   </strong>
-                  <Image src={ex.image} alt={ex.name} width={65} className="img-fluid mx-auto mb-2" />
+                  <Image
+                    src={ex.image}
+                    alt={ex.name}
+                    className="img-fluid mx-auto mb-2"
+                    style={{ maxHeight: "65px" }}
+                  />
                   <p className="mb-0 small">{ex.instructions}</p>
                 </li>
               ))}
@@ -193,25 +212,28 @@ const RelaxBodyExercises = ({ config }) => {
       {isRunning && (
         <div className="exercise-box mt-4 text-center px-4">
           <h4>{isPauseStep ? "Pausa" : exercises[currentStep]?.name}</h4>
+          {isPauseStep && (
+            <Image src={Pause} alt="Pause" className="img-fluid mx-auto mb-2" style={{ maxHeight: "140px" }} />
+          )}
           {!isPauseStep && exercises[currentStep]?.image && (
             <Image
               src={exercises[currentStep].image}
               alt={exercises[currentStep].name}
-              width={140}
               className="img-fluid mx-auto mb-2"
+              style={{ maxHeight: "140px" }}
             />
           )}
-          <p>{isPauseStep ? "Recupera prima del prossimo esercizio." : exercises[currentStep]?.instructions}</p>
-          <div className="relax-circle-wrapper my-3">
-            <div className={`relax-circle-bg ${isPauseStep ? "pause-mode" : ""}`}>
-              <div className="relax-timer">{secondsLeft}s</div>
-            </div>
+          <p className="mb-0">
+            {isPauseStep ? "Recupera prima del prossimo esercizio." : exercises[currentStep]?.instructions}
+          </p>
+          <div className={`${isPauseStep ? "pause-mode" : ""}`}>
+            <div className="relax-timer">{secondsLeft}s</div>
           </div>
         </div>
       )}
 
       {isRunning && (
-        <button className="breathing-btn btn-danger mt-4" onClick={handleStop}>
+        <button className="breathing-btn btn-danger position-absolute" style={{ bottom: "55px" }} onClick={handleStop}>
           Ferma
         </button>
       )}
