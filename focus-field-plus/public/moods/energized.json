@@ -23,7 +23,35 @@
     "scope": "aumentare l'ossigenazione e la prontezza."
   },
   "relaxBody": {
-    "enabled": false
+    "enabled": true,
+    "title": "Esercizi di attivazione energetica",
+    "description": "Risveglia il corpo e preparalo all'azione con movimenti dinamici.",
+    "exercises": [
+      {
+        "name": "Saltelli sul posto",
+        "instructions": "Esegui piccoli saltelli, mantenendo un ritmo costante per 30 secondi. Mantieni le braccia rilassate o muovile in sincronia con i salti.",
+        "duration": 30,
+        "image": "../../src/assets/images/jumping_jacks.png"
+      },
+      {
+        "name": "Rotazioni delle braccia",
+        "instructions": "Ruota le braccia in avanti in cerchi ampi per 20 secondi, poi inverti il movimento all'indietro per altri 20 secondi.",
+        "duration": 40,
+        "image": "../../src/assets/images/arm_circles.png"
+      },
+      {
+        "name": "Squat dinamici",
+        "instructions": "Piega le ginocchia a 90° e risali rapidamente, mantenendo la schiena dritta. Ripeti per 15 secondi.",
+        "duration": 30,
+        "image": "../../src/assets/images/squats.png"
+      },
+      {
+        "name": "Torsioni del busto",
+        "instructions": "In piedi, tieni i piedi leggermente divaricati e le braccia piegate davanti al petto. Ruota delicatamente il busto a destra e a sinistra, mantenendo i fianchi fermi. Continua per 30 secondi.",
+        "duration": 30,
+        "image": "../../src/assets/images/torso_twists.png"
+      }
+    ]
   },
   "journalPre": {
     "enabled": true,
