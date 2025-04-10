@@ -130,6 +130,13 @@ body {
   z-index: -1;
 }
 
+.mood-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .mood-section {
   position: relative;
   z-index: 0;

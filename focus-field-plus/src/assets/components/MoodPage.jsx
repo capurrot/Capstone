@@ -5,10 +5,13 @@ import { SET_MOOD } from "../../redux/actions";
 import FocusPlayer from "./FocusPlayer";
 import BreathingExercise from "./BreathingExercise";
 import RelaxBodyExercises from "./RelaxBodyExercises";
+import FocusMoodInfoModal from "./FocusMoodInfoModal";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+
   const dispatch = useDispatch();
   const allMoods = useSelector((state) => state.mood.allMoods);
 
@@ -19,7 +22,6 @@ function MoodPage({ moodName }) {
         const data = await res.json();
         setMoodData(data);
 
-        // Cerca il mood completo da allMoods (con colori, icone, ecc.)
         const fullMood = allMoods.find((m) => m.slug === moodName);
         if (fullMood) {
           dispatch({ type: SET_MOOD, payload: fullMood });
@@ -41,7 +43,7 @@ function MoodPage({ moodName }) {
   return (
     <Container
       fluid
-      className="mood-page"
+      className="mood-page px-0"
       style={{
         backgroundImage: `url(${moodData.environment.backgroundImage})`,
         backgroundSize: "cover",
@@ -50,9 +52,18 @@ function MoodPage({ moodName }) {
       }}
     >
       <Container>
-        <header className="mood-hero text-white p-5 text-center">
-          <h1 className="display-1">{moodData.mood}</h1>
-          <p className="lead">{moodData.description}</p>
+        <header className="mood-header text-white p-5 text-center position-relative">
+          <div className="d-flex flex-row">
+            <h1 className="display-1">{moodData.mood}</h1>
+            <i
+              className="bi bi-question-circle-fill ms-3"
+              style={{ cursor: "pointer", fontSize: "1.5rem", verticalAlign: "middle" }}
+              onClick={() => setShowInfoModal(true)}
+              title="Scopri cosa puoi fare in questa sessione"
+            />
+          </div>
+
+          <p className="lead mt-3">{moodData.description}</p>
         </header>
 
         <section className="mood-section music py-4 px-lg-4 rounded">
@@ -61,7 +72,7 @@ function MoodPage({ moodName }) {
         </section>
 
         <Row className="mt-4">
-          <Col xs={12} md={4}>
+          <Col xs={12} md={6} xl={4}>
             {moodData.breathing?.enabled && (
               <section className="mood-section breathing p-4">
                 <h2 className="mood-text mb-3 ps-3">🧘‍♀️ Respirazione</h2>
@@ -69,21 +80,23 @@ function MoodPage({ moodName }) {
               </section>
             )}
           </Col>
-          <Col xs={12} md={4}>
+          <Col xs={12} md={6} xl={4}>
             {moodData.relaxBody?.enabled && (
               <section className="mood-section relax-body p-4">
-                <h2 className="mood-text mb-3 ps-3">🧘‍♀️ Attività motoria</h2>
+                <h2 className="mood-text mb-3 ps-3">🤸‍♀️ Attività motoria</h2>
                 <RelaxBodyExercises config={moodData.relaxBody} />
               </section>
             )}
           </Col>
         </Row>
 
-        <section className="mood-section journal p-4">
-          <h2>✍️ Journal</h2>
-          <p>{moodData.journal.prompt}</p>
-          <textarea className="form-control" rows="4" />
-        </section>
+        {moodData.journal?.enabled && (
+          <section className="mood-section journal p-4">
+            <h2>✍️ Journal</h2>
+            <p>{moodData.journal.prompt}</p>
+            <textarea className="form-control" rows="4" />
+          </section>
+        )}
 
         {moodData.spiritual?.enabled && (
           <section className="mood-section spiritual p-4 bg-light">
@@ -103,6 +116,8 @@ function MoodPage({ moodName }) {
         <footer className="p-4 text-center">
           <button className="btn btn-primary btn-lg">{moodData.cta.text}</button>
         </footer>
+
+        <FocusMoodInfoModal show={showInfoModal} handleClose={() => setShowInfoModal(false)} mood={moodData} />
       </Container>
     </Container>
   );

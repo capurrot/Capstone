@@ -1,10 +1,13 @@
 {
   "mood": "Calma",
   "description": "Ti aiuteremo a ritrovare la tranquillità e a rilassare la mente.",
+  "imagine": "Immagina di ritagliarti uno spazio tutto tuo, lontano dal rumore e dai pensieri.",
+  "helpYou": "ti aiuterà a rallentare il ritmo, sciogliere le tensioni e ritrovare equilibrio interiore.",
   "music": {
     "title": "Peaceful Flow",
     "playlistUrl": "https://api.audius.co/v1/playlists/wEa2p5",
-    "tags": ["rilassante", "ambient", "lento", "calmante"]
+    "tags": ["rilassante", "ambient", "lento", "calmante"],
+    "scope": "verso la quiete"
   },
   "breathing": {
     "enabled": true,
@@ -20,7 +23,8 @@
       "Inspira profondamente per 4 secondi",
       "Trattieni il respiro per 4 secondi",
       "Espira lentamente per 6 secondi"
-    ]
+    ],
+    "scope": "portare calma e lucidità."
   },
   "relaxBody": {
     "enabled": true,
@@ -41,13 +45,18 @@
       }
     ]
   },
-  "journal": {
+  "journalPre": {
     "enabled": true,
-    "prompt": "Scrivi cosa ti sta turbando e cosa puoi fare per lasciare andare quella tensione.",
+    "prompt": "Scrivi cosa ti sta turbando e cosa puoi fare per lasciare andare quella tensione. (Sarà fondamentale per valutare il beneficio al termine della sessione)",
+    "optional": true
+  },
+  "journalPost": {
+    "enabled": true,
+    "prompt": "Scrivi come ti senti ora dopo questa sessione. Aiutaci a rendere l'esperienza ancora più adatta alla tua situazione.",
     "optional": true
   },
   "spiritual": {
-    "enabled": true,
+    "enabled": false,
     "type": "verse",
     "verse": "Salmo 4:8",
     "text": "In pace mi coricherò e subito dormirò, perché tu solo, o Geova, mi fai abitare al sicuro."

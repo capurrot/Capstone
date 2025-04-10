@@ -1,30 +1,46 @@
 {
   "mood": "Energetico",
   "description": "Ti aiuteremo a ricaricarti e a sentirti pieno di energia.",
+  "imagine": "Immagina di risvegliare il tuo corpo e la tua mente, pronti a conquistare la giornata.",
+  "helpYou": "ti aiuterà ad attivare il corpo, aumentare la concentrazione e potenziare la motivazione.",
   "music": {
     "title": "High Energy Beats",
     "playlistUrl": "https://api.audius.co/v1/playlists/qEg9m",
-    "tags": ["energetico", "motivazionale", "ritmo veloce"]
+    "tags": ["energetico", "motivazionale", "ritmo veloce"],
+    "scope": "alla carica e vitalità"
   },
   "breathing": {
     "enabled": true,
     "technique": "rapid",
     "phases": {
       "in": 2,
+      "hold": 0,
       "out": 2
     },
+    "rounds": "auto",
     "duration": 180,
-    "instructions": ["Inspira rapidamente per 2 secondi", "Espira rapidamente per 2 secondi"]
+    "instructions": ["Inspira rapidamente per 2 secondi", "Espira rapidamente per 2 secondi"],
+    "scope": "aumentare l'ossigenazione e la prontezza."
   },
-  "journal": {
-    "prompt": "Scrivi 3 obiettivi da raggiungere oggi e come ti sentirai una volta completati.",
+  "relaxBody": {
+    "enabled": false
+  },
+  "journalPre": {
+    "enabled": true,
+    "prompt": "Scrivi 3 obiettivi da raggiungere oggi e cosa fare per raggiungerli!",
+    "optional": true
+  },
+  "journalPost": {
+    "enabled": true,
+    "prompt": "Racconta come hai raggiunto i tuoi obiettivi e come ti senti una volta completati.",
     "optional": true
   },
   "spiritual": {
     "enabled": true,
+    "type": "versetto",
     "verse": "Filippesi 4:13",
     "text": "Tutto posso in colui che mi fortifica.",
-    "type": "versetto"
+    "scope": "fiducia e determinazione"
   },
   "environment": {
     "backgroundImage": "https://images.unsplash.com/photo-1594882645126-14020914d58d?q=80&w=2085&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
