@@ -6,6 +6,8 @@ import FocusPlayer from "./FocusPlayer";
 import BreathingExercise from "./BreathingExercise";
 import RelaxBodyExercises from "./RelaxBodyExercises";
 import FocusMoodInfoModal from "./FocusMoodInfoModal";
+import FocusScopes from "./FocusScopes";
+import FocusJournal from "./FocusJournal";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
@@ -67,9 +69,26 @@ function MoodPage({ moodName }) {
         </header>
 
         <section className="mood-section music py-4 px-lg-4 rounded">
-          <h2 className="mood-text mb-3 ps-3">🎵 Musica</h2>
+          <h2 className="mood-text mb-3 ps-3">
+            <i class="fas fa-music me-1"></i>
+            <span> - Musica</span>
+          </h2>
           <FocusPlayer playlistUrl={moodData.music.playlistUrl} />
         </section>
+
+        {moodData.journalGoals?.enabled && (
+          <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
+            <h2 className="mood-text mb-3 ps-3">✍️ Condizione di partenza</h2>
+            <FocusScopes goals={moodData.journalGoals} />
+          </section>
+        )}
+
+        {moodData.journalPre?.enabled && (
+          <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
+            <h2 className="mood-text mb-3 ps-3">✍️ Condizione di partenza</h2>
+            <FocusJournal journal={moodData.journalPre} />
+          </section>
+        )}
 
         <Row className="mt-4">
           <Col xs={12} md={6} xl={4}>
@@ -89,14 +108,6 @@ function MoodPage({ moodName }) {
             )}
           </Col>
         </Row>
-
-        {moodData.journal?.enabled && (
-          <section className="mood-section journal p-4">
-            <h2>✍️ Journal</h2>
-            <p>{moodData.journal.prompt}</p>
-            <textarea className="form-control" rows="4" />
-          </section>
-        )}
 
         {moodData.spiritual?.enabled && (
           <section className="mood-section spiritual p-4 bg-light">

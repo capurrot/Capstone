@@ -47,14 +47,15 @@ const FocusMoodInfoModal = ({ show, handleClose, mood }) => {
         <hr />
         {journalPre?.enabled && (
           <>
-            <p>
+            <p className="mb-0">
               <strong>✍️ Descrivi il tuo stato d'animo:</strong> {journalPre.prompt}{" "}
-              {journalPre.optional && (
-                <p className="text-muted">
-                  <em>(facoltativo)</em>
-                </p>
-              )}
             </p>
+            {journalPre.optional && (
+              <p className="text-muted">
+                <em>(facoltativo)</em>
+              </p>
+            )}
+
             <hr />
           </>
         )}
@@ -75,7 +76,7 @@ const FocusMoodInfoModal = ({ show, handleClose, mood }) => {
             <p>
               <strong>🤸‍♂️ Rilassa il corpo:</strong> {relaxBody.description} Esercizi consigliati:{" "}
               {relaxBody.exercises.map((ex, i) => (
-                <span>{i < relaxBody.exercises.length - 1 ? ex.name + ", " : ex.name + "."}</span>
+                <span key={i}>{i < relaxBody.exercises.length - 1 ? ex.name + ", " : ex.name + "."}</span>
               ))}
             </p>
             <hr />

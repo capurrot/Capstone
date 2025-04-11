@@ -226,7 +226,20 @@
     "image": "https://source.unsplash.com/featured/?calm,relax,serenity",
     "background": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1080&auto=format",
     "tag": ["pazienza", "rilassamento"],
-    "colors": ["#27417A", "#FFFFFF", "#64cdff", "#FFFFFF", "#3cc4ff", "#FFFFFF"],
+    "colors": [
+      "#F0F7F8",
+      "#2C3E50",
+      "#CCE3E6",
+      "#FFFFFF",
+      "#007B9E",
+      "#7BBEC5",
+      "#F0F7F8",
+      "#E6F0F1",
+      "#07464b",
+      "#156168",
+      "#d2c2c2",
+      "#c2c2c2"
+    ],
     "icon": "bi-droplet"
   }
 ]

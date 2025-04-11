@@ -44,12 +44,18 @@ function App() {
     <div
       className={`main-container mood-${slug}`}
       style={{
-        "--mood-bg": colors[0],
-        "--mood-text": colors[1],
-        "--mood-accent": colors[2],
-        "--mood-text-card": colors[3],
-        "--mood-text-1": colors[4],
-        "--mood-text-2": colors[5],
+        "--mood-color-1": colors[0],
+        "--mood-color-2": colors[1],
+        "--mood-color-3": colors[2],
+        "--mood-color-4": colors[3],
+        "--mood-color-5": colors[4],
+        "--mood-color-6": colors[5],
+        "--mood-color-7": colors[6],
+        "--mood-color-8": colors[7],
+        "--mood-color-9": colors[8],
+        "--mood-color-10": colors[9],
+        "--mood-color-11": colors[10],
+        "--mood-color-12": colors[11],
       }}
     >
       <Routes>

@@ -109,14 +109,14 @@ const BreathingExercise = ({ config }) => {
     <div className="breathing-container">
       <p className="breathing-technique fst-italic mb-0 pt-4">Tecnica consigliata: {technique}</p>
 
-      <div className="breathing-phase-text mb-2">{phaseName}</div>
+      <div className="breathing-phase-text mb-2">{isRunning && phaseName}</div>
 
       <div className="breathing-circle-wrapper">
         <div
           className="breathing-circle-bg"
           style={{
             transform: `scale(${scaleValue})`,
-            backgroundColor: phaseName === "Trattieni" ? "var(--mood-bg)" : "var(--mood-bg)",
+            backgroundColor: phaseName === "Trattieni" ? "var(--mood-color-6)" : "var(--mood-color-6)",
             filter: phaseName === "Trattieni" ? "blur(2px)" : "none",
             backdropFilter: phaseName === "Trattieni" ? "blur(2px)" : "none",
             transition:
@@ -141,7 +141,7 @@ const BreathingExercise = ({ config }) => {
           {duration && (
             <p
               className="breathing-instructions fw-semibold mb-0"
-              style={{ position: "absolute", bottom: "25px", color: "var(--mood-text-1)" }}
+              style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-5)" }}
             >
               {hasStarted
                 ? `Durata: ${Math.floor(totalTimeLeft / 60)} min e ${totalTimeLeft % 60} sec`

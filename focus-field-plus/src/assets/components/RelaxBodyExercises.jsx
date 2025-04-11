@@ -209,7 +209,7 @@ const RelaxBodyExercises = ({ config }) => {
       {!isRunning && (
         <p
           className="breathing-instructions fw-semibold mb-0"
-          style={{ position: "absolute", bottom: "25px", color: "var(--mood-text-1)" }}
+          style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-5)" }}
         >
           Durata: {Math.floor(totalDuration / 60)} min e {totalDuration % 60} sec
         </p>
@@ -247,7 +247,7 @@ const RelaxBodyExercises = ({ config }) => {
       {isRunning && (
         <p
           className="breathing-instructions fw-semibold mb-0"
-          style={{ position: "absolute", bottom: "25px", color: "var(--mood-text-1)" }}
+          style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-5)" }}
         >
           Durata: {Math.floor(totalTimeLeft / 60)} min e {totalTimeLeft % 60} sec
         </p>

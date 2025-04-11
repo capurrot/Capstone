@@ -21,12 +21,12 @@ body {
 .navbar {
   /* Navbar effetto sfocato */
   backdrop-filter: blur(10px);
-  color: var(--mood-text);
+  color: var(--mood-color-2);
 }
 
 .navbar .nav-link,
 .navbar .navbar-brand {
-  color: var(--mood-text);
+  color: var(--mood-color-2);
 }
 
 .navbar.scrolled {
@@ -49,13 +49,13 @@ body {
 }
 
 .main-container {
-  background-color: var(--mood-bg);
-  color: var(--mood-text);
+  background-color: var(--mood-color-1);
+  color: var(--mood-color-2);
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .main-container .accent {
-  color: var(--mood-accent);
+  color: var(--mood-color-3);
 }
 
 .focus-0 {
@@ -70,7 +70,7 @@ body {
 }
 
 .card-body {
-  color: var(--mood-text-card);
+  color: var(--mood-color-4);
   transition: background-color 0.4s ease, color 0.4s ease;
   position: absolute;
   bottom: 0;
@@ -112,9 +112,9 @@ body {
 }
 
 .try-button {
-  background-color: var(--mood-bg);
-  border: var(--mood-bg);
-  color: var(--mood-text);
+  background-color: var(--mood-color-1);
+  border: var(--mood-color-1);
+  color: var(--mood-color-2);
 }
 
 .mood-page {
@@ -146,13 +146,15 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(to right, var(--mood-color-7), var(--mood-color-8));
+  opacity: 0.5;
+  /*   background: rgba(0, 0, 0, 0.4); */
   z-index: -1;
   border-radius: 20px;
 }
 
 .mood-text {
-  color: var(--mood-text-1);
+  color: var(--mood-color-5);
 }
 
 .cookie-message {
@@ -160,7 +162,7 @@ body {
 }
 
 .player {
-  background: linear-gradient(to right, #313234, #2f3031);
+  background: linear-gradient(to right, var(--mood-color-9), var(--mood-color-10));
   box-shadow: 0 1rem 5rem rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
   display: flex;
@@ -238,8 +240,8 @@ body {
 
 .song-name {
   font-size: 1.5rem;
-  font-weight: 300;
-  color: #fff;
+  font-weight: 600;
+  color: var(--mood-color-4);
 }
 
 .song-artist {
@@ -271,8 +273,7 @@ body {
   left: 0;
   width: 0;
   height: 100%;
-  /*   background: linear-gradient(to right, #3baa7b, #62bc68); */
-  background-color: var(--mood-bg);
+  background-color: var(--mood-color-5);
   border-radius: 0.5rem;
 }
 
@@ -289,7 +290,7 @@ body {
 
 .time span {
   font-size: 1.2rem;
-  color: #a8a9ab;
+  color: var(--mood-color-11);
 }
 
 .controls {
@@ -303,8 +304,8 @@ body {
 .play-pause {
   width: 3rem;
   height: 3rem;
-  background-color: var(--mood-bg);
-  color: var(--mood-text);
+  background-color: var(--mood-color-6);
+  color: var(--mood-color-2);
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.5), -6px -6px 6px rgba(255, 255, 255, 0.1);
 }
 
@@ -318,7 +319,7 @@ body {
 
 .player-footer i {
   font-size: 1.8rem;
-  color: #a8a9ab;
+  color: var(--mood-color-11);
 }
 
 .player-footer span {
@@ -337,7 +338,7 @@ body {
 
 .list-group-item {
   background-color: transparent;
-  color: #a3a3a3;
+  color: var(--mood-color-11);
   border-radius: 10px;
   border: none !important;
   transition: background-color 0.1s linear;
@@ -353,8 +354,8 @@ body {
 }
 
 .list-group-item.active {
-  background-color: var(--mood-bg);
-  color: var(--mood-text);
+  background-color: var(--mood-color-6);
+  color: var(--mood-color-2);
   border: none !important;
 }
 
@@ -447,7 +448,7 @@ body {
   width: 32px;
   height: 16px;
   border-radius: 50rem;
-  background-color: var(--mood-bg);
+  background-color: var(--mood-color-1);
   border: none;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
   transition: background 0.3s;
@@ -457,23 +458,23 @@ body {
   width: 32px;
   height: 16px;
   border-radius: 50rem;
-  background-color: var(--mood-bg);
+  background-color: var(--mood-color-1);
   border: none;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
   transition: background 0.3s;
 }
 
 .volume-slider::-moz-range-thumb:hover {
-  background-color: var(--mood-accent);
+  background-color: var(--mood-color-3);
 }
 
 .volume-slider::-webkit-slider-thumb:hover {
-  background-color: var(--mood-accent);
+  background-color: var(--mood-color-3);
 }
 
 .btn-enabled {
-  background-color: var(--mood-bg);
-  color: var(--mood-text);
+  background-color: var(--mood-color-6);
+  color: var(--mood-color-2);
 }
 
 .breathing-container {
@@ -481,7 +482,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  background: linear-gradient(to right, #313234, #2f3031);
+  background: linear-gradient(to right, var(--mood-color-9), var(--mood-color-10));
   color: #fff;
   border-radius: 1rem;
   height: 37rem;
@@ -513,7 +514,7 @@ body {
   z-index: 2;
   font-size: 2rem;
   font-weight: 600;
-  color: var(--mood-text);
+  color: var(--mood-color-2);
   position: relative;
   pointer-events: none;
 }
@@ -524,8 +525,8 @@ body {
 }
 
 .breathing-btn {
-  background-color: var(--mood-bg);
-  color: var(--mood-text);
+  background-color: var(--mood-color-6);
+  color: var(--mood-color-2);
   border: none;
   padding: 0.6rem 2.5rem;
   font-size: 1rem;
@@ -545,7 +546,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(to right, #313234, #2f3031);
+  background: linear-gradient(to right, var(--mood-color-9), var(--mood-color-10));
   color: #fff;
   border-radius: 1rem;
   height: 37rem;
@@ -587,7 +588,18 @@ body {
 }
 
 .pause-mode {
-  color: var(--mood-bg);
+  color: var(--mood-color-1);
+}
+
+.focus-scopes-container {
+  background: linear-gradient(to right, var(--mood-color-9), var(--mood-color-10));
+  color: #fff;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.focus-input {
+  background-color: var(--mood-color-12);
 }
 
 @media (min-width: 768px) {

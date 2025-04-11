@@ -62,7 +62,7 @@
     "text": "In pace mi coricherò e subito dormirò, perché tu solo, o Geova, mi fai abitare al sicuro."
   },
   "environment": {
-    "backgroundImage": "https://images.unsplash.com/photo-1707326497246-2a4cccbc3316?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "backgroundImage": "../../src/assets/images/bg_calm.png",
     "soundscape": ["suono dell'acqua", "cicale", "brezza leggera"]
   },
   "durationSuggestion": "10-20 min",

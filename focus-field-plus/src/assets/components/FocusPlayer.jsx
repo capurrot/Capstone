@@ -212,7 +212,7 @@ const FocusPlayer = ({ playlistUrl }) => {
   const trackImage = currentTrack.data.artwork["150x150"];
 
   return (
-    <Container>
+    <Container className="px-lg-0">
       <div className="player">
         <div className="song-info">
           <div className="song-details d-flex flex-row align-items-center">
@@ -342,7 +342,7 @@ const FocusPlayer = ({ playlistUrl }) => {
               href={`https://audius.co${currentTrack.data.permalink}`}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#a8a9ab" }}
+              style={{ color: "var(--mood-color-11)" }}
             >
               Listen to Audius Music
             </a>

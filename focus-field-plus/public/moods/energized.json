@@ -37,7 +37,7 @@
         "name": "Rotazioni delle braccia",
         "instructions": "Ruota le braccia in avanti in cerchi ampi per 20 secondi, poi inverti il movimento all'indietro per altri 20 secondi.",
         "duration": 40,
-        "image": "../../src/assets/images/arm_circles.png"
+        "image": "../../src/assets/images/arm_circles.svg"
       },
       {
         "name": "Squat dinamici",
@@ -53,14 +53,14 @@
       }
     ]
   },
-  "journalPre": {
+  "journalGoals": {
     "enabled": true,
     "prompt": "Scrivi 3 obiettivi da raggiungere oggi e cosa fare per raggiungerli!",
     "optional": true
   },
   "journalPost": {
     "enabled": true,
-    "prompt": "Racconta come hai raggiunto i tuoi obiettivi e come ti senti una volta completati.",
+    "prompt": "Dicci come ti senti dopo questa sessione. Ti aiuterà a tenere traccia degli effetti.",
     "optional": true
   },
   "spiritual": {
