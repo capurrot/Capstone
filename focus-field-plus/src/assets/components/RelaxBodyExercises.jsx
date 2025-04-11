@@ -45,13 +45,6 @@ const RelaxBodyExercises = ({ config }) => {
       let seconds = 10;
       setRestartCountdown(seconds);
 
-      // Reset freccia scroll
-      setAtBottom(false);
-      if (scrollRef.current) {
-        scrollRef.current.scrollTop = 0;
-        updateScrollState();
-      }
-
       const interval = setInterval(() => {
         seconds--;
         setRestartCountdown(seconds);
@@ -67,12 +60,23 @@ const RelaxBodyExercises = ({ config }) => {
   }, [isCompleted]);
 
   useEffect(() => {
+    if (!isRunning && !isCompleted && scrollRef.current) {
+      const el = scrollRef.current;
+      requestAnimationFrame(() => {
+        el.scrollTop = 0;
+        const isScrollable = el.scrollHeight > el.clientHeight;
+        const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+        setShowArrow(isScrollable);
+        setAtBottom(isAtBottom);
+      });
+    }
+  }, [isRunning, isCompleted, exercises]);
+
+  useEffect(() => {
     const checkScroll = () => {
       updateScrollState();
     };
     checkScroll();
-    window.addEventListener("resize", checkScroll);
-    return () => window.removeEventListener("resize", checkScroll);
   }, [exercises]);
 
   useEffect(() => {
@@ -153,7 +157,7 @@ const RelaxBodyExercises = ({ config }) => {
 
   return (
     <div className="relax-body-container">
-      <p className="fst-italic mb-0 pt-4 px-4">{description}</p>
+      <p className="fst-italic mb-0 pt-4 px-5 text-center">{description}</p>
 
       {!isRunning && !isCompleted && exercises?.length > 0 && (
         <>
@@ -179,9 +183,11 @@ const RelaxBodyExercises = ({ config }) => {
                 onClick={() => {
                   if (scrollRef.current) {
                     scrollRef.current.scrollBy({
-                      top: atBottom ? -999 : 250,
+                      top: atBottom ? -999 : 300,
                       behavior: "smooth",
                     });
+
+                    setTimeout(() => updateScrollState(), 300);
                   }
                 }}
                 className="scroll-down-arrow"
@@ -195,7 +201,7 @@ const RelaxBodyExercises = ({ config }) => {
       )}
 
       {!isRunning && !isCompleted && (
-        <button className="breathing-btn mt-4" onClick={handleStart}>
+        <button className="breathing-btn btn-danger position-absolute" style={{ bottom: "65px" }} onClick={handleStart}>
           Avvia
         </button>
       )}
@@ -233,7 +239,7 @@ const RelaxBodyExercises = ({ config }) => {
       )}
 
       {isRunning && (
-        <button className="breathing-btn btn-danger position-absolute" style={{ bottom: "55px" }} onClick={handleStop}>
+        <button className="breathing-btn btn-danger position-absolute" style={{ bottom: "65px" }} onClick={handleStop}>
           Ferma
         </button>
       )}

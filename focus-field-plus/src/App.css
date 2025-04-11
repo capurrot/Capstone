@@ -484,7 +484,7 @@ body {
   background: linear-gradient(to right, #313234, #2f3031);
   color: #fff;
   border-radius: 1rem;
-  height: 555px;
+  height: 37rem;
   position: relative;
 }
 
@@ -548,17 +548,18 @@ body {
   background: linear-gradient(to right, #313234, #2f3031);
   color: #fff;
   border-radius: 1rem;
-  height: 555px;
+  height: 37rem;
   position: relative;
 }
 
 .relax-timer {
   font-size: 2rem;
   font-weight: 600;
+  margin-top: 1rem;
 }
 
 .scroll-wrapper {
-  max-height: 350px;
+  max-height: 25rem;
   overflow-y: scroll;
   position: relative;
   scrollbar-width: none;
