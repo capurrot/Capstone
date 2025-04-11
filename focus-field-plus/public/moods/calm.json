@@ -47,7 +47,7 @@
   },
   "journalPre": {
     "enabled": true,
-    "prompt": "Scrivi cosa ti sta turbando e cosa puoi fare per lasciare andare quella tensione. (Sarà fondamentale per valutare il beneficio al termine della sessione)",
+    "prompt": "Scrivi cosa ti sta turbando e cosa puoi fare per lasciare andare quella tensione. (Sarà utile per valutare il beneficio al termine della sessione e per tenere traccia dei progressi nel tempo!)",
     "optional": true
   },
   "journalPost": {

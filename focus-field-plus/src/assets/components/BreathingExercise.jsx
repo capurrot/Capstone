@@ -109,7 +109,13 @@ const BreathingExercise = ({ config }) => {
     <div className="breathing-container">
       <p className="breathing-technique fst-italic mb-0 pt-4">Tecnica consigliata: {technique}</p>
 
-      <div className="breathing-phase-text mb-2">{isRunning && phaseName}</div>
+      {isRunning ? (
+        <div className="breathing-phase-text mb-2">{phaseName}</div>
+      ) : (
+        <div className="breathing-phase-text mb-2" style={{ color: "transparent" }}>
+          Seleziona una fase
+        </div>
+      )}
 
       <div className="breathing-circle-wrapper">
         <div
@@ -127,21 +133,25 @@ const BreathingExercise = ({ config }) => {
         <div className="breathing-timer">{phaseSecondsLeft}s</div>
       </div>
 
-      <button className="breathing-btn mt-2" onClick={handleStartStop}>
-        {isRunning ? "Ferma" : "Avvia"}
-      </button>
-
       {instructions?.length > 0 && (
         <>
-          <ul className="breathing-instructions mt-1 text-center pb-2">
+          <ul className="breathing-instructions mt-3 text-center pb-2">
             {instructions.map((step, idx) => (
               <li key={idx}>{step}</li>
             ))}
           </ul>
+          <button
+            className="focusfield-btn mt-2 position-absolute"
+            style={{ bottom: "65px" }}
+            onClick={handleStartStop}
+          >
+            {isRunning ? "Ferma" : "Avvia"}
+          </button>
+
           {duration && (
             <p
               className="breathing-instructions fw-semibold mb-0"
-              style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-5)" }}
+              style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-6)" }}
             >
               {hasStarted
                 ? `Durata: ${Math.floor(totalTimeLeft / 60)} min e ${totalTimeLeft % 60} sec`

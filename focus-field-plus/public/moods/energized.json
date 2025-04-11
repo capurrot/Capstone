@@ -71,7 +71,7 @@
     "scope": "fiducia e determinazione"
   },
   "environment": {
-    "backgroundImage": "https://images.unsplash.com/photo-1594882645126-14020914d58d?q=80&w=2085&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "backgroundImage": "../../src/assets/images/bg_energized.jpg",
     "soundscape": ["canti degli uccelli", "vento tra le montagne"]
   },
   "durationSuggestion": "10-15 min",

@@ -162,7 +162,7 @@ body {
 }
 
 .player {
-  background: linear-gradient(to right, var(--mood-color-9), var(--mood-color-10));
+  background: linear-gradient(to bottom right, var(--mood-color-9), var(--mood-color-10));
   box-shadow: 0 1rem 5rem rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
   display: flex;
@@ -189,6 +189,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s linear;
+}
+
+.player-btn:hover {
+  background: var(--mood-color-3);
+  color: var(--mood-color-2);
 }
 
 .player-btn:active {
@@ -241,12 +247,12 @@ body {
 .song-name {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--mood-color-4);
+  color: var(--mood-color-6);
 }
 
 .song-artist {
   font-size: 1rem;
-  color: #a8a9ab;
+  color: var(--mood-color-11);
 }
 
 .song-info i {
@@ -448,7 +454,7 @@ body {
   width: 32px;
   height: 16px;
   border-radius: 50rem;
-  background-color: var(--mood-color-1);
+  background-color: var(--mood-color-6);
   border: none;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
   transition: background 0.3s;
@@ -482,7 +488,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  background: linear-gradient(to right, var(--mood-color-9), var(--mood-color-10));
+  background: linear-gradient(to bottom right, var(--mood-color-9), var(--mood-color-10));
   color: #fff;
   border-radius: 1rem;
   height: 37rem;
@@ -524,7 +530,7 @@ body {
   font-weight: 400;
 }
 
-.breathing-btn {
+.focusfield-btn {
   background-color: var(--mood-color-6);
   color: var(--mood-color-2);
   border: none;
@@ -535,19 +541,30 @@ body {
   transition: background-color 0.3s ease;
 }
 
+.focusfield-btn:hover {
+  background: var(--mood-color-3);
+  color: var(--mood-color-2);
+}
+
 .breathing-instructions {
   list-style: none;
   padding: 0;
   font-size: 0.9rem;
-  color: #aaa;
+  color: var(--mood-color-11);
+}
+
+.breathing-technique,
+.breathing-phase-text,
+.journal-text {
+  color: var(--mood-color-11);
 }
 
 .relax-body-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(to right, var(--mood-color-9), var(--mood-color-10));
-  color: #fff;
+  background: linear-gradient(to bottom right, var(--mood-color-9), var(--mood-color-10));
+  color: var(--mood-color-12);
   border-radius: 1rem;
   height: 37rem;
   position: relative;
@@ -592,13 +609,17 @@ body {
 }
 
 .focus-scopes-container {
-  background: linear-gradient(to right, var(--mood-color-9), var(--mood-color-10));
+  background: linear-gradient(to bottom right, var(--mood-color-9), var(--mood-color-10));
   color: #fff;
   border-radius: 1rem;
   position: relative;
 }
 
-.focus-input {
+.bg-input {
+  background-color: var(--mood-color-12);
+}
+
+.form-control:focus {
   background-color: var(--mood-color-12);
 }
 

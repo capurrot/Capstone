@@ -225,7 +225,7 @@ const FocusPlayer = ({ playlistUrl }) => {
           {isFavorited && <i className="fa-solid fa-heart"></i>}
         </div>
         <div className="song-duration">
-          <div className="song-time" onClick={handleProgressClick} style={isBuffering ? { background: "white" } : {}}>
+          <div className="song-time" onClick={handleProgressClick} style={isBuffering ? { background: "#ddd" } : {}}>
             <div className="song-progress" style={{ width: `${progress}%` }}></div>
           </div>
           <div className="time">

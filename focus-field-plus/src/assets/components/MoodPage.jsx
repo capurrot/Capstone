@@ -6,8 +6,8 @@ import FocusPlayer from "./FocusPlayer";
 import BreathingExercise from "./BreathingExercise";
 import RelaxBodyExercises from "./RelaxBodyExercises";
 import FocusMoodInfoModal from "./FocusMoodInfoModal";
-import FocusScopes from "./FocusScopes";
 import FocusJournal from "./FocusJournal";
+import FocusGoals from "./FocusGoals";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
@@ -78,14 +78,20 @@ function MoodPage({ moodName }) {
 
         {moodData.journalGoals?.enabled && (
           <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
-            <h2 className="mood-text mb-3 ps-3">✍️ Condizione di partenza</h2>
-            <FocusScopes goals={moodData.journalGoals} />
+            <h2 className="mood-text mb-3 ps-3">
+              <i class="fas fa-pencil-alt me-1"></i>
+              <span> - Definisci gli obiettivi</span>{" "}
+            </h2>
+            <FocusGoals goals={moodData.journalGoals} />
           </section>
         )}
 
         {moodData.journalPre?.enabled && (
           <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
-            <h2 className="mood-text mb-3 ps-3">✍️ Condizione di partenza</h2>
+            <h2 className="mood-text mb-3 ps-3">
+              <i class="fas fa-pencil-alt me-1"></i>
+              <span> - Condizione di partenza</span>{" "}
+            </h2>
             <FocusJournal journal={moodData.journalPre} />
           </section>
         )}
@@ -94,7 +100,9 @@ function MoodPage({ moodName }) {
           <Col xs={12} md={6} xl={4}>
             {moodData.breathing?.enabled && (
               <section className="mood-section breathing p-4">
-                <h2 className="mood-text mb-3 ps-3">🧘‍♀️ Respirazione</h2>
+                <h2 className="mood-text mb-3 ps-3">
+                  <i class="fas fa-lungs me-1"></i> <span> - Respirazione</span>
+                </h2>
                 <BreathingExercise config={moodData.breathing} />
               </section>
             )}
@@ -102,7 +110,10 @@ function MoodPage({ moodName }) {
           <Col xs={12} md={6} xl={4}>
             {moodData.relaxBody?.enabled && (
               <section className="mood-section relax-body p-4">
-                <h2 className="mood-text mb-3 ps-3">🤸‍♀️ Attività motoria</h2>
+                <h2 className="mood-text mb-3 ps-3">
+                  <i class="fas fa-running me-1"></i>
+                  <span> - Attività motoria</span>{" "}
+                </h2>
                 <RelaxBodyExercises config={moodData.relaxBody} />
               </section>
             )}
@@ -116,6 +127,16 @@ function MoodPage({ moodName }) {
               <p>{moodData.spiritual.text}</p>
               <cite>{moodData.spiritual.verse}</cite>
             </blockquote>
+          </section>
+        )}
+
+        {moodData.journalPost?.enabled && (
+          <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
+            <h2 className="mood-text mb-3 ps-3">
+              <i class="fas fa-pencil-alt me-1"></i>
+              <span> - Condizione di partenza</span>{" "}
+            </h2>
+            <FocusJournal journal={moodData.journalPost} />
           </section>
         )}
 

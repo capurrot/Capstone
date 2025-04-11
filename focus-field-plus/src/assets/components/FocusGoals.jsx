@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 
-const FocusScopes = ({ goals }) => {
+const FocusGoals = ({ goals }) => {
   return (
     <div className="focus-scopes-container d-flex flex-column pt-3 px-3">
       <p>{goals.prompt}</p>
@@ -31,11 +31,11 @@ const FocusScopes = ({ goals }) => {
         <Form.Control type="text" placeholder="Come lo raggiungerai" />
       </div>
 
-      <button className="breathing-btn my-3 mx-auto" style={{ width: "15rem" }}>
+      <button className="focusfield-btn my-3 mx-auto" style={{ width: "15rem" }}>
         Salva
       </button>
     </div>
   );
 };
 
-export default FocusScopes;
+export default FocusGoals;

@@ -201,7 +201,11 @@ const RelaxBodyExercises = ({ config }) => {
       )}
 
       {!isRunning && !isCompleted && (
-        <button className="breathing-btn btn-danger position-absolute" style={{ bottom: "65px" }} onClick={handleStart}>
+        <button
+          className="focusfield-btn btn-danger position-absolute"
+          style={{ bottom: "65px" }}
+          onClick={handleStart}
+        >
           Avvia
         </button>
       )}
@@ -209,7 +213,7 @@ const RelaxBodyExercises = ({ config }) => {
       {!isRunning && (
         <p
           className="breathing-instructions fw-semibold mb-0"
-          style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-5)" }}
+          style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-6)" }}
         >
           Durata: {Math.floor(totalDuration / 60)} min e {totalDuration % 60} sec
         </p>
@@ -239,7 +243,7 @@ const RelaxBodyExercises = ({ config }) => {
       )}
 
       {isRunning && (
-        <button className="breathing-btn btn-danger position-absolute" style={{ bottom: "65px" }} onClick={handleStop}>
+        <button className="focusfield-btn btn-danger position-absolute" style={{ bottom: "65px" }} onClick={handleStop}>
           Ferma
         </button>
       )}
@@ -247,7 +251,7 @@ const RelaxBodyExercises = ({ config }) => {
       {isRunning && (
         <p
           className="breathing-instructions fw-semibold mb-0"
-          style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-5)" }}
+          style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-6)" }}
         >
           Durata: {Math.floor(totalTimeLeft / 60)} min e {totalTimeLeft % 60} sec
         </p>
