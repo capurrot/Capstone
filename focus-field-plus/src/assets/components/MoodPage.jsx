@@ -9,6 +9,7 @@ import FocusMoodInfoModal from "./FocusMoodInfoModal";
 import FocusJournal from "./FocusJournal";
 import FocusGoals from "./FocusGoals";
 import FocusSoundScape from "./FocusSoundScape";
+import FocusMentalCoach from "./FocusMentalCoach";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
@@ -119,7 +120,17 @@ function MoodPage({ moodName }) {
               </section>
             )}
           </Col>
-          <Col xs={12} md={6} xl={4}></Col>
+          <Col xs={12} md={6} xl={4}>
+            {moodData.coach?.enabled && (
+              <section className="mood-section mental-coach p-4 mt-4 mt-md-0">
+                <h2 className="mood-text mb-3 ps-3">
+                  <i className="fas fa-brain me-1"></i>
+                  <span> - Mental Coach</span>{" "}
+                </h2>
+                <FocusMentalCoach coach={moodData.coach} />
+              </section>
+            )}
+          </Col>
         </Row>
 
         <section className="mood-section ambient p-4 mt-4">
