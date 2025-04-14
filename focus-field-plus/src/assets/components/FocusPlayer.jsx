@@ -191,11 +191,13 @@ const FocusPlayer = ({ playlistUrl }) => {
 
   if (loading)
     return (
-      <Container className="d-flex justify-content-center align-items-center player" style={{ height: "230px" }}>
-        <div className="focusfield-spinner">
-          <div className="bounce1"></div>
-          <div className="bounce2"></div>
-          <div className="bounce3"></div>
+      <Container className="px-lg-0">
+        <div className="d-flex justify-content-center align-items-center player" style={{ height: "230px" }}>
+          <div className="focusfield-spinner">
+            <div className="bounce1"></div>
+            <div className="bounce2"></div>
+            <div className="bounce3"></div>
+          </div>
         </div>
       </Container>
     );

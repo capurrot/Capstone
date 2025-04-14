@@ -443,7 +443,7 @@ body {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: 15rem;
+  width: 8rem;
   height: 0.25rem;
   background: #ddd;
   border-radius: 3px;
@@ -731,5 +731,8 @@ body {
 @media (min-width: 768px) {
   .border-md-none {
     border-bottom: none !important;
+  }
+  .volume-slider {
+    width: 15rem;
   }
 }
