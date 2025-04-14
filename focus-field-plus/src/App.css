@@ -486,6 +486,40 @@ body {
   color: var(--mood-color-2);
 }
 
+.focusfield-spinner {
+  width: 90px;
+  text-align: center;
+}
+
+.focusfield-spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: var(--mood-color-11);
+  border-radius: 100%;
+  display: inline-block;
+  animation: focusfield-bouncedelay 1.4s infinite ease-in-out both;
+  margin: 0 3px;
+}
+
+.focusfield-spinner .bounce1 {
+  animation-delay: -0.32s;
+}
+
+.focusfield-spinner .bounce2 {
+  animation-delay: -0.16s;
+}
+
+@keyframes focusfield-bouncedelay {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
 .breathing-container {
   display: flex;
   flex-direction: column;

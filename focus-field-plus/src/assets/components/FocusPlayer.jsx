@@ -189,7 +189,17 @@ const FocusPlayer = ({ playlistUrl }) => {
     }
   }, [streamUrl, isPlaying]);
 
-  if (loading) return <p>Caricamento playlist...</p>;
+  if (loading)
+    return (
+      <Container className="d-flex justify-content-center align-items-center player" style={{ height: "230px" }}>
+        <div className="focusfield-spinner">
+          <div className="bounce1"></div>
+          <div className="bounce2"></div>
+          <div className="bounce3"></div>
+        </div>
+      </Container>
+    );
+
   if (error) return <p>{error}</p>;
   if (tracks.length === 0) return <p>Nessuna traccia trovata nella playlist.</p>;
 
