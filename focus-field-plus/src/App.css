@@ -687,6 +687,13 @@ body {
   position: relative;
 }
 
+.reflection-container {
+  background: linear-gradient(to bottom right, var(--mood-color-9), var(--mood-color-10));
+  color: var(--mood-color-12);
+  border-radius: 1rem;
+  position: relative;
+}
+
 @media (min-width: 768px) {
   .border-md-none {
     border-bottom: none !important;

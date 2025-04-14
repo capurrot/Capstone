@@ -198,7 +198,7 @@
   },
   "durationSuggestion": "10-20 min",
   "cta": {
-    "text": "Inizia il tuo momento di calma",
+    "text": "Termina la tua sessione",
     "action": "/session/start"
   }
 }

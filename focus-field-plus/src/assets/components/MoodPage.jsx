@@ -10,6 +10,7 @@ import FocusJournal from "./FocusJournal";
 import FocusGoals from "./FocusGoals";
 import FocusSoundScape from "./FocusSoundScape";
 import FocusMentalCoach from "./FocusMentalCoach";
+import { MdAutoStories } from "react-icons/md";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
@@ -148,12 +149,15 @@ function MoodPage({ moodName }) {
         </section>
 
         {moodData.spiritual?.enabled && (
-          <section className="mood-section spiritual p-4 bg-light">
-            <h2>🕊️ Spunto spirituale</h2>
-            <blockquote>
-              <p>{moodData.spiritual.text}</p>
-              <cite>{moodData.spiritual.verse}</cite>
-            </blockquote>
+          <section className="mood-section spiritual p-4 mt-4">
+            <h2 className="mood-text mb-3 ps-3">
+              <MdAutoStories />
+              <span> - Riflessione</span>
+            </h2>
+            <div className="reflection-container p-3 d-flex flex-column">
+              <p className="fs-4">{moodData.spiritual.text}</p>
+              <cite className="ms-auto fs-4">{moodData.spiritual.verse}</cite>
+            </div>
           </section>
         )}
 
@@ -168,7 +172,7 @@ function MoodPage({ moodName }) {
         )}
 
         <footer className="p-4 text-center">
-          <button className="btn btn-primary btn-lg">{moodData.cta.text}</button>
+          <button className="focusfield-btn fs-4">{moodData.cta.text}</button>
         </footer>
 
         <FocusMoodInfoModal show={showInfoModal} handleClose={() => setShowInfoModal(false)} mood={moodData} />
