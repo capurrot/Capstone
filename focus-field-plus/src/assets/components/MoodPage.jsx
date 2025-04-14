@@ -8,6 +8,7 @@ import RelaxBodyExercises from "./RelaxBodyExercises";
 import FocusMoodInfoModal from "./FocusMoodInfoModal";
 import FocusJournal from "./FocusJournal";
 import FocusGoals from "./FocusGoals";
+import FocusSoundScape from "./FocusSoundScape";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
@@ -70,7 +71,7 @@ function MoodPage({ moodName }) {
 
         <section className="mood-section music py-4 px-lg-4 rounded">
           <h2 className="mood-text mb-3 ps-3">
-            <i class="fas fa-music me-1"></i>
+            <i className="fas fa-music me-1"></i>
             <span> - Musica</span>
           </h2>
           <FocusPlayer playlistUrl={moodData.music.playlistUrl} />
@@ -79,7 +80,7 @@ function MoodPage({ moodName }) {
         {moodData.journalGoals?.enabled && (
           <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <i class="fas fa-pencil-alt me-1"></i>
+              <i className="fas fa-pencil-alt me-1"></i>
               <span> - Definisci gli obiettivi</span>{" "}
             </h2>
             <FocusGoals goals={moodData.journalGoals} />
@@ -87,10 +88,10 @@ function MoodPage({ moodName }) {
         )}
 
         {moodData.journalPre?.enabled && (
-          <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
+          <section className="mood-section journal p-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <i class="fas fa-pencil-alt me-1"></i>
-              <span> - Condizione di partenza</span>{" "}
+              <i className="fas fa-pencil-alt me-1"></i>
+              <span> - Stato di partenza</span>{" "}
             </h2>
             <FocusJournal journal={moodData.journalPre} />
           </section>
@@ -101,7 +102,7 @@ function MoodPage({ moodName }) {
             {moodData.breathing?.enabled && (
               <section className="mood-section breathing p-4">
                 <h2 className="mood-text mb-3 ps-3">
-                  <i class="fas fa-lungs me-1"></i> <span> - Respirazione</span>
+                  <i className="fas fa-lungs me-1"></i> <span> - Respirazione</span>
                 </h2>
                 <BreathingExercise config={moodData.breathing} />
               </section>
@@ -109,16 +110,30 @@ function MoodPage({ moodName }) {
           </Col>
           <Col xs={12} md={6} xl={4}>
             {moodData.relaxBody?.enabled && (
-              <section className="mood-section relax-body p-4">
+              <section className="mood-section relax-body p-4 mt-4 mt-md-0">
                 <h2 className="mood-text mb-3 ps-3">
-                  <i class="fas fa-running me-1"></i>
+                  <i className="fas fa-running me-1"></i>
                   <span> - Attività motoria</span>{" "}
                 </h2>
                 <RelaxBodyExercises config={moodData.relaxBody} />
               </section>
             )}
           </Col>
+          <Col xs={12} md={6} xl={4}></Col>
         </Row>
+
+        <section className="mood-section ambient p-4 mt-4">
+          <h2 className="mood-text mb-3 ps-3">
+            <i className="fas fa-leaf"></i>
+            <span> - Ambientazione</span>{" "}
+          </h2>
+          <FocusSoundScape
+            soundScape={moodData.environment.soundscape}
+            backgroundVideo={moodData.environment.backgroundVideo}
+            audioSrc={moodData.environment.audioSrc}
+            suggestion={moodData.environment.suggestion}
+          />
+        </section>
 
         {moodData.spiritual?.enabled && (
           <section className="mood-section spiritual p-4 bg-light">
@@ -131,19 +146,14 @@ function MoodPage({ moodName }) {
         )}
 
         {moodData.journalPost?.enabled && (
-          <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
+          <section className="mood-section journal p-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <i class="fas fa-pencil-alt me-1"></i>
-              <span> - Condizione di partenza</span>{" "}
+              <i className="fas fa-pencil-alt me-1"></i>
+              <span> - Stato di arrivo</span>{" "}
             </h2>
             <FocusJournal journal={moodData.journalPost} />
           </section>
         )}
-
-        <section className="mood-section ambient p-4">
-          <h2>🌄 Ambientazione</h2>
-          <p>Suoni: {moodData.environment.soundscape.join(", ")}</p>
-        </section>
 
         <footer className="p-4 text-center">
           <button className="btn btn-primary btn-lg">{moodData.cta.text}</button>

@@ -63,7 +63,10 @@
   },
   "environment": {
     "backgroundImage": "../../src/assets/images/bg_calm.png",
-    "soundscape": ["suono dell'acqua", "cicale", "brezza leggera"]
+    "backgroundVideo": "../../src/assets/media/calm.mp4",
+    "soundscape": ["suono dell'acqua", "cicale", "brezza leggera"],
+    "audioSrc": "../../src/assets/media/calm.mp3",
+    "suggestion": "Trova un luogo tranquillo, abbassa le luci, chiudi gli occhi se puoi e ascolta questi suoni in cuffia per immergerti meglio nell’atmosfera."
   },
   "durationSuggestion": "10-20 min",
   "cta": {

@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Container, Image, ListGroup } from "react-bootstrap";
 import { MdShuffle, MdRepeat, MdRepeatOne } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_VOLUME } from "../../redux/actions";
 
 const FocusPlayer = ({ playlistUrl }) => {
   const [songIndex, setSongIndex] = useState(0);
@@ -18,10 +20,11 @@ const FocusPlayer = ({ playlistUrl }) => {
   const [isBuffering, setIsBuffering] = useState(false);
   const [isFavorited, setIsFavorite] = useState(false);
   const [isControlsVisible, setIsControlsVisible] = useState(false);
-  const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
   const [repeatMode, setRepeatMode] = useState("off");
   const [isShuffled, setIsShuffled] = useState(false);
+  const musicVolume = useSelector((state) => state.sound.musicVolume);
+  const dispatch = useDispatch();
 
   const audioRef = useRef(null);
 
@@ -42,10 +45,7 @@ const FocusPlayer = ({ playlistUrl }) => {
 
   const handleVolumeChange = (e) => {
     const newVolume = parseFloat(e.target.value);
-    setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
-    }
+    dispatch({ type: SET_VOLUME, payload: { musicVolume: newVolume } });
   };
 
   const toggleLoop = () => {
@@ -94,8 +94,18 @@ const FocusPlayer = ({ playlistUrl }) => {
   };
 
   useEffect(() => {
+    dispatch({ type: SET_VOLUME, payload: { musicVolume: 0.5 } });
+  }, []);
+
+  useEffect(() => {
     if (playlistUrl) fetchPlaylist();
   }, [playlistUrl]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = musicVolume;
+    }
+  }, [musicVolume]);
 
   useEffect(() => {
     if (tracks.length > 0) loadSong(songIndex);
@@ -173,6 +183,11 @@ const FocusPlayer = ({ playlistUrl }) => {
     const totalMinutes = Math.floor(totalDuration / 60);
     const totalSeconds = Math.floor(totalDuration % 60);
     setDuration(`${totalMinutes}:${totalSeconds < 10 ? `0${totalSeconds}` : totalSeconds}`);
+
+    e.target.volume = musicVolume;
+    if (e.target) {
+      e.target.volume = musicVolume;
+    }
   };
 
   const handleProgressClick = (e) => {
@@ -257,7 +272,7 @@ const FocusPlayer = ({ playlistUrl }) => {
             min="0"
             max="1"
             step="0.01"
-            value={volume}
+            value={musicVolume}
             onChange={handleVolumeChange}
             className="volume-slider"
           />
@@ -315,7 +330,13 @@ const FocusPlayer = ({ playlistUrl }) => {
                       `${index + 1}.`
                     )}
                   </span>
-                  <Image src={track.data.artwork["150x150"]} alt={track.data.title} width={40} height={40} />
+                  <Image
+                    src={track.data.artwork["150x150"]}
+                    alt={track.data.title}
+                    width={40}
+                    height={40}
+                    className="song-image"
+                  />
                   <div className="d-flex flex-column ms-3">
                     <strong>{track.data.title}</strong>
                     <small>{track.data.user.name}</small>

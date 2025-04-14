@@ -8,7 +8,7 @@ const FocusGoals = ({ goals }) => {
         <Form.Control type="text" placeholder="Obiettivo n. 1" />
         <span className="mx-auto">
           <i className="fas fa-arrow-right d-none d-md-flex"></i>
-          <i class="fas fa-arrow-down d-flex d-md-none"></i>
+          <i className="fas fa-arrow-down d-flex d-md-none"></i>
         </span>
         <Form.Control type="text" placeholder="Come lo raggiungerai" />
       </div>
@@ -17,7 +17,7 @@ const FocusGoals = ({ goals }) => {
         <Form.Control type="text" placeholder="Obiettivo n. 2" />
         <span className="mx-auto">
           <i className="fas fa-arrow-right d-none d-md-flex"></i>
-          <i class="fas fa-arrow-down d-flex d-md-none"></i>
+          <i className="fas fa-arrow-down d-flex d-md-none"></i>
         </span>
         <Form.Control type="text" placeholder="Come lo raggiungerai" />
       </div>
@@ -26,7 +26,7 @@ const FocusGoals = ({ goals }) => {
         <Form.Control type="text" placeholder="Obiettivo n. 3" />
         <span className="mx-auto">
           <i className="fas fa-arrow-right d-none d-md-flex"></i>
-          <i class="fas fa-arrow-down d-flex d-md-none"></i>
+          <i className="fas fa-arrow-down d-flex d-md-none"></i>
         </span>
         <Form.Control type="text" placeholder="Come lo raggiungerai" />
       </div>

@@ -6,11 +6,13 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import sessionReducer from "../reducers/sessionReducesr";
 import userReducer from "../reducers/userReducer";
 import moodReducer from "../reducers/moodReducer";
+import soundReducer from "../reducers/soundReducer";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   user: userReducer,
   mood: moodReducer,
+  sound: soundReducer,
 });
 
 const persistConfig = {

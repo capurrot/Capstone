@@ -239,6 +239,10 @@ body {
   margin-bottom: 1rem;
 }
 
+.song-image {
+  border-radius: 5px;
+}
+
 .song-details {
   display: flex;
   flex-direction: column;
@@ -621,6 +625,32 @@ body {
 
 .form-control:focus {
   background-color: var(--mood-color-12);
+}
+
+.sound-scape-container {
+  background: linear-gradient(to bottom right, var(--mood-color-9), var(--mood-color-10));
+  color: #fff;
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-blurred {
+  filter: blur(8px);
+  transition: filter 1s ease;
+}
+
+.overlay-container {
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.focus-environment {
+  margin-bottom: -6px;
 }
 
 @media (min-width: 768px) {
