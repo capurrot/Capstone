@@ -132,6 +132,7 @@ function MoodPage({ moodName }) {
             backgroundVideo={moodData.environment.backgroundVideo}
             audioSrc={moodData.environment.audioSrc}
             suggestion={moodData.environment.suggestion}
+            duration={moodData.environment.duration}
           />
         </section>
 

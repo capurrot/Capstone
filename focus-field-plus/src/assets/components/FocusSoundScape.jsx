@@ -1,10 +1,10 @@
 import { useRef, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SET_VOLUME } from "../../redux/actions";
 import { FaVolumeMute, FaVolumeUp, FaExpand, FaStop, FaCompress } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
 
-const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestion }) => {
+const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestion, duration = 300 }) => {
   const dispatch = useDispatch();
   const audioRef = useRef(null);
   const videoRef = useRef(null);
@@ -12,9 +12,14 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
 
   const [started, setStarted] = useState(false);
   const [timer, setTimer] = useState(0);
+  const [countdown, setCountdown] = useState(duration);
   const [isMusicMuted, setIsMusicMuted] = useState(false);
+  const [isWarning, setIsWarning] = useState(false);
+  const previousVolumeRef = useRef(null);
+  const musicVolume = useSelector((state) => state.sound.musicVolume);
 
   const handleStart = () => {
+    previousVolumeRef.current = musicVolume;
     dispatch({ type: SET_VOLUME, payload: { musicVolume: 0.2 } });
 
     if (audioRef.current) {
@@ -27,10 +32,12 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
 
     setStarted(true);
     setTimer(0);
+    setCountdown(duration);
   };
 
   const handleStop = () => {
-    dispatch({ type: SET_VOLUME, payload: { musicVolume: 0.5 } });
+    const previousVolume = previousVolumeRef.current ?? 0.5;
+    dispatch({ type: SET_VOLUME, payload: { musicVolume: previousVolume } });
 
     if (audioRef.current) {
       audioRef.current.pause();
@@ -49,35 +56,61 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
     setStarted(false);
     setTimer(0);
     setIsMusicMuted(false);
+    setIsWarning(false);
   };
 
   const toggleMusicMute = () => {
     setIsMusicMuted((prev) => {
       const newState = !prev;
-      dispatch({ type: SET_VOLUME, payload: { musicVolume: newState ? 0 : 0.2 } });
+      const volumeToSet = newState ? 0 : 0.2;
+      dispatch({ type: SET_VOLUME, payload: { musicVolume: volumeToSet } });
       return newState;
     });
   };
 
   const toggleFullscreen = () => {
-    if (containerRef.current) {
+    const el = containerRef.current;
+
+    // Safari (iOS) fullscreen workaround
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS && videoRef.current?.webkitEnterFullscreen) {
+      videoRef.current.webkitEnterFullscreen();
+      return;
+    }
+
+    // Standard Fullscreen API
+    if (el) {
       if (document.fullscreenElement) {
         document.exitFullscreen();
       } else {
-        containerRef.current.requestFullscreen().catch((err) => console.warn("Fullscreen fallito:", err.message));
+        el.requestFullscreen().catch((err) => console.warn("Fullscreen fallito:", err.message));
       }
     }
   };
 
   useEffect(() => {
     let interval;
+
     if (started) {
       interval = setInterval(() => {
-        setTimer((prev) => prev + 1);
+        setTimer((prevTimer) => {
+          const updatedTimer = prevTimer + 1;
+
+          if (updatedTimer <= duration) {
+            setCountdown((prevCountdown) => Math.max(prevCountdown - 1, 0));
+          } else {
+            setIsWarning(true);
+            setCountdown((prevCountdown) => prevCountdown + 1);
+          }
+
+          return updatedTimer;
+        });
       }, 1000);
     }
+
     return () => clearInterval(interval);
-  }, [started]);
+  }, [started, duration]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -102,40 +135,40 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
         {audioSrc && <audio ref={audioRef} src={audioSrc} loop preload="auto" className="d-none" />}
 
         <div
-          className={`position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex flex-column justify-content-center align-items-center text-white text-center p-4 z-3 overlay-container ${
+          className={`position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex flex-column justify-content-center align-items-center text-center p-4 z-3 overlay-container ${
             started ? "fade-out" : ""
           }`}
           style={{ pointerEvents: started ? "none" : "auto" }}
         >
           {!started && (
             <>
-              <h4 className="mb-3">Ambientazione Sonora</h4>
+              <h4 className="mb-3">Ambientazione immersiva</h4>
 
-              <ul className="list-unstyled small mb-3">
+              <ul className="list-unstyled mb-3">
                 {soundScape.map((sound, idx) => (
-                  <li key={idx} className="text-light">
+                  <li key={idx}>
                     <i className="fas fa-music me-1 text-secondary"></i> {sound}
                   </li>
                 ))}
               </ul>
 
+              <button className="focusfield-btn " onClick={handleStart}>
+                Avvia ambientazione
+              </button>
+
               {suggestion && (
-                <div className="alert alert-info text-dark rounded small mb-3">
+                <div className="alert alert-info rounded small mb-3 info-text fs-5 position-absolute bottom-0 end-0 m-3 d-none d-md-flex align-items-center">
                   <i className="fas fa-info-circle me-1"></i> {suggestion}
                 </div>
               )}
-
-              <button className="btn btn-light" onClick={handleStart}>
-                Avvia ambientazione
-              </button>
             </>
           )}
         </div>
 
         {started && (
           <div className="position-absolute top-0 end-0 m-3 text-end z-2">
-            <div className="bg-dark bg-opacity-50 text-white px-3 py-2 rounded-3 small d-flex flex-column align-items-end">
-              <div>Tempo: {formatTime(timer)}</div>
+            <div className="bg-dark bg-opacity-50 text-white px-3 py-2 rounded-3 small d-flex flex-column align-items-center">
+              <div className="text-light text-end small">consigliato: {Math.floor(duration / 60)} min</div>
               <div className="d-flex gap-2 mt-2">
                 <button
                   className="btn btn-sm btn-outline-light"
@@ -161,9 +194,22 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
                 >
                   <FaStop />
                 </button>
-                <Tooltip id="tooltip" place="bottom" effect="solid" />
+              </div>
+              <div className={`mt-2 fw-bold fs-3 ${isWarning ? "text-warning" : "text-secondary"}`}>
+                {formatTime(countdown)}
+              </div>
+              <div className="progress mt-2 w-100" style={{ height: "6px" }}>
+                <div
+                  className="progress-bar bg-success"
+                  role="progressbar"
+                  style={{ width: `${(timer / duration) * 100}%` }}
+                  aria-valuenow={(timer / duration) * 100}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
               </div>
             </div>
+            <Tooltip id="tooltip" place="bottom" effect="solid" />
           </div>
         )}
       </div>

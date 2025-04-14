@@ -19,7 +19,6 @@ body {
 }
 
 .navbar {
-  /* Navbar effetto sfocato */
   backdrop-filter: blur(10px);
   color: var(--mood-color-2);
 }
@@ -614,7 +613,7 @@ body {
 
 .focus-scopes-container {
   background: linear-gradient(to bottom right, var(--mood-color-9), var(--mood-color-10));
-  color: #fff;
+  color: var(--mood-color-12);
   border-radius: 1rem;
   position: relative;
 }
@@ -629,7 +628,7 @@ body {
 
 .sound-scape-container {
   background: linear-gradient(to bottom right, var(--mood-color-9), var(--mood-color-10));
-  color: #fff;
+  color: var(--mood-color-12);
   border-radius: 1rem;
   position: relative;
   overflow: hidden;
@@ -651,6 +650,16 @@ body {
 
 .focus-environment {
   margin-bottom: -6px;
+}
+
+.bg-success {
+  background-color: var(--mood-color-5) !important;
+}
+
+.info-text {
+  background-color: var(--mood-color-5);
+  color: var(--mood-color-12) !important;
+  border: none;
 }
 
 @media (min-width: 768px) {

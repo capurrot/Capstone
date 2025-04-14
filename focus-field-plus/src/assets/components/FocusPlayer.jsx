@@ -108,6 +108,19 @@ const FocusPlayer = ({ playlistUrl }) => {
   }, [musicVolume]);
 
   useEffect(() => {
+    if (audioRef.current) {
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+      if (!isIOS) {
+        audioRef.current.volume = musicVolume;
+      }
+
+      // Questo funziona su iOS se c'è interazione utente
+      audioRef.current.muted = musicVolume === 0;
+    }
+  }, [musicVolume]);
+
+  useEffect(() => {
     if (tracks.length > 0) loadSong(songIndex);
   }, [songIndex, tracks]);
 
