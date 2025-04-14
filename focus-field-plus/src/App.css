@@ -662,6 +662,19 @@ body {
   border: none;
 }
 
+.progressbar-container {
+  height: 10px;
+  background-color: var(--mood-color-4);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progressbar-fill {
+  height: 100%;
+  background-color: var(--mood-color-6);
+  transition: width 1s linear;
+}
+
 @media (min-width: 768px) {
   .border-md-none {
     border-bottom: none !important;

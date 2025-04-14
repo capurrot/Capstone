@@ -99,7 +99,6 @@ const BreathingExercise = ({ config }) => {
       setTotalTimeLeft(duration);
     } else {
       setHasStarted(true);
-      console.log("Start", hasStarted);
       setTotalTimeLeft(duration);
       setIsRunning(true);
     }
@@ -147,16 +146,27 @@ const BreathingExercise = ({ config }) => {
           >
             {isRunning ? "Ferma" : "Avvia"}
           </button>
-
-          {duration && (
+          {duration && !hasStarted && (
             <p
               className="breathing-instructions fw-semibold mb-0"
               style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-6)" }}
             >
-              {hasStarted
-                ? `Durata: ${Math.floor(totalTimeLeft / 60)} min e ${totalTimeLeft % 60} sec`
-                : `Durata: ${Math.floor(duration / 60)} min e ${duration % 60} sec`}
+              Durata: {Math.floor(duration / 60)} min{duration % 60 !== 0 ? ` e ${duration % 60} sec` : ""}
             </p>
+          )}
+
+          {duration && hasStarted && (
+            <div
+              className="progressbar-container position-absolute"
+              style={{ bottom: "25px", left: "10%", width: "80%" }}
+            >
+              <div
+                className="progressbar-fill"
+                style={{
+                  width: `${(totalTimeLeft / duration) * 100}%`,
+                }}
+              ></div>
+            </div>
           )}
         </>
       )}

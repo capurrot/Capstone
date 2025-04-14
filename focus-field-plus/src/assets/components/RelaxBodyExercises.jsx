@@ -249,12 +249,14 @@ const RelaxBodyExercises = ({ config }) => {
       )}
 
       {isRunning && (
-        <p
-          className="breathing-instructions fw-semibold mb-0"
-          style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-6)" }}
-        >
-          Durata: {Math.floor(totalTimeLeft / 60)} min e {totalTimeLeft % 60} sec
-        </p>
+        <div className="progressbar-container position-absolute" style={{ bottom: "25px", left: "10%", width: "80%" }}>
+          <div
+            className="progressbar-fill"
+            style={{
+              width: `${(totalTimeLeft / totalDuration) * 100}%`,
+            }}
+          ></div>
+        </div>
       )}
 
       {isCompleted && (
