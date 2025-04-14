@@ -39,6 +39,7 @@ function App() {
 
   const colors = mood?.colors || ["#4e495d", "#ffffff", "#6c5ce7", "#ffffff", "#ffffff", "#ffffff"];
   const slug = mood?.slug || "standard";
+  const opacity = mood?.opacity || 0.5;
 
   return (
     <div
@@ -56,6 +57,7 @@ function App() {
         "--mood-color-10": colors[9],
         "--mood-color-11": colors[10],
         "--mood-color-12": colors[11],
+        "--mood-opacity": opacity,
       }}
     >
       <Routes>

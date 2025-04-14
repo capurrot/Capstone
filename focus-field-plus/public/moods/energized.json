@@ -37,7 +37,7 @@
         "name": "Rotazioni delle braccia",
         "instructions": "Ruota le braccia in avanti in cerchi ampi per 20 secondi, poi inverti il movimento all'indietro per altri 20 secondi.",
         "duration": 40,
-        "image": "../../src/assets/images/arm_circles.svg"
+        "image": "../../src/assets/images/arm_circles.png"
       },
       {
         "name": "Squat dinamici",
@@ -71,8 +71,134 @@
     "scope": "fiducia e determinazione"
   },
   "environment": {
-    "backgroundImage": "../../src/assets/images/bg_energized.jpg",
+    "backgroundImage": "../../src/assets/images/bg_energized.png",
     "soundscape": ["canti degli uccelli", "vento tra le montagne"]
+  },
+  "coach": {
+    "enabled": true,
+    "intro": "Imparerai ad affrontare ostacoli comuni restando motivato e focalizzato.",
+    "steps": [
+      {
+        "id": "energetic-1",
+        "situation": "Ti svegli stanco e senza voglia di iniziare la giornata.",
+        "options": [
+          { "text": "Faccio 2 minuti di saltelli e ascolto una traccia energica.", "correct": true },
+          { "text": "Resto a letto scrollando il telefono ancora un po’.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Ottimo! Il movimento e la musica possono risvegliare subito il corpo.",
+          "wrong": "Comprensibile, ma un piccolo gesto attivo può cambiare subito l’energia."
+        }
+      },
+      {
+        "id": "energetic-2",
+        "situation": "Hai una lista di cose da fare ma ti senti senza motivazione.",
+        "options": [
+          { "text": "Scrivo 3 obiettivi e li associo a un’azione immediata.", "correct": true },
+          { "text": "Evito di pensarci e passo a un’attività qualsiasi.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Scrivere gli obiettivi attiva il focus mentale.",
+          "wrong": "Partire senza direzione può consumare energia inutilmente."
+        }
+      },
+      {
+        "id": "energetic-3",
+        "situation": "Ti distrai facilmente durante un compito.",
+        "options": [
+          { "text": "Mi alzo, faccio 30 secondi di squat e poi riprendo.", "correct": true },
+          { "text": "Continuo a lottare con la distrazione senza fermarmi.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Ottima strategia. Riattivare il corpo aiuta la concentrazione.",
+          "wrong": "A volte basta una breve pausa attiva per ritrovare il focus."
+        }
+      },
+      {
+        "id": "energetic-4",
+        "situation": "Hai ricevuto un commento demotivante.",
+        "options": [
+          { "text": "Rileggo il versetto motivazionale e mi ricordo il mio perché.", "correct": true },
+          { "text": "Ci penso a lungo e inizio a dubitare di me stesso.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Bene! Mantenere la visione ti dà forza.",
+          "wrong": "Lasciare che l’energia venga spenta da fuori non ti aiuta. Riparti dal tuo scopo."
+        }
+      },
+      {
+        "id": "energetic-5",
+        "situation": "Hai poco tempo prima di un’attività importante.",
+        "options": [
+          { "text": "Almeno 1 minuto di respirazione rapida per darmi la carica.", "correct": true },
+          { "text": "Non faccio nulla, ormai è troppo tardi.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Anche 1 minuto può accendere la scintilla.",
+          "wrong": "Mai sottovalutare il potere di pochi secondi di energia consapevole."
+        }
+      },
+      {
+        "id": "energetic-6",
+        "situation": "Il tuo ambiente è spento e poco stimolante.",
+        "options": [
+          { "text": "Metto su la mia playlist energica e apro le finestre.", "correct": true },
+          { "text": "Mi adatto, anche se mi sento giù.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Hai acceso l’ambiente giusto per sprigionare energia.",
+          "wrong": "L’ambiente incide molto: fallo tuo!"
+        }
+      },
+      {
+        "id": "energetic-7",
+        "situation": "Hai iniziato con entusiasmo, ma senti l’energia calare.",
+        "options": [
+          { "text": "Mi prendo una pausa attiva per riaccendere il corpo.", "correct": true },
+          { "text": "Ignoro il calo e vado avanti sempre più stanco.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Ottima intuizione! Le pause attive rigenerano.",
+          "wrong": "Il calo energetico si gestisce meglio con un reset mirato."
+        }
+      },
+      {
+        "id": "energetic-8",
+        "situation": "Hai fatto molto, ma senti che manca qualcosa.",
+        "options": [
+          { "text": "Scrivo nel journal i progressi fatti per darmi motivazione.", "correct": true },
+          { "text": "Passo subito alla prossima cosa senza fermarmi.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Riconoscere i progressi alimenta la motivazione.",
+          "wrong": "La gratitudine per ciò che fai dà più energia di quanto pensi."
+        }
+      },
+      {
+        "id": "energetic-9",
+        "situation": "Ti senti solo nella tua carica e nessuno ti capisce.",
+        "options": [
+          { "text": "Medito sul versetto e sulla forza che viene da dentro.", "correct": true },
+          { "text": "Reprimo l’energia e mi isolo.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Connettersi a una forza più grande mantiene viva l’energia.",
+          "wrong": "Non spegnerti: canalizza l’energia verso ciò che conta."
+        }
+      },
+      {
+        "id": "energetic-10",
+        "situation": "La sessione è finita ma non sai se ti è davvero servita.",
+        "options": [
+          { "text": "Scrivo nel journal come mi sento ora rispetto a prima.", "correct": true },
+          { "text": "Chiudo tutto e torno alla giornata come se nulla fosse.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Perfetto. La consapevolezza consolida il beneficio.",
+          "wrong": "Non lasciare che tutto passi inosservato. La riflessione dà senso."
+        }
+      }
+    ]
   },
   "durationSuggestion": "10-15 min",
   "cta": {

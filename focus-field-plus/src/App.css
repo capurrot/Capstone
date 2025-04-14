@@ -146,7 +146,7 @@ body {
   position: absolute;
   inset: 0;
   background: linear-gradient(to right, var(--mood-color-7), var(--mood-color-8));
-  opacity: 0.5;
+  opacity: var(--mood-opacity);
   /*   background: rgba(0, 0, 0, 0.4); */
   z-index: -1;
   border-radius: 20px;

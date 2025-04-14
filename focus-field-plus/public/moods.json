@@ -21,6 +21,7 @@
       "#d2c2c2",
       "#c2c2c2"
     ],
+    "opacity": "0.5",
     "icon": "bi-droplet"
   },
   {
@@ -31,7 +32,21 @@
     "image": "https://images.unsplash.com/photo-1518365658347-c4906efc5636?w=1080&auto=format",
     "background": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1080&auto=format",
     "tag": ["attività", "movimento"],
-    "colors": ["#b9e100", "#3C3C3C", "#0000FF", "#FFFFFF", "#b9e100", "#2f3031"],
+    "colors": [
+      "#b9e100",
+      "#3C3C3C",
+      "#fff600",
+      "#FFFFFF",
+      "#b9e100",
+      "#b9e100",
+      "#313234",
+      "#2f3031",
+      "#313234",
+      "#2f3031",
+      "#ffffff",
+      "#ffffff"
+    ],
+    "opacity": "0.9",
     "icon": "bi-lightning-fill"
   },
   {
