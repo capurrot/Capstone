@@ -7,14 +7,9 @@ import sessionReducer from "../reducers/sessionReducesr";
 import userReducer from "../reducers/userReducer";
 import moodReducer from "../reducers/moodReducer";
 import soundReducer from "../reducers/soundReducer";
+import playerPreferencesReducer from "../reducers/playerPreferencesReducer";
 
-const rootReducer = combineReducers({
-  session: sessionReducer,
-  user: userReducer,
-  mood: moodReducer,
-  sound: soundReducer,
-});
-
+// Root-level persist config
 const persistConfig = {
   key: "root",
   storage: getPersistStorage(),
@@ -26,7 +21,16 @@ const persistConfig = {
       },
     }),
   ],
+  blacklist: ["session", "sound"],
 };
+
+const rootReducer = combineReducers({
+  session: sessionReducer,
+  user: userReducer,
+  mood: moodReducer,
+  sound: soundReducer,
+  playerPrefs: playerPreferencesReducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

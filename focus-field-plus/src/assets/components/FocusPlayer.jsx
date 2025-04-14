@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Container, Image, ListGroup } from "react-bootstrap";
 import { MdShuffle, MdRepeat, MdRepeatOne } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_VOLUME } from "../../redux/actions";
+import { SET_VOLUME, SET_PLAYER_PREFERENCE } from "../../redux/actions";
 
 const FocusPlayer = ({ playlistUrl }) => {
   const [songIndex, setSongIndex] = useState(0);
@@ -16,82 +16,149 @@ const FocusPlayer = ({ playlistUrl }) => {
   const [currentTime, setCurrentTime] = useState("0:00");
   const [duration, setDuration] = useState("0:00");
   const [streamUrl, setStreamUrl] = useState("");
-  const [isListVisible, setIsListVisible] = useState(false);
   const [isBuffering, setIsBuffering] = useState(false);
   const [isFavorited, setIsFavorite] = useState(false);
-  const [isControlsVisible, setIsControlsVisible] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [repeatMode, setRepeatMode] = useState("off");
-  const [isShuffled, setIsShuffled] = useState(false);
-  const musicVolume = useSelector((state) => state.sound.musicVolume);
-  const dispatch = useDispatch();
 
   const audioRef = useRef(null);
+  const dispatch = useDispatch();
 
-  const toggleList = () => {
-    setIsListVisible((prevState) => !prevState);
-  };
+  // Redux Persist Preferences
+  const { isMuted, isListVisible, isControlsVisible, repeatMode, isShuffled } = useSelector(
+    (state) => state.playerPrefs
+  );
 
-  const toggleControls = () => {
-    setIsControlsVisible((prevState) => !prevState);
-  };
+  const musicVolume = useSelector((state) => state.sound.musicVolume);
 
+  const setPreference = (key, value) => dispatch({ type: SET_PLAYER_PREFERENCE, payload: { key, value } });
+
+  const toggleList = () => setPreference("isListVisible", !isListVisible);
+  const toggleControls = () => setPreference("isControlsVisible", !isControlsVisible);
   const toggleMute = () => {
     if (audioRef.current) {
-      audioRef.current.muted = !audioRef.current.muted;
-      setIsMuted(audioRef.current.muted);
+      const muted = !audioRef.current.muted;
+      audioRef.current.muted = muted;
+      setPreference("isMuted", muted);
     }
   };
+  const toggleLoop = () => {
+    const nextMode = repeatMode === "off" ? "all" : repeatMode === "all" ? "one" : "off";
+    setPreference("repeatMode", nextMode);
+  };
+  const toggleShuffle = () => setPreference("isShuffled", !isShuffled);
 
   const handleVolumeChange = (e) => {
     const newVolume = parseFloat(e.target.value);
     dispatch({ type: SET_VOLUME, payload: { musicVolume: newVolume } });
   };
 
-  const toggleLoop = () => {
-    setRepeatMode((prev) => {
-      if (prev === "off") return "all";
-      if (prev === "all") return "one";
-      return "off";
-    });
-  };
-
   const fetchPlaylist = async () => {
     try {
       const response = await fetch(playlistUrl);
       if (!response.ok) throw new Error("Errore nel recupero della playlist.");
-
       const data = await response.json();
 
       if (data.data[0] && data.data[0].playlist_contents) {
         const trackIds = data.data[0].playlist_contents.map((item) => item.track_id);
-
         const trackDetails = await Promise.all(
           trackIds.map(async (trackId) => {
-            const trackResponse = await fetch(`https://api.audius.co/v1/tracks/${trackId}`);
-            if (!trackResponse.ok) throw new Error(`Errore nel recupero della traccia ${trackId}`);
-            const trackData = await trackResponse.json();
-            return trackData;
+            const res = await fetch(`https://api.audius.co/v1/tracks/${trackId}`);
+            if (!res.ok) throw new Error(`Errore traccia ${trackId}`);
+            return await res.json();
           })
         );
-
         setTracks(trackDetails);
       } else {
         setError("La playlist non contiene tracce.");
       }
-
       setLoading(false);
     } catch (err) {
-      setError("Impossibile caricare la playlist: " + err.message);
+      setError("Errore: " + err.message);
       setLoading(false);
     }
   };
 
   const loadSong = (index) => {
     const song = tracks[index];
-    const streamUrl = `https://discoveryprovider.audius.co/v1/tracks/${song.data.id}/stream`;
-    setStreamUrl(streamUrl);
+    const url = `https://discoveryprovider.audius.co/v1/tracks/${song.data.id}/stream`;
+    setStreamUrl(url);
   };
+
+  const playSong = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.play();
+      setIsPlaying(true);
+      setIsBuffering(true);
+    }
+  };
+
+  const pauseSong = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const prevSongPlay = () => {
+    setSongIndex((prev) => (prev === 0 ? tracks.length - 1 : prev - 1));
+    resetAudio();
+  };
+
+  const nextSongPlay = () => {
+    if (isShuffled) {
+      const randomIndex = Math.floor(Math.random() * tracks.length);
+      setSongIndex(randomIndex);
+    } else {
+      setSongIndex((prev) => (prev === tracks.length - 1 ? 0 : prev + 1));
+    }
+    resetAudio();
+  };
+
+  const resetAudio = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      setProgress(0);
+      setCurrentTime("0:00");
+    }
+  };
+
+  const handleTimeUpdate = (e) => {
+    const { currentTime, duration } = e.target;
+    setProgress((currentTime / duration) * 100);
+    setCurrentTime(formatTime(currentTime));
+  };
+
+  const handleLoadedData = (e) => {
+    setDuration(formatTime(e.target.duration));
+    e.target.volume = musicVolume;
+    e.target.muted = isMuted;
+  };
+
+  const formatTime = (secs) => {
+    const minutes = Math.floor(secs / 60);
+    const seconds = Math.floor(secs % 60);
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+  };
+
+  const handleProgressClick = (e) => {
+    const audio = audioRef.current;
+    const width = e.target.clientWidth;
+    const offsetX = e.nativeEvent.offsetX;
+    if (audio) {
+      audio.currentTime = (offsetX / width) * audio.duration;
+    }
+  };
+
+  const handleAudioEnd = () => {
+    if (repeatMode === "one") playSong();
+    else if (repeatMode === "all") nextSongPlay();
+    else if (songIndex < tracks.length - 1) nextSongPlay();
+    else loadSong(0);
+  };
+
+  const trackDuration = (e) => formatTime(e);
 
   useEffect(() => {
     dispatch({ type: SET_VOLUME, payload: { musicVolume: 0.5 } });
@@ -104,21 +171,9 @@ const FocusPlayer = ({ playlistUrl }) => {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = musicVolume;
+      audioRef.current.muted = isMuted;
     }
-  }, [musicVolume]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-
-      if (!isIOS) {
-        audioRef.current.volume = musicVolume;
-      }
-
-      // Questo funziona su iOS se c'è interazione utente
-      audioRef.current.muted = musicVolume === 0;
-    }
-  }, [musicVolume]);
+  }, [musicVolume, isMuted]);
 
   useEffect(() => {
     if (tracks.length > 0) loadSong(songIndex);
@@ -133,104 +188,6 @@ const FocusPlayer = ({ playlistUrl }) => {
       }, 500);
     }
   }, [streamUrl, isPlaying]);
-
-  const playSong = () => {
-    const audioElement = audioRef.current;
-    if (audioElement) {
-      audioElement.play();
-      setIsPlaying(true);
-      setIsBuffering(true);
-    }
-  };
-
-  const pauseSong = () => {
-    const audioElement = audioRef.current;
-    if (audioElement) {
-      audioElement.pause();
-      setIsPlaying(false);
-    }
-  };
-
-  const prevSongPlay = () => {
-    setSongIndex((prevIndex) => {
-      const newIndex = prevIndex === 0 ? tracks.length - 1 : prevIndex - 1;
-      resetAudio();
-      return newIndex;
-    });
-  };
-
-  const nextSongPlay = () => {
-    if (isShuffled) {
-      const randomIndex = Math.floor(Math.random() * tracks.length);
-      setSongIndex(randomIndex);
-    } else {
-      setSongIndex((prevIndex) => {
-        const newIndex = prevIndex === tracks.length - 1 ? 0 : prevIndex + 1;
-        resetAudio();
-        return newIndex;
-      });
-    }
-  };
-
-  const resetAudio = () => {
-    const audioElement = audioRef.current;
-    if (audioElement) {
-      audioElement.currentTime = 0;
-      setProgress(0);
-      setCurrentTime("0:00");
-    }
-  };
-
-  const handleTimeUpdate = (e) => {
-    const currentTime = e.target.currentTime;
-    const duration = e.target.duration;
-    setProgress((currentTime / duration) * 100);
-
-    const currentMinutes = Math.floor(currentTime / 60);
-    const currentSeconds = Math.floor(currentTime % 60);
-    setCurrentTime(`${currentMinutes}:${currentSeconds < 10 ? `0${currentSeconds}` : currentSeconds}`);
-  };
-
-  const handleLoadedData = (e) => {
-    const totalDuration = e.target.duration;
-    const totalMinutes = Math.floor(totalDuration / 60);
-    const totalSeconds = Math.floor(totalDuration % 60);
-    setDuration(`${totalMinutes}:${totalSeconds < 10 ? `0${totalSeconds}` : totalSeconds}`);
-
-    e.target.volume = musicVolume;
-    if (e.target) {
-      e.target.volume = musicVolume;
-    }
-  };
-
-  const handleProgressClick = (e) => {
-    const progressWidth = e.target.clientWidth;
-    const clickedOffsetX = e.nativeEvent.offsetX;
-    const audioElement = audioRef.current;
-    const songDuration = audioElement.duration;
-    audioElement.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-  };
-
-  const trackDuration = (e) => {
-    const minutes = Math.floor(e / 60);
-    const seconds = e % 60;
-    const trackDuration = `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-    return trackDuration;
-  };
-
-  const handleAudioEnd = () => {
-    if (repeatMode === "one") {
-      playSong();
-    } else if (repeatMode === "all") {
-      nextSongPlay();
-    } else if (repeatMode === "off") {
-      if (songIndex < tracks.length - 1) {
-        nextSongPlay();
-      } else {
-        loadSong(0);
-      }
-    }
-  };
 
   if (loading) return <p>Caricamento playlist...</p>;
   if (error) return <p>{error}</p>;
@@ -289,33 +246,16 @@ const FocusPlayer = ({ playlistUrl }) => {
             onChange={handleVolumeChange}
             className="volume-slider"
           />
-          {repeatMode === "off" && (
-            <button className="player-btn" type="button" onClick={toggleLoop}>
-              <MdRepeat className="fs-5" />
-            </button>
-          )}
-          {repeatMode === "all" && (
-            <button className="player-btn btn-enabled" type="button" onClick={toggleLoop}>
-              <MdRepeat className="fs-5" />
-            </button>
-          )}
-          {repeatMode === "one" && (
-            <button className="player-btn btn-enabled" type="button" onClick={toggleLoop}>
-              <MdRepeatOne className="fs-5" />
-            </button>
-          )}
-
-          {isShuffled ? (
-            <>
-              <button className="player-btn btn-enabled" type="button" onClick={() => setIsShuffled(!isShuffled)}>
-                <MdShuffle className="fs-5" />
-              </button>
-            </>
-          ) : (
-            <button className="player-btn" type="button" onClick={() => setIsShuffled(!isShuffled)}>
-              <MdShuffle className="fs-5" />
-            </button>
-          )}
+          <button
+            className={`player-btn ${repeatMode !== "off" ? "btn-enabled" : ""}`}
+            type="button"
+            onClick={toggleLoop}
+          >
+            {repeatMode === "one" ? <MdRepeatOne className="fs-5" /> : <MdRepeat className="fs-5" />}
+          </button>
+          <button className={`player-btn ${isShuffled ? "btn-enabled" : ""}`} type="button" onClick={toggleShuffle}>
+            <MdShuffle className="fs-5" />
+          </button>
         </div>
         <div className={`song-list-scroll ${isListVisible ? "expanded" : "collapsed"}`}>
           <ListGroup className="song-list-group">
@@ -337,7 +277,7 @@ const FocusPlayer = ({ playlistUrl }) => {
                   <span className="me-2" style={{ minWidth: "30px" }}>
                     {hoveredIndex === index ? (
                       <button className="hidden-btn" onClick={() => playSong(index)}>
-                        <i className="fa-solid fa-play"></i>{" "}
+                        <i className="fa-solid fa-play"></i>
                       </button>
                     ) : (
                       `${index + 1}.`
@@ -386,7 +326,6 @@ const FocusPlayer = ({ playlistUrl }) => {
           </button>
         </div>
       </div>
-
       <audio
         ref={audioRef}
         src={streamUrl || null}
