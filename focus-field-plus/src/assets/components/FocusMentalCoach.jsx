@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
-const FocusMentalCoach = ({ coach }) => {
+const FocusMentalCoach = ({ coach, moodName }) => {
+  const { t } = useTranslation(moodName, { keyPrefix: "coach" });
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -32,21 +34,19 @@ const FocusMentalCoach = ({ coach }) => {
       setSelectedOption(null);
       setShowFeedback(false);
     } else {
-      alert(`Percorso completato! Hai gestito bene ${score} situazioni su ${steps.length}.`);
+      alert(t("finished", { score, total: steps.length }));
     }
   };
 
-  if (!steps.length) return <p>Nessun percorso disponibile per questo mood.</p>;
+  if (!steps.length) return <p>{t("noSteps")}</p>;
   if (!currentStep) return null;
 
   return (
     <div className="mental-coach-container">
       <div className="p-4">
-        <h4 className="mb-3">
-          Ostacolo {currentStepIndex + 1} di {steps.length}
-        </h4>
+        <h4 className="mb-3">{t("obstacle", { current: currentStepIndex + 1, total: steps.length })}</h4>
         <p>
-          <strong>SITUAZIONE:</strong> {currentStep.situation}
+          <strong>{t("situation")}:</strong> {currentStep.situation}
         </p>
         <div className="d-flex flex-column gap-2">
           {currentStep.options.map((option, index) => (
@@ -72,11 +72,11 @@ const FocusMentalCoach = ({ coach }) => {
         {showFeedback && (
           <div className="position-absolute bottom-0 end-0 p-4">
             <p className="mb-1">
-              <strong>Feedback:</strong>
+              <strong>{t("feedback")}:</strong>
             </p>
             <p>{selectedOption?.correct ? currentStep.feedback.correct : currentStep.feedback.wrong}</p>
             <Button variant="primary" onClick={handleNext} className="focusfield-btn d-block mx-auto">
-              Avanti
+              {t("next")}
             </Button>
           </div>
         )}

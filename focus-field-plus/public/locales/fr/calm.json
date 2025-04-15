@@ -1,45 +1,145 @@
 {
   "name": "Calme",
-  "description": "Nous vous aiderons à retrouver la tranquillité et à détendre votre esprit.",
-  "imagine": "Imaginez-vous créer un espace rien que pour vous, loin du bruit et des pensées.",
-  "helpYou": "Cela vous aidera à ralentir le rythme, à libérer les tensions et à retrouver l'équilibre intérieur.",
+  "description": "Nous t’aiderons à retrouver la tranquillité et à détendre ton esprit.",
+  "imagine": "Imagine que tu te réserves un espace rien qu’à toi, loin du bruit et des pensées.",
+  "helpYou": "t’aidera à ralentir le rythme, relâcher les tensions et retrouver l’équilibre intérieur.",
   "music": {
-    "title": "Peaceful Flow",
-    "scope": "vers la tranquillité"
+    "title": "Flux paisible",
+    "playlistUrl": "https://api.audius.co/v1/playlists/wEa2p5",
+    "tags": ["relaxant", "ambiant", "lent", "calmant"],
+    "scope": "vers le calme"
   },
-  "breathing": {
-    "instructions": [
-      "Inspirez profondément pendant 4 secondes",
-      "Retenez votre souffle pendant 4 secondes",
-      "Expirez lentement pendant 6 secondes"
-    ],
-    "scope": "apporter calme et clarté."
-  },
-  "relaxBody": {
-    "title": "Exercices de relaxation physique",
-    "description": "Libérez la tension musculaire avec des mouvements simples et guidés.",
-    "shoulder_relax": {
-      "name": "Relaxation des épaules",
-      "instructions": "Soulevez vos épaules vers vos oreilles, maintenez pendant 2 secondes, puis relâchez lentement."
+  "moodPage": {
+    "loading": "Chargement...",
+    "notFound": "État d’esprit introuvable.",
+    "infoModal": {
+      "title": "Informations sur la session"
     },
-    "neck_stretch": {
-      "name": "Étirement du cou",
-      "instructions": "Inclinez lentement la tête d'un côté à l'autre, en maintenant chaque position pendant 5 secondes."
+    "cta": {
+      "default": "Commencer la session"
+    },
+    "title": {
+      "calm": "Calme"
+    },
+    "desc": {
+      "calm": "Tu as besoin de patience et de tranquillité."
+    },
+    "sections": {
+      "music": "Musique",
+      "goals": "Objectifs",
+      "preJournal": "Journal initial",
+      "breathing": "Respiration",
+      "relaxBody": "Activité physique",
+      "coach": "Coach mental",
+      "ambient": "Environnement",
+      "spiritual": "Réflexion",
+      "postJournal": "Journal final"
     }
   },
+  "audius": "Écouter sur Audius",
+  "breathing": {
+    "enabled": true,
+    "techniqueLabel": "Technique proposée",
+    "technique": "profonde",
+    "in": "Inspire",
+    "hold": "Retiens",
+    "out": "Expire",
+    "phases": {
+      "in": 4,
+      "hold": 4,
+      "out": 6
+    },
+    "rounds": "auto",
+    "durationLabel": "Durée",
+    "duration": 300,
+    "instructions": [
+      "Inspire profondément pendant 4 secondes",
+      "Retiens ton souffle pendant 4 secondes",
+      "Expire lentement pendant 6 secondes"
+    ],
+    "scope": "apporter calme et clarté.",
+    "start": "Démarrer",
+    "stop": "Arrêter"
+  },
+  "relaxBody": {
+    "enabled": true,
+    "title": "Exercices de relaxation physique",
+    "description": "Relâche les tensions musculaires avec des mouvements simples et guidés.",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "pause": "Pause",
+    "pauseText": "Récupère avant le prochain exercice.",
+    "duration": "Durée :",
+    "scrollDown": "Faire défiler vers le bas",
+    "scrollUp": "Revenir en haut",
+    "completed": "Tu as terminé tous les exercices ! ✅",
+    "repeatIn": "Tu pourras refaire ces exercices dans {{seconds}} secondes.",
+    "pauseDuration": 5,
+    "exercises": [
+      {
+        "name": "Relaxation des épaules",
+        "instructions": "Hausse les épaules vers les oreilles, retiens 2 secondes, puis relâche doucement.",
+        "duration": "30",
+        "image": "../../src/assets/images/shoulder_relax.png"
+      },
+      {
+        "name": "Étirement du cou",
+        "instructions": "Incline lentement la tête d’un côté à l’autre, en maintenant chaque position 5 secondes.",
+        "duration": "60",
+        "image": "../../src/assets/images/neck_relax.png"
+      }
+    ]
+  },
   "journalPre": {
-    "prompt": "Écrivez ce qui vous trouble et ce que vous pouvez faire pour relâcher cette tension."
+    "enabled": true,
+    "prompt": "Écris ce qui te dérange et ce que tu peux faire pour le relâcher.",
+    "placeholder": "Écris ici...",
+    "save": "Enregistrer",
+    "optional": true
   },
   "journalPost": {
-    "prompt": "Écrivez comment vous vous sentez maintenant après cette session."
+    "enabled": true,
+    "prompt": "Écris comment tu te sens après cette session.",
+    "placeholder": "Écris ici...",
+    "save": "Enregistrer",
+    "optional": true
   },
   "spiritual": {
+    "enabled": true,
+    "type": "verse",
+    "verse": "Proverbes 14:30",
     "text": "Un cœur calme est la vie pour le corps..."
   },
   "environment": {
-    "suggestion": "Trouvez un endroit tranquille, tamisez les lumières, fermez les yeux si vous le pouvez et écoutez ces sons avec des écouteurs pour mieux vous immerger dans l'atmosphère."
+    "backgroundImage": "../../src/assets/images/bg_calm.png",
+    "backgroundVideo": "../../src/assets/media/calm.mp4",
+    "soundscape": ["Couleurs de la forêt", "Son de l'eau"],
+    "audioSrc": "../../src/assets/media/calm.mp3",
+    "suggestion": "Trouve un endroit calme, tamise la lumière, ferme les yeux si possible et écoute ces sons au casque.",
+    "duration": "300",
+    "title": "Environnement immersif",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "mute": "Couper la musique",
+    "unmute": "Activer la musique",
+    "fullscreen": "Plein écran",
+    "exitFullscreen": "Quitter le plein écran",
+    "suggestedDuration": "Suggéré : {{min}} min"
   },
+  "coach": {
+    "enabled": true,
+    "intro": "Tu apprendras à gérer des obstacles réels en restant calme et présent.",
+    "obstacle": "Obstacle {{current}} sur {{total}}",
+    "situation": "Situation",
+    "feedback": "Retour",
+    "next": "Suivant",
+    "finished": "Parcours terminé ! Tu as bien géré {{score}} situations sur {{total}}.",
+    "noSteps": "Aucun parcours disponible pour cette humeur.",
+    "steps": []
+  },
+  "durationSuggestion": "10-20 min",
   "cta": {
-    "text": "Terminez votre session"
+    "text": "Termine ta session",
+    "action": "/session/start"
   }
 }

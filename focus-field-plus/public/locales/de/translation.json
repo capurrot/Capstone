@@ -169,33 +169,5 @@
       "faq": "FAQ",
       "contact": "Kontakt"
     }
-  },
-  "moodPage": {
-    "loading": "Wird geladen...",
-    "notFound": "Stimmung nicht gefunden.",
-    "infoModal": {
-      "title": "Sitzungsinformationen"
-    },
-    "cta": {
-      "default": "Sitzung starten"
-    },
-    "title": {
-      "calm": "Ruhe"
-    },
-    "desc": {
-      "calm": "Du brauchst Geduld und Ruhe."
-    },
-    "sections": {
-      "music": "Musik",
-      "goals": "Ziele",
-      "preJournal": "Anfangsjournal",
-      "breathing": "Atmung",
-      "relaxBody": "Bewegung",
-      "coach": "Mentales Training",
-      "ambient": "Klangumgebung",
-      "spiritual": "Reflexion",
-      "postJournal": "Abschlussjournal"
-    }
-  },
-  "audius": "Auf Audius anhören"
+  }
 }

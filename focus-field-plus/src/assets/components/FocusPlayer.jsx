@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SET_VOLUME, SET_PLAYER_PREFERENCE } from "../../redux/actions";
 import { useTranslation } from "react-i18next";
 
-const FocusPlayer = ({ playlistUrl }) => {
+const FocusPlayer = ({ playlistUrl, moodName }) => {
   const [songIndex, setSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [tracks, setTracks] = useState([]);
@@ -22,7 +22,7 @@ const FocusPlayer = ({ playlistUrl }) => {
 
   const audioRef = useRef(null);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t } = useTranslation(moodName);
 
   // Redux Persist Preferences
   const { isMuted, isListVisible, isControlsVisible, repeatMode, isShuffled } = useSelector(

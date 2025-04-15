@@ -169,33 +169,5 @@
       "faq": "FAQ",
       "contact": "Contatti"
     }
-  },
-  "moodPage": {
-    "loading": "Caricamento in corso...",
-    "notFound": "Stato d'animo non trovato.",
-    "infoModal": {
-      "title": "Informazioni sulla sessione"
-    },
-    "cta": {
-      "default": "Inizia la sessione"
-    },
-    "title": {
-      "calm": "Calma"
-    },
-    "desc": {
-      "calm": "Hai bisogno di pazienza e tranquillità."
-    },
-    "sections": {
-      "music": "Musica",
-      "goals": "Obiettivi",
-      "preJournal": "Diario iniziale",
-      "breathing": "Respirazione",
-      "relaxBody": "Attività motoria",
-      "coach": "Coach mentale",
-      "ambient": "Ambiente sonoro",
-      "spiritual": "Riflessione",
-      "postJournal": "Diario finale"
-    }
-  },
-  "audius": "Ascolta su Audius"
+  }
 }

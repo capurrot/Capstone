@@ -15,30 +15,21 @@ import { MdAutoStories } from "react-icons/md";
 
 function MoodPage({ moodName }) {
   const [moodData, setMoodData] = useState(null);
-  const [translations, setTranslations] = useState({});
   const [loading, setLoading] = useState(true);
   const [showInfoModal, setShowInfoModal] = useState(false);
 
   const dispatch = useDispatch();
   const allMoods = useSelector((state) => state.mood.allMoods);
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation(moodName, { keyPrefix: "moodPage" });
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
       try {
         const lang = i18n.language || "it";
-
-        // Carica il contenuto del mood
-        const moodRes = await fetch(`/locales/${lang}/${moodName}.json`);
-        const moodJson = await moodRes.json();
-
-        // Carica la traduzione del mood
-        const transRes = await fetch(`/locales/${lang}/${moodName}.json`);
-        const transJson = await transRes.json();
-
-        setMoodData(moodJson);
-        setTranslations(transJson);
+        const res = await fetch(`/locales/${lang}/${moodName}.json`);
+        const json = await res.json();
+        setMoodData(json);
 
         const fullMood = allMoods.find((m) => m.slug === moodName);
         if (fullMood) {
@@ -47,7 +38,6 @@ function MoodPage({ moodName }) {
       } catch (error) {
         console.error("Errore nel caricamento dati del mood:", error);
         setMoodData(null);
-        setTranslations({});
       } finally {
         setLoading(false);
       }
@@ -56,10 +46,21 @@ function MoodPage({ moodName }) {
     loadData();
   }, [moodName, dispatch, allMoods, i18n.language]);
 
-  if (loading) return <p>{t("moodPage.loading")}</p>;
-  if (!moodData) return <p>{t("moodPage.notFound")}</p>;
+  if (loading) return <p>{t("loading")}</p>;
+  if (!moodData) return <p>{t("notFound")}</p>;
 
-  const tr = (key, fallback) => translations[key] || fallback;
+  const tr = (key, fallback) => {
+    const keys = key.split(".");
+    let value = moodData;
+    for (let k of keys) {
+      if (value?.[k] !== undefined) {
+        value = value[k];
+      } else {
+        return fallback;
+      }
+    }
+    return value;
+  };
 
   return (
     <Container
@@ -75,28 +76,28 @@ function MoodPage({ moodName }) {
       <Container>
         <header className="mood-header text-white p-5 text-center position-relative">
           <div className="d-flex flex-row">
-            <h1 className="display-1">{t("name", moodData.name)}</h1>
+            <h1 className="display-1">{tr("name", moodName)}</h1>
             <i
               className="bi bi-question-circle-fill ms-3"
               style={{ cursor: "pointer", fontSize: "1.5rem" }}
               onClick={() => setShowInfoModal(true)}
-              title={t("moodPage.infoModal.title")}
+              title={t("infoModal.title")}
             />
           </div>
-          <p className="lead mt-3">{t("description", moodData.description)}</p>
+          <p className="lead mt-3">{tr("description", "")}</p>
         </header>
 
         <section className="mood-section music py-4 px-lg-4 rounded">
           <h2 className="mood-text mb-3 ps-3">
-            <i className="fas fa-music me-1"></i> - {t("moodPage.sections.music")}
+            <i className="fas fa-music me-1"></i> - {t("sections.music")}
           </h2>
-          <FocusPlayer playlistUrl={moodData.music.playlistUrl} />
+          <FocusPlayer playlistUrl={moodData.music.playlistUrl} moodName={moodName} />
         </section>
 
         {moodData.journalGoals?.enabled && (
           <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <i className="fas fa-pencil-alt me-1"></i> - {t("moodPage.sections.goals")}
+              <i className="fas fa-pencil-alt me-1"></i> - {t("sections.goals")}
             </h2>
             <FocusGoals goals={moodData.journalGoals} />
           </section>
@@ -105,11 +106,9 @@ function MoodPage({ moodName }) {
         {moodData.journalPre?.enabled && (
           <section className="mood-section journal p-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <i className="fas fa-pencil-alt me-1"></i> - {t("moodPage.sections.preJournal")}
+              <i className="fas fa-pencil-alt me-1"></i> - {t("sections.preJournal")}
             </h2>
-            <FocusJournal
-              journal={{ ...moodData.journalPre, prompt: tr("journalPre.prompt", moodData.journalPre.prompt) }}
-            />
+            <FocusJournal journal={moodData.journalPre} moodName={moodName} />
           </section>
         )}
 
@@ -118,7 +117,7 @@ function MoodPage({ moodName }) {
             {moodData.breathing?.enabled && (
               <section className="mood-section breathing p-4">
                 <h2 className="mood-text mb-3 ps-3">
-                  <i className="fas fa-lungs me-1"></i> - {t("moodPage.sections.breathing")}
+                  <i className="fas fa-lungs me-1"></i> - {t("sections.breathing")}
                 </h2>
                 <BreathingExercise config={moodData.breathing} moodName={moodName} />
               </section>
@@ -128,9 +127,9 @@ function MoodPage({ moodName }) {
             {moodData.relaxBody?.enabled && (
               <section className="mood-section relax-body p-4 mt-4 mt-md-0">
                 <h2 className="mood-text mb-3 ps-3">
-                  <i className="fas fa-running me-1"></i> - {t("moodPage.sections.relaxBody")}
+                  <i className="fas fa-running me-1"></i> - {t("sections.relaxBody")}
                 </h2>
-                <RelaxBodyExercises config={moodData.relaxBody} translations={translations.relaxBody} />
+                <RelaxBodyExercises config={moodData.relaxBody} moodName={moodName} />
               </section>
             )}
           </Col>
@@ -138,9 +137,9 @@ function MoodPage({ moodName }) {
             {moodData.coach?.enabled && (
               <section className="mood-section mental-coach p-4 mt-4 mt-md-0">
                 <h2 className="mood-text mb-3 ps-3">
-                  <i className="fas fa-brain me-1"></i> - {t("moodPage.sections.coach")}
+                  <i className="fas fa-brain me-1"></i> - {t("sections.coach")}
                 </h2>
-                <FocusMentalCoach coach={moodData.coach} translations={translations.coach} />
+                <FocusMentalCoach coach={moodData.coach} moodName={moodName} />
               </section>
             )}
           </Col>
@@ -148,24 +147,25 @@ function MoodPage({ moodName }) {
 
         <section className="mood-section ambient p-4 mt-4">
           <h2 className="mood-text mb-3 ps-3">
-            <i className="fas fa-leaf"></i> - {t("moodPage.sections.ambient")}
+            <i className="fas fa-leaf"></i> - {t("sections.ambient")}
           </h2>
           <FocusSoundScape
             soundScape={moodData.environment.soundscape}
             backgroundVideo={moodData.environment.backgroundVideo}
             audioSrc={moodData.environment.audioSrc}
-            suggestion={tr("environment.suggestion", moodData.environment.suggestion)}
+            suggestion={moodData.environment.suggestion}
             duration={moodData.environment.duration}
+            moodName={moodName}
           />
         </section>
 
         {moodData.spiritual?.enabled && (
           <section className="mood-section spiritual p-4 mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <MdAutoStories /> - {t("moodPage.sections.spiritual")}
+              <MdAutoStories /> - {t("sections.spiritual")}
             </h2>
             <div className="reflection-container p-3 d-flex flex-column">
-              <p className="fs-4">{tr("spiritual.text", moodData.spiritual.text)}</p>
+              <p className="fs-4">{moodData.spiritual.text}</p>
               <cite className="ms-auto fs-4">{moodData.spiritual.verse}</cite>
             </div>
           </section>
@@ -174,18 +174,14 @@ function MoodPage({ moodName }) {
         {moodData.journalPost?.enabled && (
           <section className="mood-section journal p-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <i className="fas fa-pencil-alt me-1"></i> - {t("moodPage.sections.postJournal")}
+              <i className="fas fa-pencil-alt me-1"></i> - {t("sections.postJournal")}
             </h2>
-            <FocusJournal
-              journal={{ ...moodData.journalPost, prompt: tr("journalPost.prompt", moodData.journalPost.prompt) }}
-            />
+            <FocusJournal journal={moodData.journalPost} />
           </section>
         )}
 
         <footer className="p-4 text-center">
-          <button className="focusfield-btn fs-4">
-            {tr("cta.text", moodData.cta?.text) || t("moodPage.cta.default")}
-          </button>
+          <button className="focusfield-btn fs-4">{moodData.cta?.text || t("cta.default")}</button>
         </footer>
 
         <FocusMoodInfoModal show={showInfoModal} handleClose={() => setShowInfoModal(false)} mood={moodData} />

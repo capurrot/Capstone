@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { SET_VOLUME } from "../../redux/actions";
 import { FaVolumeMute, FaVolumeUp, FaExpand, FaStop, FaCompress } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
+import { useTranslation } from "react-i18next";
 
-const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestion, duration = 300 }) => {
+const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestion, duration = 300, moodName }) => {
+  const { t } = useTranslation(moodName, { keyPrefix: "environment" });
+
   const dispatch = useDispatch();
   const audioRef = useRef(null);
   const videoRef = useRef(null);
@@ -22,13 +25,8 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
     previousVolumeRef.current = musicVolume;
     dispatch({ type: SET_VOLUME, payload: { musicVolume: 0.2 } });
 
-    if (audioRef.current) {
-      audioRef.current.play().catch((err) => console.warn("Audio bloccato:", err.message));
-    }
-
-    if (videoRef.current) {
-      videoRef.current.play().catch((err) => console.warn("Video bloccato:", err.message));
-    }
+    audioRef.current?.play().catch((err) => console.warn("Audio bloccato:", err.message));
+    videoRef.current?.play().catch((err) => console.warn("Video bloccato:", err.message));
 
     setStarted(true);
     setTimer(0);
@@ -36,19 +34,16 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
   };
 
   const handleStop = () => {
-    const previousVolume = previousVolumeRef.current ?? 0.5;
-    dispatch({ type: SET_VOLUME, payload: { musicVolume: previousVolume } });
+    dispatch({ type: SET_VOLUME, payload: { musicVolume: previousVolumeRef.current ?? 0.5 } });
 
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
-
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
     }
-
     if (document.fullscreenElement) {
       document.exitFullscreen();
     }
@@ -62,16 +57,13 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
   const toggleMusicMute = () => {
     setIsMusicMuted((prev) => {
       const newState = !prev;
-      const volumeToSet = newState ? 0 : 0.2;
-      dispatch({ type: SET_VOLUME, payload: { musicVolume: volumeToSet } });
+      dispatch({ type: SET_VOLUME, payload: { musicVolume: newState ? 0 : 0.2 } });
       return newState;
     });
   };
 
   const toggleFullscreen = () => {
     const el = containerRef.current;
-
-    // Safari (iOS) fullscreen workaround
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
     if (isIOS && videoRef.current?.webkitEnterFullscreen) {
@@ -79,7 +71,6 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
       return;
     }
 
-    // Standard Fullscreen API
     if (el) {
       if (document.fullscreenElement) {
         document.exitFullscreen();
@@ -91,24 +82,20 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
 
   useEffect(() => {
     let interval;
-
     if (started) {
       interval = setInterval(() => {
-        setTimer((prevTimer) => {
-          const updatedTimer = prevTimer + 1;
-
-          if (updatedTimer <= duration) {
+        setTimer((prev) => {
+          const updated = prev + 1;
+          if (updated <= duration) {
             setCountdown((prevCountdown) => Math.max(prevCountdown - 1, 0));
           } else {
             setIsWarning(true);
             setCountdown((prevCountdown) => prevCountdown + 1);
           }
-
-          return updatedTimer;
+          return updated;
         });
       }, 1000);
     }
-
     return () => clearInterval(interval);
   }, [started, duration]);
 
@@ -142,8 +129,7 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
         >
           {!started && (
             <>
-              <h4 className="mb-3">Ambientazione immersiva</h4>
-
+              <h4 className="mb-3">{t("title")}</h4>
               <ul className="list-unstyled mb-3">
                 {soundScape.map((sound, idx) => (
                   <li key={idx}>
@@ -151,14 +137,12 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
                   </li>
                 ))}
               </ul>
-
-              <button className="focusfield-btn " onClick={handleStart}>
-                Avvia ambientazione
+              <button className="focusfield-btn" onClick={handleStart}>
+                {t("start")}
               </button>
-
               {suggestion && (
                 <div className="alert alert-info rounded small mb-3 info-text fs-5 position-absolute bottom-0 end-0 m-3 d-none d-md-flex align-items-center">
-                  <i className="fas fa-info-circle me-1"></i> {suggestion}
+                  <i className="fas fa-info-circle me-1"></i> {t("suggestion")}
                 </div>
               )}
             </>
@@ -168,13 +152,15 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
         {started && (
           <div className="position-absolute top-0 end-0 m-3 text-end z-2">
             <div className="bg-dark bg-opacity-50 text-white px-3 py-2 rounded-3 small d-flex flex-column align-items-center">
-              <div className="text-light text-end small">consigliato: {Math.floor(duration / 60)} min</div>
+              <div className="text-light text-end small">
+                {t("suggestedDuration", { min: Math.floor(duration / 60) })}
+              </div>
               <div className="d-flex gap-2 mt-2">
                 <button
                   className="btn btn-sm btn-outline-light"
                   onClick={toggleMusicMute}
                   data-tooltip-id="tooltip"
-                  data-tooltip-content={isMusicMuted ? "Riattiva musica" : "Muta musica"}
+                  data-tooltip-content={isMusicMuted ? t("unmute") : t("mute")}
                 >
                   {isMusicMuted ? <FaVolumeMute /> : <FaVolumeUp />}
                 </button>
@@ -182,7 +168,7 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
                   className="btn btn-sm btn-outline-light"
                   onClick={toggleFullscreen}
                   data-tooltip-id="tooltip"
-                  data-tooltip-content={document.fullscreenElement ? "Esci da tutto schermo" : "A tutto schermo"}
+                  data-tooltip-content={document.fullscreenElement ? t("exitFullscreen") : t("fullscreen")}
                 >
                   {document.fullscreenElement ? <FaCompress /> : <FaExpand />}
                 </button>
@@ -190,7 +176,7 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
                   className="btn btn-sm btn-outline-danger"
                   onClick={handleStop}
                   data-tooltip-id="tooltip"
-                  data-tooltip-content="Ferma ambientazione"
+                  data-tooltip-content={t("stop")}
                 >
                   <FaStop />
                 </button>
@@ -203,9 +189,6 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
                   className="progress-bar bg-success"
                   role="progressbar"
                   style={{ width: `${(timer / duration) * 100}%` }}
-                  aria-valuenow={(timer / duration) * 100}
-                  aria-valuemin="0"
-                  aria-valuemax="100"
                 ></div>
               </div>
             </div>

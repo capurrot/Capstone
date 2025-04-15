@@ -1,45 +1,171 @@
 {
   "name": "Ruhe",
-  "description": "Wir helfen Ihnen, Ruhe zu finden und Ihren Geist zu entspannen.",
-  "imagine": "Stellen Sie sich vor, Sie schaffen einen Raum nur für sich, fern vom Lärm und den Gedanken.",
-  "helpYou": "Es wird Ihnen helfen, das Tempo zu verlangsamen, Spannungen abzubauen und inneres Gleichgewicht zu finden.",
+  "description": "Wir helfen dir, Ruhe zu finden und den Geist zu entspannen.",
+  "imagine": "Stell dir einen Raum nur für dich vor, fernab von Lärm und Gedanken.",
+  "helpYou": "es wird dir helfen, das Tempo zu verlangsamen, Spannungen zu lösen und innere Balance zu finden.",
   "music": {
     "title": "Peaceful Flow",
+    "playlistUrl": "https://api.audius.co/v1/playlists/wEa2p5",
+    "tags": ["entspannend", "ambient", "langsam", "beruhigend"],
     "scope": "in Richtung Ruhe"
   },
-  "breathing": {
-    "instructions": [
-      "Atme tief ein für 4 Sekunden",
-      "Halte den Atem für 4 Sekunden",
-      "Atme langsam aus für 6 Sekunden"
-    ],
-    "scope": "Ruhe und Klarheit bringen."
-  },
-  "relaxBody": {
-    "title": "Körperliche Entspannungsübungen",
-    "description": "Lösen Sie Muskelverspannungen mit einfachen, geführten Bewegungen.",
-    "shoulder_relax": {
-      "name": "Schulterentspannung",
-      "instructions": "Heben Sie Ihre Schultern zu den Ohren, halten Sie sie 2 Sekunden und entspannen Sie dann langsam."
+  "moodPage": {
+    "loading": "Wird geladen...",
+    "notFound": "Stimmung nicht gefunden.",
+    "infoModal": {
+      "title": "Informationen zur Sitzung"
     },
-    "neck_stretch": {
-      "name": "Nackenstreckung",
-      "instructions": "Neigen Sie langsam den Kopf von Seite zu Seite und halten Sie jede Position für 5 Sekunden."
+    "cta": {
+      "default": "Sitzung starten"
+    },
+    "title": {
+      "calm": "Ruhe"
+    },
+    "desc": {
+      "calm": "Du brauchst Geduld und Ruhe."
+    },
+    "sections": {
+      "music": "Musik",
+      "goals": "Ziele",
+      "preJournal": "Anfangsjournal",
+      "breathing": "Atmung",
+      "relaxBody": "Körperliche Aktivitäten",
+      "coach": "Mentale Unterstützung",
+      "ambient": "Umgebung",
+      "spiritual": "Reflexion",
+      "postJournal": "Abschlussjournal"
     }
   },
+  "audius": "Hören auf Audius",
+  "breathing": {
+    "enabled": true,
+    "techniqueLabel": "Vorgeschlagene Technik",
+    "technique": "deep",
+    "in": "Einatmen",
+    "hold": "Halten",
+    "out": "Ausatmen",
+    "phases": {
+      "in": 4,
+      "hold": 4,
+      "out": 6
+    },
+    "rounds": "auto",
+    "durationLabel": "Dauer",
+    "duration": 300,
+    "instructions": [
+      "Tief einatmen für 4 Sekunden",
+      "Halte den Atem für 4 Sekunden",
+      "Langsam ausatmen für 6 Sekunden"
+    ],
+    "scope": "Ruhe und Klarheit bringen.",
+    "start": "Starten",
+    "stop": "Stoppen"
+  },
+  "relaxBody": {
+    "enabled": true,
+    "title": "Körperliche Entspannungsübungen",
+    "description": "Löse Muskelverspannungen mit einfachen und geführten Bewegungen.",
+    "start": "Starten",
+    "stop": "Stoppen",
+    "pause": "Pause",
+    "pauseText": "Erhole dich vor der nächsten Übung.",
+    "duration": "Dauer:",
+    "scrollDown": "Nach unten scrollen",
+    "scrollUp": "Nach oben scrollen",
+    "completed": "Du hast alle Übungen abgeschlossen! ✅",
+    "repeatIn": "In {{seconds}} Sekunden kannst du diese Übungen erneut durchführen.",
+    "pauseDuration": 5,
+    "exercises": [
+      {
+        "name": "Schulterentspannung",
+        "instructions": "Hebe die Schultern bis zu den Ohren, halte 2 Sekunden und entspanne dann langsam.",
+        "duration": "30",
+        "image": "../../src/assets/images/shoulder_relax.png"
+      },
+      {
+        "name": "Nacken-Dehnung",
+        "instructions": "Neige langsam den Kopf von Seite zu Seite und halte jede Position für 5 Sekunden.",
+        "duration": "60",
+        "image": "../../src/assets/images/neck_relax.png"
+      }
+    ]
+  },
   "journalPre": {
-    "prompt": "Schreiben Sie, was Sie beunruhigt und was Sie tun können, um diese Spannung loszulassen."
+    "enabled": true,
+    "prompt": "Schreibe, was dich stört und was du tun kannst, um diese Spannung loszulassen. (Es wird helfen, den Nutzen am Ende der Sitzung zu bewerten und den Fortschritt zu verfolgen!)",
+    "placeholder": "Schreibe hier...",
+    "save": "Speichern",
+    "optional": true
   },
   "journalPost": {
-    "prompt": "Schreiben Sie, wie Sie sich jetzt nach dieser Sitzung fühlen."
+    "enabled": true,
+    "prompt": "Schreibe, wie du dich nach dieser Sitzung fühlst. Hilf uns, die Erfahrung noch besser an deine Situation anzupassen.",
+    "placeholder": "Schreibe hier...",
+    "save": "Speichern",
+    "optional": true
   },
   "spiritual": {
+    "enabled": true,
+    "type": "verse",
+    "verse": "Sprüche 14:30",
     "text": "Ein ruhiges Herz ist Leben für den Körper..."
   },
   "environment": {
-    "suggestion": "Finden Sie einen ruhigen Ort, dimmen Sie das Licht, schließen Sie die Augen, wenn möglich, und hören Sie diese Geräusche mit Kopfhörern, um sich besser in die Atmosphäre zu vertiefen."
+    "backgroundImage": "../../src/assets/images/bg_calm.png",
+    "backgroundVideo": "../../src/assets/media/calm.mp4",
+    "soundscape": ["Farben des Waldes", "Geräusch des Wassers"],
+    "audioSrc": "../../src/assets/media/calm.mp3",
+    "suggestion": "Finde einen ruhigen Ort, dimme das Licht, schließe die Augen, wenn du kannst, und höre diese Geräusche mit Kopfhörern, um besser in die Atmosphäre einzutauchen.",
+    "duration": "300",
+    "title": "Immersive Umgebung",
+    "start": "Starten",
+    "stop": "Stoppen",
+    "mute": "Musik stummschalten",
+    "unmute": "Musik wieder aktivieren",
+    "fullscreen": "Vollbild",
+    "exitFullscreen": "Vollbild verlassen",
+    "suggestedDuration": "Empfohlen: {{min}} min"
   },
+  "coach": {
+    "enabled": true,
+    "intro": "Du wirst lernen, echte Hindernisse ruhig und präsent zu bewältigen.",
+    "obstacle": "Hindernis {{current}} von {{total}}",
+    "situation": "Situation",
+    "feedback": "Feedback",
+    "next": "Weiter",
+    "finished": "Kurs abgeschlossen! Du hast {{score}} Situationen von {{total}} gut gemeistert.",
+    "noSteps": "Für diese Stimmung ist kein Kurs verfügbar.",
+    "steps": [
+      {
+        "id": "calm-1",
+        "situation": "Du stehst kurz davor, eine wichtige Aufgabe zu beginnen, aber du fühlst dich vom Lärm um dich herum überwältigt.",
+        "options": [
+          { "text": "Ich setze meine Kopfhörer auf, höre entspannende Musik und atme tief durch.", "correct": true },
+          { "text": "Ich beschwere mich über den Lärm und verliere meine Konzentration.", "correct": false },
+          { "text": "Ich warte, dass der Lärm aufhört, während ich auf Instagram scrolle.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Gute Wahl. Du übernimmst die Kontrolle über deinen mentalen Raum.",
+          "wrong": "Verständlich, aber du hast bessere Werkzeuge, um Ruhe zu finden."
+        }
+      },
+      {
+        "id": "calm-2",
+        "situation": "Du bemerkst, dass du flach und angespannt atmest.",
+        "options": [
+          { "text": "Ich setze mich hin und mache 3 bewusste tiefe Atemzüge.", "correct": true },
+          { "text": "Ich ignoriere das Gefühl und mache weiter, als wäre nichts.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Gut gemacht. Die Atmung ist dein erster Verbündeter.",
+          "wrong": "Ignoriere deinen Körper nicht, das führt nicht zur Ruhe. Mach eine Pause."
+        }
+      }
+    ]
+  },
+  "durationSuggestion": "10-20 min",
   "cta": {
-    "text": "Beenden Sie Ihre Sitzung"
+    "text": "Sitzung beenden",
+    "action": "/session/start"
   }
 }
