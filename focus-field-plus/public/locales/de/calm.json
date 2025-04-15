@@ -1,0 +1,45 @@
+{
+  "name": "Ruhe",
+  "description": "Wir helfen Ihnen, Ruhe zu finden und Ihren Geist zu entspannen.",
+  "imagine": "Stellen Sie sich vor, Sie schaffen einen Raum nur für sich, fern vom Lärm und den Gedanken.",
+  "helpYou": "Es wird Ihnen helfen, das Tempo zu verlangsamen, Spannungen abzubauen und inneres Gleichgewicht zu finden.",
+  "music": {
+    "title": "Peaceful Flow",
+    "scope": "in Richtung Ruhe"
+  },
+  "breathing": {
+    "instructions": [
+      "Atme tief ein für 4 Sekunden",
+      "Halte den Atem für 4 Sekunden",
+      "Atme langsam aus für 6 Sekunden"
+    ],
+    "scope": "Ruhe und Klarheit bringen."
+  },
+  "relaxBody": {
+    "title": "Körperliche Entspannungsübungen",
+    "description": "Lösen Sie Muskelverspannungen mit einfachen, geführten Bewegungen.",
+    "shoulder_relax": {
+      "name": "Schulterentspannung",
+      "instructions": "Heben Sie Ihre Schultern zu den Ohren, halten Sie sie 2 Sekunden und entspannen Sie dann langsam."
+    },
+    "neck_stretch": {
+      "name": "Nackenstreckung",
+      "instructions": "Neigen Sie langsam den Kopf von Seite zu Seite und halten Sie jede Position für 5 Sekunden."
+    }
+  },
+  "journalPre": {
+    "prompt": "Schreiben Sie, was Sie beunruhigt und was Sie tun können, um diese Spannung loszulassen."
+  },
+  "journalPost": {
+    "prompt": "Schreiben Sie, wie Sie sich jetzt nach dieser Sitzung fühlen."
+  },
+  "spiritual": {
+    "text": "Ein ruhiges Herz ist Leben für den Körper..."
+  },
+  "environment": {
+    "suggestion": "Finden Sie einen ruhigen Ort, dimmen Sie das Licht, schließen Sie die Augen, wenn möglich, und hören Sie diese Geräusche mit Kopfhörern, um sich besser in die Atmosphäre zu vertiefen."
+  },
+  "cta": {
+    "text": "Beenden Sie Ihre Sitzung"
+  }
+}

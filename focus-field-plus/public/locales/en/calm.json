@@ -1,0 +1,45 @@
+{
+  "name": "Calm",
+  "description": "We will help you regain tranquility and relax your mind.",
+  "imagine": "Imagine carving out a space just for you, away from noise and thoughts.",
+  "helpYou": "It will help you slow down the pace, release tension, and regain inner balance.",
+  "music": {
+    "title": "Peaceful Flow",
+    "scope": "toward tranquility"
+  },
+  "breathing": {
+    "instructions": [
+      "Breathe in deeply for 4 seconds",
+      "Hold your breath for 4 seconds",
+      "Breathe out slowly for 6 seconds"
+    ],
+    "scope": "bring calm and clarity."
+  },
+  "relaxBody": {
+    "title": "Physical relaxation exercises",
+    "description": "Release muscle tension with simple guided movements.",
+    "shoulder_relax": {
+      "name": "Shoulder relaxation",
+      "instructions": "Lift your shoulders toward your ears, hold for 2 seconds, then slowly relax."
+    },
+    "neck_stretch": {
+      "name": "Neck stretching",
+      "instructions": "Tilt your head slowly from side to side, holding each position for 5 seconds."
+    }
+  },
+  "journalPre": {
+    "prompt": "Write what is troubling you and what you can do to release that tension."
+  },
+  "journalPost": {
+    "prompt": "Write how you feel now after this session."
+  },
+  "spiritual": {
+    "text": "A calm heart is life to the body..."
+  },
+  "environment": {
+    "suggestion": "Find a quiet place, dim the lights, close your eyes if you can, and listen to these sounds through headphones to immerse yourself better in the atmosphere."
+  },
+  "cta": {
+    "text": "Finish your session"
+  }
+}

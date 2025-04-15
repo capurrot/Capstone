@@ -25,6 +25,7 @@
     "framer-motion": "^12.7.2",
     "i18next": "^24.2.3",
     "i18next-browser-languagedetector": "^8.0.4",
+    "i18next-http-backend": "^3.0.2",
     "react": "^19.0.0",
     "react-audio-player": "^0.17.0",
     "react-bootstrap": "^2.10.9",

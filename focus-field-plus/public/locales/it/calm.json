@@ -1,0 +1,119 @@
+{
+  "name": "Calma",
+  "description": "Ti aiuteremo a ritrovare la tranquillità e a rilassare la mente.",
+  "imagine": "Immagina di ritagliarti uno spazio tutto tuo, lontano dal rumore e dai pensieri.",
+  "helpYou": "ti aiuterà a rallentare il ritmo, sciogliere le tensioni e ritrovare equilibrio interiore.",
+  "music": {
+    "title": "Peaceful Flow",
+    "playlistUrl": "https://api.audius.co/v1/playlists/wEa2p5",
+    "tags": ["rilassante", "ambient", "lento", "calmante"],
+    "scope": "verso la quiete"
+  },
+  "breathing": {
+    "enabled": true,
+    "techniqueLabel": "Tecnica proposta",
+    "technique": "deep",
+    "in": "Inspira",
+    "hold": "Trattieni",
+    "out": "Espira",
+    "phases": {
+      "in": 4,
+      "hold": 4,
+      "out": 6
+    },
+    "rounds": "auto",
+    "durationLabel": "Durata",
+    "duration": 300,
+    "instructions": [
+      "Inspira profondamente per 4 secondi",
+      "Trattieni il respiro per 4 secondi",
+      "Espira lentamente per 6 secondi"
+    ],
+    "scope": "portare calma e lucidità.",
+    "start": "Avvia",
+    "stop": "Ferma"
+  },
+  "relaxBody": {
+    "enabled": true,
+    "title": "Esercizi di rilassamento fisico",
+    "description": "Allenta le tensioni muscolari con movimenti semplici e guidati.",
+    "exercises": [
+      {
+        "name": "Rilassamento delle spalle",
+        "instructions": "Alza le spalle verso le orecchie, trattieni 2 secondi, poi rilassa lentamente.",
+        "duration": "30",
+        "image": "../../src/assets/images/shoulder_relax.png"
+      },
+      {
+        "name": "Stretching del collo",
+        "instructions": "Inclina la testa lentamente da un lato all’altro, tenendo ogni posizione per 5 secondi.",
+        "duration": "60",
+        "image": "../../src/assets/images/neck_relax.png"
+      }
+    ]
+  },
+  "journalPre": {
+    "enabled": true,
+    "prompt": "Scrivi cosa ti sta turbando e cosa puoi fare per lasciare andare quella tensione. (Sarà utile per valutare il beneficio al termine della sessione e per tenere traccia dei progressi nel tempo!)",
+    "placeholder": "Scrivi qui...",
+    "save": "Salva",
+    "optional": true
+  },
+  "journalPost": {
+    "enabled": true,
+    "prompt": "Scrivi come ti senti ora dopo questa sessione. Aiutaci a rendere l'esperienza ancora più adatta alla tua situazione.",
+    "placeholder": "Scrivi qui...",
+    "save": "Salva",
+    "optional": true
+  },
+  "spiritual": {
+    "enabled": true,
+    "type": "verse",
+    "verse": "Proverbi 14:30",
+    "text": "Il cuore calmo è vita per il corpo..."
+  },
+  "environment": {
+    "backgroundImage": "../../src/assets/images/bg_calm.png",
+    "backgroundVideo": "../../src/assets/media/calm.mp4",
+    "soundscape": ["Colori della foresta", "Suono dell'acqua"],
+    "audioSrc": "../../src/assets/media/calm.mp3",
+    "suggestion": "Trova un luogo tranquillo, abbassa le luci, chiudi gli occhi se puoi e ascolta questi suoni in cuffia per immergerti meglio nell’atmosfera.",
+    "duration": "300"
+  },
+  "coach": {
+    "enabled": true,
+    "intro": "Imparerai ad affrontare ostacoli reali rimanendo calmo e presente.",
+    "steps": [
+      {
+        "id": "calm-1",
+        "situation": "Stai per iniziare un compito importante, ma ti senti sopraffatto dal rumore intorno a te.",
+        "options": [
+          { "text": "Metto le cuffie con musica rilassante e respiro profondamente.", "correct": true },
+          { "text": "Mi lamento del rumore e perdo la concentrazione.", "correct": false },
+          { "text": "Aspetto che finisca il rumore facendo scroll su Instagram.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Ottima scelta. Stai prendendo il controllo del tuo spazio mentale.",
+          "wrong": "Comprensibile, ma hai strumenti migliori per ritrovare la calma."
+        }
+      },
+      {
+        "id": "calm-2",
+        "situation": "Ti rendi conto di avere il respiro corto e teso.",
+        "options": [
+          { "text": "Mi siedo e faccio 3 respiri profondi consapevoli.", "correct": true },
+          { "text": "Ignoro la sensazione e continuo come se niente fosse.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Ottimo. Il respiro è il tuo primo alleato.",
+          "wrong": "Ignorare il corpo non porta alla calma. Fermati un momento."
+        }
+      }
+    ]
+  },
+  "durationSuggestion": "10-20 min",
+  "cta": {
+    "text": "Termina la tua sessione",
+    "action": "/session/start"
+  }
+}

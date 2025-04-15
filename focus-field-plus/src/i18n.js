@@ -1,32 +1,22 @@
-// src/i18n.js
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-
-// Importa i file di traduzione
-import translationIT from "./locales/it.json";
-import translationEN from "./locales/en.json";
-import translationES from "./locales/es.json";
-import translationFR from "./locales/fr.json";
-import translationDE from "./locales/de.json";
-
-// Risorse (ogni lingua con la sua "translation")
-const resources = {
-  it: { translation: translationIT },
-  en: { translation: translationEN },
-  es: { translation: translationES },
-  fr: { translation: translationFR },
-  de: { translation: translationDE },
-};
+import HttpBackend from "i18next-http-backend";
 
 i18n
-  .use(LanguageDetector) // Rileva la lingua del browser
-  .use(initReactI18next) // Passa i18n a react-i18next
+  .use(HttpBackend)
+  .use(LanguageDetector)
+  .use(initReactI18next)
   .init({
-    resources,
-    fallbackLng: "it", // Lingua predefinita se non trovata
+    fallbackLng: "it",
+    debug: true,
+    defaultNS: "translation",
+    ns: ["translation"], // carica dinamicamente i mood
+    backend: {
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
     interpolation: {
-      escapeValue: false, // React già fa il lavoro di escaping
+      escapeValue: false,
     },
   });
 

@@ -1,0 +1,45 @@
+{
+  "name": "Calme",
+  "description": "Nous vous aiderons à retrouver la tranquillité et à détendre votre esprit.",
+  "imagine": "Imaginez-vous créer un espace rien que pour vous, loin du bruit et des pensées.",
+  "helpYou": "Cela vous aidera à ralentir le rythme, à libérer les tensions et à retrouver l'équilibre intérieur.",
+  "music": {
+    "title": "Peaceful Flow",
+    "scope": "vers la tranquillité"
+  },
+  "breathing": {
+    "instructions": [
+      "Inspirez profondément pendant 4 secondes",
+      "Retenez votre souffle pendant 4 secondes",
+      "Expirez lentement pendant 6 secondes"
+    ],
+    "scope": "apporter calme et clarté."
+  },
+  "relaxBody": {
+    "title": "Exercices de relaxation physique",
+    "description": "Libérez la tension musculaire avec des mouvements simples et guidés.",
+    "shoulder_relax": {
+      "name": "Relaxation des épaules",
+      "instructions": "Soulevez vos épaules vers vos oreilles, maintenez pendant 2 secondes, puis relâchez lentement."
+    },
+    "neck_stretch": {
+      "name": "Étirement du cou",
+      "instructions": "Inclinez lentement la tête d'un côté à l'autre, en maintenant chaque position pendant 5 secondes."
+    }
+  },
+  "journalPre": {
+    "prompt": "Écrivez ce qui vous trouble et ce que vous pouvez faire pour relâcher cette tension."
+  },
+  "journalPost": {
+    "prompt": "Écrivez comment vous vous sentez maintenant après cette session."
+  },
+  "spiritual": {
+    "text": "Un cœur calme est la vie pour le corps..."
+  },
+  "environment": {
+    "suggestion": "Trouvez un endroit tranquille, tamisez les lumières, fermez les yeux si vous le pouvez et écoutez ces sons avec des écouteurs pour mieux vous immerger dans l'atmosphère."
+  },
+  "cta": {
+    "text": "Terminez votre session"
+  }
+}

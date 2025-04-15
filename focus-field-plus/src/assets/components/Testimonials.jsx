@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 const TestimonialsCarousel = () => {
   const { t } = useTranslation();
-  const testimonials = t("testimonials.items", { returnObjects: true });
+  const rawTestimonials = t("testimonials.items", { returnObjects: true });
+  const testimonials = Array.isArray(rawTestimonials) ? rawTestimonials : [];
 
   const settings = {
     dots: true,

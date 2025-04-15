@@ -1,11 +1,9 @@
-// main.jsx o index.jsx
-
 import { createRoot } from "react-dom/client";
+import "./i18n";
 import "./index.css";
 import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store, { persistor } from "./redux/store/index.js";
-import "./i18n";
 import { BrowserRouter } from "react-router";
 import { PersistGate } from "redux-persist/integration/react";
 

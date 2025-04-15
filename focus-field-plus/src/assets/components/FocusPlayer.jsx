@@ -4,6 +4,7 @@ import { Container, Image, ListGroup } from "react-bootstrap";
 import { MdShuffle, MdRepeat, MdRepeatOne } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_VOLUME, SET_PLAYER_PREFERENCE } from "../../redux/actions";
+import { useTranslation } from "react-i18next";
 
 const FocusPlayer = ({ playlistUrl }) => {
   const [songIndex, setSongIndex] = useState(0);
@@ -21,6 +22,7 @@ const FocusPlayer = ({ playlistUrl }) => {
 
   const audioRef = useRef(null);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   // Redux Persist Preferences
   const { isMuted, isListVisible, isControlsVisible, repeatMode, isShuffled } = useSelector(
@@ -330,7 +332,7 @@ const FocusPlayer = ({ playlistUrl }) => {
               rel="noopener noreferrer"
               style={{ color: "var(--mood-color-11)" }}
             >
-              Listen to Audius Music
+              {t("audius")}
             </a>
           </span>
           <button onClick={toggleList} className="list-toggle-btn">

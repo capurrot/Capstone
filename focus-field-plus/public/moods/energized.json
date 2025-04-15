@@ -65,9 +65,9 @@
   },
   "spiritual": {
     "enabled": true,
-    "type": "versetto",
-    "verse": "Filippesi 4:13",
-    "text": "Tutto posso in colui che mi fortifica.",
+    "type": "aforisma",
+    "verse": "Robin Sharma",
+    "text": "L’energia è contagiosa. Sii una fonte di entusiasmo e ispira chi ti sta intorno.",
     "scope": "fiducia e determinazione"
   },
   "environment": {

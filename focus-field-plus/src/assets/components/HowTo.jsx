@@ -3,25 +3,27 @@ import { useTranslation } from "react-i18next";
 
 const HowTo = () => {
   const { t } = useTranslation();
-  const steps = t("howto.steps", { returnObjects: true });
+  const rawSteps = t("howto.steps", { returnObjects: true });
+  const steps = Array.isArray(rawSteps) ? rawSteps : [];
+
+  if (!Array.isArray(steps)) {
+    console.warn("⚠️ steps non è un array!", steps);
+    return null; // oppure un fallback visivo
+  }
 
   return (
     <section className="py-5">
       <Container>
         <h2 className="text-center mb-4">{t("howto.title")}</h2>
-        <div className="row text-center">
-          {steps.map((step, index) => {
-            const cardClass = index !== 2 ? "p-4 border-bottom border-md-none h-100" : "p-4 border-md-none h-100";
-
-            return (
-              <div className="col-md-4 mb-4" key={index}>
-                <div className={cardClass}>
-                  <h3>{step.title}</h3>
-                  <p>{step.desc}</p>
-                </div>
+        <div className="row row-cols-1 row-cols-md-3 text-center">
+          {steps.map((step, index) => (
+            <div className="col mb-4" key={index}>
+              <div className="p-4 h-100">
+                <h3>{step.title}</h3>
+                <p>{step.desc}</p>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </Container>
     </section>

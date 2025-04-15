@@ -169,5 +169,33 @@
       "faq": "FAQ",
       "contact": "Contact"
     }
-  }
+  },
+  "moodPage": {
+    "loading": "Chargement...",
+    "notFound": "État d’esprit introuvable.",
+    "infoModal": {
+      "title": "Informations sur la session"
+    },
+    "cta": {
+      "default": "Commencer la session"
+    },
+    "title": {
+      "calm": "Calme"
+    },
+    "desc": {
+      "calm": "Tu as besoin de patience et de tranquillité."
+    },
+    "sections": {
+      "music": "Musique",
+      "goals": "Objectifs",
+      "preJournal": "Journal initial",
+      "breathing": "Respiration",
+      "relaxBody": "Activité physique",
+      "coach": "Coach mental",
+      "ambient": "Ambiance sonore",
+      "spiritual": "Réflexion",
+      "postJournal": "Journal final"
+    }
+  },
+  "audius": "Écouter sur Audius"
 }

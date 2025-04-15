@@ -1,0 +1,45 @@
+{
+  "name": "Calma",
+  "description": "Te ayudaremos a encontrar tranquilidad y relajar tu mente.",
+  "imagine": "Imagina crear un espacio solo para ti, lejos del ruido y los pensamientos.",
+  "helpYou": "Te ayudará a reducir el ritmo, liberar tensiones y recuperar el equilibrio interior.",
+  "music": {
+    "title": "Peaceful Flow",
+    "scope": "hacia la tranquilidad"
+  },
+  "breathing": {
+    "instructions": [
+      "Inhala profundamente durante 4 segundos",
+      "Sujeta la respiración durante 4 segundos",
+      "Exhala lentamente durante 6 segundos"
+    ],
+    "scope": "traer calma y claridad."
+  },
+  "relaxBody": {
+    "title": "Ejercicios de relajación física",
+    "description": "Libera la tensión muscular con movimientos simples y guiados.",
+    "shoulder_relax": {
+      "name": "Relajación de los hombros",
+      "instructions": "Levanta los hombros hacia las orejas, mantén durante 2 segundos y luego relaja lentamente."
+    },
+    "neck_stretch": {
+      "name": "Estiramiento de cuello",
+      "instructions": "Inclina la cabeza lentamente de un lado a otro, manteniendo cada posición durante 5 segundos."
+    }
+  },
+  "journalPre": {
+    "prompt": "Escribe lo que te preocupa y lo que puedes hacer para liberar esa tensión."
+  },
+  "journalPost": {
+    "prompt": "Escribe cómo te sientes ahora después de esta sesión."
+  },
+  "spiritual": {
+    "text": "Un corazón tranquilo es vida para el cuerpo..."
+  },
+  "environment": {
+    "suggestion": "Encuentra un lugar tranquilo, baja las luces, cierra los ojos si puedes y escucha estos sonidos con auriculares para sumergirte mejor en la atmósfera."
+  },
+  "cta": {
+    "text": "Termina tu sesión"
+  }
+}

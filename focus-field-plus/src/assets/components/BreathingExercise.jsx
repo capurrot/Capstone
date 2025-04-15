@@ -1,9 +1,12 @@
 import { useEffect, useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-const BreathingExercise = ({ config }) => {
+const BreathingExercise = ({ config, moodName }) => {
+  const { t } = useTranslation(moodName, { keyPrefix: "breathing" });
+  console.log(moodName);
   const { technique, phases, duration, instructions } = config;
 
-  const [phaseName, setPhaseName] = useState("Inspira");
+  const [phaseName, setPhaseName] = useState(t("in"));
   const [isRunning, setIsRunning] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [step, setStep] = useState(0);
@@ -13,12 +16,12 @@ const BreathingExercise = ({ config }) => {
 
   const steps = useMemo(() => {
     const arr = [];
-    if (phases.in) arr.push({ name: "Inspira", time: phases.in });
-    if (phases.hold) arr.push({ name: "Trattieni", time: phases.hold });
-    if (phases.out) arr.push({ name: "Espira", time: phases.out });
-    if (phases.hold2) arr.push({ name: "Trattieni", time: phases.hold2 });
+    if (phases.in) arr.push({ name: t("in"), time: phases.in });
+    if (phases.hold) arr.push({ name: t("hold"), time: phases.hold });
+    if (phases.out) arr.push({ name: t("out"), time: phases.out });
+    if (phases.hold2) arr.push({ name: t("hold"), time: phases.hold2 });
     return arr;
-  }, [phases]);
+  }, [phases, t]);
 
   useEffect(() => {
     if (!isRunning || steps.length === 0) return;
@@ -40,9 +43,9 @@ const BreathingExercise = ({ config }) => {
 
       const progress = Math.min(elapsed / current.time, 1);
 
-      if (current.name === "Inspira") {
+      if (current.name === t("in")) {
         setScaleValue(1 + 0.3 * progress);
-      } else if (current.name === "Espira") {
+      } else if (current.name === t("out")) {
         setScaleValue(1.3 - 0.6 * progress);
       } else {
         setScaleValue(1.3);
@@ -55,7 +58,7 @@ const BreathingExercise = ({ config }) => {
     }, 100);
 
     return () => clearInterval(countdownInterval);
-  }, [isRunning, step, steps]);
+  }, [isRunning, step, steps, t]);
 
   useEffect(() => {
     if (!isRunning || !duration) return;
@@ -64,13 +67,13 @@ const BreathingExercise = ({ config }) => {
       setIsRunning(false);
       setHasStarted(false);
       setStep(0);
-      setPhaseName("Inspira");
+      setPhaseName(t("in"));
       setPhaseSecondsLeft(0);
       setScaleValue(1);
     }, duration * 1000);
 
     return () => clearTimeout(stopTimer);
-  }, [isRunning, duration]);
+  }, [isRunning, duration, t]);
 
   useEffect(() => {
     if (!isRunning || !duration) return;
@@ -93,7 +96,7 @@ const BreathingExercise = ({ config }) => {
       setIsRunning(false);
       setHasStarted(false);
       setStep(0);
-      setPhaseName("Inspira");
+      setPhaseName(t("in"));
       setPhaseSecondsLeft(0);
       setScaleValue(1);
       setTotalTimeLeft(duration);
@@ -106,24 +109,22 @@ const BreathingExercise = ({ config }) => {
 
   return (
     <div className="breathing-container">
-      <p className="breathing-technique fst-italic mb-0 pt-4">Tecnica consigliata: {technique}</p>
+      <p className="breathing-technique fst-italic mb-0 pt-4">
+        {t("techniqueLabel")}: {technique}
+      </p>
 
-      {isRunning ? (
-        <div className="breathing-phase-text mb-2">{phaseName}</div>
-      ) : (
-        <div className="breathing-phase-text mb-2" style={{ color: "transparent" }}>
-          Seleziona una fase
-        </div>
-      )}
+      <div className="breathing-phase-text mb-2">
+        {isRunning ? phaseName : <span style={{ color: "transparent" }}>{t("selectPhase")}</span>}
+      </div>
 
       <div className="breathing-circle-wrapper">
         <div
           className="breathing-circle-bg"
           style={{
             transform: `scale(${scaleValue})`,
-            backgroundColor: phaseName === "Trattieni" ? "var(--mood-color-6)" : "var(--mood-color-6)",
-            filter: phaseName === "Trattieni" ? "blur(2px)" : "none",
-            backdropFilter: phaseName === "Trattieni" ? "blur(2px)" : "none",
+            backgroundColor: "var(--mood-color-6)",
+            filter: phaseName === t("breathing.hold") ? "blur(2px)" : "none",
+            backdropFilter: phaseName === t("breathing.hold") ? "blur(2px)" : "none",
             transition:
               "transform 0.1s linear, background-color 0.5s ease, filter 0.5s ease, backdrop-filter 0.5s ease",
           }}
@@ -144,14 +145,16 @@ const BreathingExercise = ({ config }) => {
             style={{ bottom: "65px" }}
             onClick={handleStartStop}
           >
-            {isRunning ? "Ferma" : "Avvia"}
+            {isRunning ? t("stop") : t("start")}
           </button>
+
           {duration && !hasStarted && (
             <p
               className="breathing-instructions fw-semibold mb-0"
               style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-6)" }}
             >
-              Durata: {Math.floor(duration / 60)} min{duration % 60 !== 0 ? ` e ${duration % 60} sec` : ""}
+              {t("durationLabel")}: {Math.floor(duration / 60)} min
+              {duration % 60 !== 0 ? ` e ${duration % 60} sec` : ""}
             </p>
           )}
 
@@ -160,12 +163,7 @@ const BreathingExercise = ({ config }) => {
               className="progressbar-container position-absolute"
               style={{ bottom: "25px", left: "10%", width: "80%" }}
             >
-              <div
-                className="progressbar-fill"
-                style={{
-                  width: `${(totalTimeLeft / duration) * 100}%`,
-                }}
-              ></div>
+              <div className="progressbar-fill" style={{ width: `${(totalTimeLeft / duration) * 100}%` }}></div>
             </div>
           )}
         </>

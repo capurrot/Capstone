@@ -169,5 +169,33 @@
       "faq": "FAQ",
       "contact": "Contact"
     }
-  }
+  },
+  "moodPage": {
+    "loading": "Loading...",
+    "notFound": "Mood not found.",
+    "infoModal": {
+      "title": "Session information"
+    },
+    "cta": {
+      "default": "Start session"
+    },
+    "title": {
+      "calm": "Calm"
+    },
+    "desc": {
+      "calm": "You need patience and tranquility."
+    },
+    "sections": {
+      "music": "Music",
+      "goals": "Goals",
+      "preJournal": "Initial Journal",
+      "breathing": "Breathing",
+      "relaxBody": "Physical activity",
+      "coach": "Mental coach",
+      "ambient": "Sound environment",
+      "spiritual": "Reflection",
+      "postJournal": "Final journal"
+    }
+  },
+  "audius": "Listen on Audius"
 }
