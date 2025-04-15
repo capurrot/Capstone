@@ -37,9 +37,18 @@ function App() {
     }
   }, [dispatch, mood]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const colors = mood?.colors || ["#4e495d", "#ffffff", "#6c5ce7", "#ffffff", "#ffffff", "#ffffff"];
   const slug = mood?.slug || "standard";
   const opacity = mood?.opacity || 0.5;
+
+  useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    const primaryColor = colors[0];
+    if (meta && primaryColor) {
+      meta.setAttribute("content", primaryColor);
+    }
+  }, [colors]);
 
   return (
     <div

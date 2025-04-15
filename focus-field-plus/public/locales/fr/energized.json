@@ -1,0 +1,278 @@
+{
+  "name": "Énergique",
+  "description": "Nous allons t’aider à te recharger et à te sentir plein d’énergie.",
+  "imagine": "Imagine ton corps et ton esprit se réveiller, prêts à conquérir la journée.",
+  "helpYou": "t’aidera à activer ton corps, augmenter ta concentration et booster ta motivation.",
+  "music": {
+    "title": "High Energy Beats",
+    "playlistUrl": "https://api.audius.co/v1/playlists/qEg9m",
+    "tags": ["énergique", "motivant", "rythme rapide"],
+    "scope": "élan et vitalité"
+  },
+  "moodPage": {
+    "loading": "Chargement en cours...",
+    "notFound": "État d’esprit introuvable.",
+    "infoModal": {
+      "title": "Informations sur la session"
+    },
+    "cta": {
+      "default": "Commencer la session"
+    },
+    "title": {
+      "energetic": "Énergique"
+    },
+    "desc": {
+      "energetic": "Tu as besoin d’énergie et de concentration."
+    },
+    "sections": {
+      "music": "Musique",
+      "goals": "Objectifs",
+      "preJournal": "Journal initial",
+      "breathing": "Respiration",
+      "relaxBody": "Activité physique",
+      "coach": "Coach mental",
+      "ambient": "Environnement",
+      "spiritual": "Réflexion",
+      "postJournal": "Journal final"
+    }
+  },
+  "audius": "Écouter sur Audius",
+  "breathing": {
+    "enabled": true,
+    "techniqueLabel": "Technique proposée",
+    "technique": "rapide",
+    "in": "Inspire",
+    "out": "Expire",
+    "phases": {
+      "in": 2,
+      "hold": 0,
+      "out": 2
+    },
+    "rounds": "auto",
+    "durationLabel": "Durée",
+    "duration": 180,
+    "instructions": ["Inspire rapidement pendant 2 secondes", "Expire rapidement pendant 2 secondes"],
+    "scope": "augmenter l’oxygénation et l’éveil.",
+    "start": "Démarrer",
+    "stop": "Arrêter"
+  },
+  "relaxBody": {
+    "enabled": true,
+    "title": "Exercices d’activation énergétique",
+    "description": "Réveille ton corps et prépare-le à l’action avec des mouvements dynamiques.",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "pause": "Pause",
+    "pauseText": "Récupère avant le prochain exercice.",
+    "duration": "Durée :",
+    "scrollDown": "Faire défiler vers le bas",
+    "scrollUp": "Retour en haut",
+    "completed": "Tu as terminé tous les exercices ! ✅",
+    "repeatIn": "Dans {{seconds}} secondes, tu pourras refaire ces exercices.",
+    "pauseDuration": 5,
+    "exercises": [
+      {
+        "name": "Sauts sur place",
+        "instructions": "Effectue de petits sauts en gardant un rythme constant pendant 30 secondes. Garde les bras détendus ou bouge-les en rythme avec les sauts.",
+        "duration": 30,
+        "image": "/images/jumping_jacks.png"
+      },
+      {
+        "name": "Rotations des bras",
+        "instructions": "Fais des cercles larges avec les bras vers l’avant pendant 20 secondes, puis inverse le mouvement vers l’arrière pendant 20 secondes.",
+        "duration": 40,
+        "image": "/images/arm_circles.png"
+      },
+      {
+        "name": "Squats dynamiques",
+        "instructions": "Plie les genoux à 90° et redresse-toi rapidement, en gardant le dos droit. Répète pendant 30 secondes.",
+        "duration": 30,
+        "image": "/images/squats.png"
+      },
+      {
+        "name": "Torsions du torse",
+        "instructions": "Debout, écarte légèrement les pieds et plie les bras devant la poitrine. Tourne doucement le torse à droite et à gauche sans bouger les hanches. Continue pendant 30 secondes.",
+        "duration": 30,
+        "image": "/images/torso_twists.png"
+      }
+    ]
+  },
+  "journalGoals": {
+    "enabled": true,
+    "prompt": "Écris 3 objectifs à atteindre aujourd’hui et comment tu comptes les réaliser !",
+    "placeholder": "Écris ici...",
+    "save": "Enregistrer",
+    "optional": true
+  },
+  "goals": {
+    "prompt": "Écris 3 objectifs à atteindre aujourd’hui et comment tu comptes les réaliser !",
+    "goal": "Objectif n° {{index}}",
+    "how": "Comment tu vas y parvenir",
+    "save": "Enregistrer"
+  },
+  "journalPost": {
+    "enabled": true,
+    "prompt": "Dis-nous comment tu te sens après cette session. Cela t’aidera à suivre tes progrès.",
+    "placeholder": "Écris ici...",
+    "save": "Enregistrer",
+    "optional": true
+  },
+  "spiritual": {
+    "enabled": true,
+    "type": "citation",
+    "verse": "Robin Sharma",
+    "text": "L’énergie est contagieuse. Sois une source d’enthousiasme et inspire les autres autour de toi.",
+    "scope": "confiance et détermination"
+  },
+  "environment": {
+    "backgroundImage": "/images/bg_energized.png",
+    "soundscape": ["chants d’oiseaux", "vent dans les montagnes"],
+    "suggestion": "Ouvre les fenêtres, respire profondément et plonge-toi dans les sons pour démarrer ta journée.",
+    "duration": 300,
+    "title": "Environnement énergisant",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "mute": "Couper la musique",
+    "unmute": "Activer la musique",
+    "fullscreen": "Plein écran",
+    "exitFullscreen": "Quitter le plein écran",
+    "suggestedDuration": "Recommandé : {{min}} min"
+  },
+  "coach": {
+    "enabled": true,
+    "intro": "Tu apprendras à surmonter les obstacles courants en restant motivé et concentré.",
+    "obstacle": "Obstacle {{current}} sur {{total}}",
+    "situation": "Situation",
+    "feedback": "Retour",
+    "next": "Suivant",
+    "finished": "Parcours terminé ! Tu as bien géré {{score}} situations sur {{total}}.",
+    "noSteps": "Aucun parcours disponible pour cet état d’esprit.",
+    "steps": [
+      {
+        "id": "energetic-1",
+        "situation": "Tu te réveilles fatigué et sans envie de commencer la journée.",
+        "options": [
+          { "text": "Je fais 2 minutes de sauts et j’écoute un morceau énergique.", "correct": true },
+          { "text": "Je reste au lit en scrollant sur mon téléphone encore un peu.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Excellent ! Le mouvement et la musique peuvent réveiller le corps immédiatement.",
+          "wrong": "C’est compréhensible, mais un petit geste actif peut changer ton énergie dès le départ."
+        }
+      },
+      {
+        "id": "energetic-2",
+        "situation": "Tu as une liste de tâches à faire mais tu manques de motivation.",
+        "options": [
+          { "text": "J’écris 3 objectifs et je les associe à une action immédiate.", "correct": true },
+          { "text": "J’évite d’y penser et je passe à une autre activité au hasard.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Écrire ses objectifs active la concentration mentale.",
+          "wrong": "Se lancer sans direction peut faire perdre beaucoup d’énergie."
+        }
+      },
+      {
+        "id": "energetic-3",
+        "situation": "Tu te laisses facilement distraire pendant une tâche.",
+        "options": [
+          { "text": "Je me lève, fais 30 secondes de squats puis je reprends.", "correct": true },
+          { "text": "Je continue à lutter contre la distraction sans m’arrêter.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Très bonne stratégie. Réactiver le corps aide à retrouver la concentration.",
+          "wrong": "Parfois, une courte pause active suffit pour se recentrer."
+        }
+      },
+      {
+        "id": "energetic-4",
+        "situation": "Tu as reçu un commentaire démotivant.",
+        "options": [
+          { "text": "Je relis la citation motivante et je me rappelle mon pourquoi.", "correct": true },
+          { "text": "J’y pense trop et je commence à douter de moi.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Parfait ! Garder ta vision t’aide à rester fort.",
+          "wrong": "Laisse pas l’extérieur éteindre ton énergie. Reconnecte-toi à ton but."
+        }
+      },
+      {
+        "id": "energetic-5",
+        "situation": "Tu as peu de temps avant une activité importante.",
+        "options": [
+          { "text": "Au moins 1 minute de respiration rapide pour me dynamiser.", "correct": true },
+          { "text": "Je ne fais rien, il est trop tard.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Même 1 minute peut suffire à rallumer l’étincelle.",
+          "wrong": "Ne sous-estime jamais le pouvoir de quelques secondes d’énergie consciente."
+        }
+      },
+      {
+        "id": "energetic-6",
+        "situation": "Ton environnement est terne et peu stimulant.",
+        "options": [
+          { "text": "Je lance ma playlist énergique et j’ouvre les fenêtres.", "correct": true },
+          { "text": "Je m’adapte, même si je me sens abattu.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Tu as créé l’environnement idéal pour libérer ton énergie.",
+          "wrong": "Ton environnement influence beaucoup : adapte-le à toi !"
+        }
+      },
+      {
+        "id": "energetic-7",
+        "situation": "Tu as commencé avec enthousiasme, mais tu sens l’énergie baisser.",
+        "options": [
+          { "text": "Je fais une pause active pour réactiver mon corps.", "correct": true },
+          { "text": "J’ignore la fatigue et je continue jusqu’à m’épuiser.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Excellente intuition ! Les pauses actives régénèrent.",
+          "wrong": "La baisse d’énergie se gère mieux avec un petit redémarrage."
+        }
+      },
+      {
+        "id": "energetic-8",
+        "situation": "Tu as fait beaucoup, mais il te manque quelque chose.",
+        "options": [
+          { "text": "J’écris mes progrès dans le journal pour me motiver.", "correct": true },
+          { "text": "Je passe à la prochaine tâche sans m’arrêter.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Reconnaître ses progrès nourrit la motivation.",
+          "wrong": "La gratitude pour ce que tu fais donne plus d’énergie que tu ne le penses."
+        }
+      },
+      {
+        "id": "energetic-9",
+        "situation": "Tu te sens seul dans ton élan, incompris par les autres.",
+        "options": [
+          { "text": "Je médite sur la citation et sur la force intérieure.", "correct": true },
+          { "text": "Je réprime mon énergie et je m’isole.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Te connecter à une force plus grande garde ton énergie vivante.",
+          "wrong": "Ne t’éteins pas : canalise ton énergie vers ce qui compte."
+        }
+      },
+      {
+        "id": "energetic-10",
+        "situation": "La session est terminée, mais tu ne sais pas si elle t’a vraiment aidé.",
+        "options": [
+          { "text": "J’écris dans le journal comment je me sens maintenant par rapport à avant.", "correct": true },
+          { "text": "Je ferme tout et je reprends ma journée comme si de rien n’était.", "correct": false }
+        ],
+        "feedback": {
+          "correct": "Parfait. La prise de conscience renforce le bénéfice.",
+          "wrong": "Ne laisse pas cette expérience passer inaperçue. La réflexion lui donne du sens."
+        }
+      }
+    ]
+  },
+  "durationSuggestion": "10-15 min",
+  "cta": {
+    "text": "Commence ta session",
+    "action": "/session/start"
+  }
+}

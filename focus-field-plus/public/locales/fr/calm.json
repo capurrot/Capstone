@@ -80,13 +80,13 @@
         "name": "Relaxation des épaules",
         "instructions": "Hausse les épaules vers les oreilles, retiens 2 secondes, puis relâche doucement.",
         "duration": "30",
-        "image": "../../src/assets/images/shoulder_relax.png"
+        "image": "/images/shoulder_relax.png"
       },
       {
         "name": "Étirement du cou",
         "instructions": "Incline lentement la tête d’un côté à l’autre, en maintenant chaque position 5 secondes.",
         "duration": "60",
-        "image": "../../src/assets/images/neck_relax.png"
+        "image": "/images/neck_relax.png"
       }
     ]
   },
@@ -111,10 +111,10 @@
     "text": "Un cœur calme est la vie pour le corps..."
   },
   "environment": {
-    "backgroundImage": "../../src/assets/images/bg_calm.png",
-    "backgroundVideo": "../../src/assets/media/calm.mp4",
+    "backgroundImage": "/images/bg_calm.png",
+    "backgroundVideo": "/media/calm.mp4",
     "soundscape": ["Couleurs de la forêt", "Son de l'eau"],
-    "audioSrc": "../../src/assets/media/calm.mp3",
+    "audioSrc": "/media/calm.mp3",
     "suggestion": "Trouve un endroit calme, tamise la lumière, ferme les yeux si possible et écoute ces sons au casque.",
     "duration": "300",
     "title": "Environnement immersif",

@@ -80,13 +80,13 @@
         "name": "Rilassamento delle spalle",
         "instructions": "Alza le spalle verso le orecchie, trattieni 2 secondi, poi rilassa lentamente.",
         "duration": "30",
-        "image": "../../src/assets/images/shoulder_relax.png"
+        "image": "/images/shoulder_relax.png"
       },
       {
         "name": "Stretching del collo",
         "instructions": "Inclina la testa lentamente da un lato all’altro, tenendo ogni posizione per 5 secondi.",
         "duration": "60",
-        "image": "../../src/assets/images/neck_relax.png"
+        "image": "/images/neck_relax.png"
       }
     ]
   },
@@ -111,10 +111,10 @@
     "text": "Il cuore calmo è vita per il corpo..."
   },
   "environment": {
-    "backgroundImage": "../../src/assets/images/bg_calm.png",
-    "backgroundVideo": "../../src/assets/media/calm.mp4",
+    "backgroundImage": "/images/bg_calm.png",
+    "backgroundVideo": "/media/calm.mp4",
     "soundscape": ["Colori della foresta", "Suono dell'acqua"],
-    "audioSrc": "../../src/assets/media/calm.mp3",
+    "audioSrc": "/media/calm.mp3",
     "suggestion": "Trova un luogo tranquillo, abbassa le luci, chiudi gli occhi se puoi e ascolta questi suoni in cuffia per immergerti meglio nell’atmosfera.",
     "duration": "300",
     "title": "Ambientazione immersiva",

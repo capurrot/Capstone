@@ -80,13 +80,13 @@
         "name": "Relajación de los hombros",
         "instructions": "Levanta los hombros hacia las orejas, mantén durante 2 segundos y luego relaja lentamente.",
         "duration": "30",
-        "image": "../../src/assets/images/shoulder_relax.png"
+        "image": "/images/shoulder_relax.png"
       },
       {
         "name": "Estiramiento del cuello",
         "instructions": "Inclina la cabeza lentamente de un lado a otro, manteniendo cada posición durante 5 segundos.",
         "duration": "60",
-        "image": "../../src/assets/images/neck_relax.png"
+        "image": "/images/neck_relax.png"
       }
     ]
   },
@@ -111,10 +111,10 @@
     "text": "Un corazón tranquilo es vida para el cuerpo..."
   },
   "environment": {
-    "backgroundImage": "../../src/assets/images/bg_calm.png",
-    "backgroundVideo": "../../src/assets/media/calm.mp4",
+    "backgroundImage": "/images/bg_calm.png",
+    "backgroundVideo": "/media/calm.mp4",
     "soundscape": ["Colores del bosque", "Sonido del agua"],
-    "audioSrc": "../../src/assets/media/calm.mp3",
+    "audioSrc": "/media/calm.mp3",
     "suggestion": "Encuentra un lugar tranquilo, apaga las luces, cierra los ojos si puedes y escucha estos sonidos con audífonos para sumergirte mejor en la atmósfera.",
     "duration": "300",
     "title": "Ambiente inmersivo",

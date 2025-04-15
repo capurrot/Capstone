@@ -26,7 +26,7 @@ function MoodPage({ moodName }) {
     const loadData = async () => {
       setLoading(true);
       try {
-        const lang = i18n.language || "it";
+        const lang = i18n.language?.split("-")[0] || "it";
         const res = await fetch(`/locales/${lang}/${moodName}.json`);
         const json = await res.json();
         setMoodData(json);
@@ -99,7 +99,7 @@ function MoodPage({ moodName }) {
             <h2 className="mood-text mb-3 ps-3">
               <i className="fas fa-pencil-alt me-1"></i> - {t("sections.goals")}
             </h2>
-            <FocusGoals goals={moodData.journalGoals} />
+            <FocusGoals goals={moodData.journalGoals} moodName={moodName} />
           </section>
         )}
 

@@ -80,13 +80,13 @@
         "name": "Schulterentspannung",
         "instructions": "Hebe die Schultern bis zu den Ohren, halte 2 Sekunden und entspanne dann langsam.",
         "duration": "30",
-        "image": "../../src/assets/images/shoulder_relax.png"
+        "image": "/images/shoulder_relax.png"
       },
       {
         "name": "Nacken-Dehnung",
         "instructions": "Neige langsam den Kopf von Seite zu Seite und halte jede Position für 5 Sekunden.",
         "duration": "60",
-        "image": "../../src/assets/images/neck_relax.png"
+        "image": "/images/neck_relax.png"
       }
     ]
   },
@@ -111,10 +111,10 @@
     "text": "Ein ruhiges Herz ist Leben für den Körper..."
   },
   "environment": {
-    "backgroundImage": "../../src/assets/images/bg_calm.png",
-    "backgroundVideo": "../../src/assets/media/calm.mp4",
+    "backgroundImage": "/images/bg_calm.png",
+    "backgroundVideo": "/media/calm.mp4",
     "soundscape": ["Farben des Waldes", "Geräusch des Wassers"],
-    "audioSrc": "../../src/assets/media/calm.mp3",
+    "audioSrc": "/media/calm.mp3",
     "suggestion": "Finde einen ruhigen Ort, dimme das Licht, schließe die Augen, wenn du kannst, und höre diese Geräusche mit Kopfhörern, um besser in die Atmosphäre einzutauchen.",
     "duration": "300",
     "title": "Immersive Umgebung",

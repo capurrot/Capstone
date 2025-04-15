@@ -76,13 +76,13 @@
         "name": "Shoulder relaxation",
         "instructions": "Raise your shoulders toward your ears, hold for 2 seconds, then slowly release.",
         "duration": "30",
-        "image": "../../src/assets/images/shoulder_relax.png"
+        "image": "/images/shoulder_relax.png"
       },
       {
         "name": "Neck stretching",
         "instructions": "Slowly tilt your head from one side to the other, holding each position for 5 seconds.",
         "duration": "60",
-        "image": "../../src/assets/images/neck_relax.png"
+        "image": "/images/neck_relax.png"
       }
     ]
   },
@@ -107,10 +107,10 @@
     "text": "A calm heart gives life to the body..."
   },
   "environment": {
-    "backgroundImage": "../../src/assets/images/bg_calm.png",
-    "backgroundVideo": "../../src/assets/media/calm.mp4",
+    "backgroundImage": "/images/bg_calm.png",
+    "backgroundVideo": "/media/calm.mp4",
     "soundscape": ["Forest colors", "Water sounds"],
-    "audioSrc": "../../src/assets/media/calm.mp3",
+    "audioSrc": "/media/calm.mp3",
     "suggestion": "Find a quiet place, dim the lights, close your eyes if you can, and listen to these sounds with headphones to better immerse yourself in the atmosphere.",
     "duration": "300",
     "title": "Immersive environment",
