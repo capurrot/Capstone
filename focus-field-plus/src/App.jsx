@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     const fetchMoods = async () => {
       try {
-        const response = await fetch("/moods.json");
+        const response = await fetch("http://localhost:8080/api/moods");
         const data = await response.json();
         dispatch({ type: SET_ALL_MOODS, payload: data });
       } catch (error) {
