@@ -96,7 +96,20 @@
       "tag-11",
       "tag-12"
     ],
-    "colors": ["#000000", "#FFFFFF", "#0000FF", "#FF0000"],
+    "colors": [
+      "#B497BD",
+      "#B497BD",
+      "#0000FF",
+      "#FF0000",
+      "#B497BD",
+      "#B497BD",
+      "#FF00FF",
+      "#00FFFF",
+      "#FF00FF",
+      "#00FFFF",
+      "#FF00FF",
+      "#00FFFF"
+    ],
     "icon": "bi-brush"
   },
   {
