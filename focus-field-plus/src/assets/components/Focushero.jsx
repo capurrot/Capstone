@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,17 +13,6 @@ const Focushero = () => {
   const dispatch = useDispatch();
   const selectedMood = useSelector((state) => state.mood.selectedMood);
   const allMoods = useSelector((state) => state.mood.allMoods);
-
-  const testMoodSlug = "energized"; // test iniziale
-
-  useEffect(() => {
-    if (allMoods.length > 0) {
-      const moodToSet = allMoods.find((m) => m.slug === testMoodSlug);
-      if (moodToSet) {
-        dispatch({ type: SET_MOOD, payload: moodToSet });
-      }
-    }
-  }, [allMoods, dispatch, testMoodSlug]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

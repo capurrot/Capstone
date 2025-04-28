@@ -12,7 +12,9 @@ const Focuscards = () => {
   const moods = useSelector((state) => state.mood.allMoods);
   const selectedMood = useSelector((state) => state.mood.selectedMood);
 
-  const moodsToDisplay = [...moods.filter((mood) => !mood.slug.includes(selectedMood.slug))].slice(0, 8);
+  const moodsToDisplay = Array.isArray(moods)
+    ? moods.filter((mood) => !mood.slug.includes(selectedMood?.slug)).slice(0, 8)
+    : [];
 
   return (
     <Container fluid className="mt-5 px-md-5 pb-5">
