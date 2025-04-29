@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_ALL_MOODS, SET_MOOD } from "./redux/actions/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router";
-import MoodPageWrapper from "./assets/components/MoodPageWrapper.jsx";
+import MoodPageWrapper from "./assets/components/expierence/MoodPageWrapper.jsx";
 
 function App() {
   const dispatch = useDispatch();

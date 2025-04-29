@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Image } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import Pause from "../../assets/images/pause.png";
+import Pause from "../../../assets/images/pause.png";
 
 const RelaxBodyExercises = ({ config, moodName }) => {
   const { t } = useTranslation(moodName, { keyPrefix: "relaxBody" });

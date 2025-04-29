@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Container, Image, ListGroup } from "react-bootstrap";
 import { MdShuffle, MdRepeat, MdRepeatOne } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_VOLUME, SET_PLAYER_PREFERENCE } from "../../redux/actions";
+import { SET_VOLUME, SET_PLAYER_PREFERENCE } from "../../../redux/actions";
 import { useTranslation } from "react-i18next";
 
 const FocusPlayer = ({ playlistUrl, moodName }) => {

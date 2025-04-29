@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { SET_MOOD } from "../../redux/actions";
+import { SET_MOOD } from "../../../redux/actions";
 import FocusPlayer from "./FocusPlayer";
 import BreathingExercise from "./BreathingExercise";
 import RelaxBodyExercises from "./RelaxBodyExercises";
