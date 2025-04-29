@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_MOOD } from "../../redux/actions";
+import { SET_MOOD } from "../../../redux/actions";
 import { useTranslation } from "react-i18next";
 
-const Focushero = () => {
+const FocusHero = () => {
   const { t } = useTranslation();
   const [moodText, setMoodText] = useState("");
   const [notFound, setNotFound] = useState(false);
@@ -79,4 +79,4 @@ const Focushero = () => {
   );
 };
 
-export default Focushero;
+export default FocusHero;

@@ -7,8 +7,7 @@ const HowTo = () => {
   const steps = Array.isArray(rawSteps) ? rawSteps : [];
 
   if (!Array.isArray(steps)) {
-    console.warn("⚠️ steps non è un array!", steps);
-    return null; // oppure un fallback visivo
+    return null;
   }
 
   return (

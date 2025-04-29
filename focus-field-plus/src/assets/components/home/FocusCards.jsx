@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
-const Focuscards = () => {
+const FocusCards = () => {
   const { t } = useTranslation();
   const moods = useSelector((state) => state.mood.allMoods);
   const selectedMood = useSelector((state) => state.mood.selectedMood);
@@ -45,4 +45,4 @@ const Focuscards = () => {
   );
 };
 
-export default Focuscards;
+export default FocusCards;

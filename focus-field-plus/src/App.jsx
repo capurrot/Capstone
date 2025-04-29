@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./App.css";
-import Focusfield from "./assets/components/Focusfield.jsx";
+import FocusField from "./assets/components/FocusField.jsx";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_ALL_MOODS, SET_MOOD } from "./redux/actions/index.js";
@@ -69,7 +69,7 @@ function App() {
       }}
     >
       <Routes>
-        <Route path="/" element={<Focusfield />} />
+        <Route path="/" element={<FocusField />} />
         <Route path="/mood/:moodName" element={<MoodPageWrapper />} />
       </Routes>
     </div>
