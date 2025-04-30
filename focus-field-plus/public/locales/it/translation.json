@@ -54,6 +54,7 @@
   },
   "navbar": {
     "home": "Home",
+    "login": "Login",
     "history": "Storico",
     "settings": "Impostazioni",
     "profile": "Profilo utente",

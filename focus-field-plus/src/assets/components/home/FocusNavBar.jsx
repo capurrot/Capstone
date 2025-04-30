@@ -6,6 +6,7 @@ import Logo from "../../../../public/images/logo.png";
 import { useEffect, useState } from "react";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 
 function FocusNavBar() {
   const { t } = useTranslation();
@@ -39,13 +40,18 @@ function FocusNavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto align-items-center">
-            <Nav.Link href="#home">{t("navbar.home")}</Nav.Link>
+            <Link className="nav-link" to="/">
+              {t("navbar.home")}
+            </Link>
+            <Link className="nav-link" to="/login">
+              {t("navbar.login")}
+            </Link>
+
             <Nav.Link href="#link">{t("navbar.history")}</Nav.Link>
             <NavDropdown title={t("navbar.settings")} id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">{t("navbar.profile")}</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">{t("navbar.preferences")}</NavDropdown.Item>
             </NavDropdown>
-
             {/* Selettore lingue */}
             <div className="d-flex align-items-center ms-3">
               <button onClick={() => changeLanguage("it")} className="btn btn-sm bg-transparent text-white px-1">

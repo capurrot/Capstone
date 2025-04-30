@@ -583,6 +583,22 @@ body {
   color: var(--mood-color-2);
 }
 
+.focusfield-btn-outline {
+  border: 1px solid var(--mood-color-6);
+  background-color: transparent;
+  color: var(--mood-color-6);
+  padding: 0.6rem 2.5rem;
+  font-size: 1rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.focusfield-btn-outline:hover {
+  background: var(--mood-color-3);
+  color: var(--mood-color-2);
+}
+
 .breathing-instructions {
   list-style: none;
   padding: 0;
@@ -726,6 +742,38 @@ body {
   color: var(--mood-color-12);
   border-radius: 1rem;
   position: relative;
+}
+
+.login-container {
+  background: url("https://images.unsplash.com/photo-1547444196-2ea3ce201cc6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  color: var(--mood-color-12);
+  position: relative;
+}
+
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(to bottom right, var(--mood-color-9), var(--mood-color-10));
+  color: var(--mood-color-12);
+  border-radius: 1rem;
+  position: relative;
+}
+
+.login-text {
+  color: var(--mood-color-11);
+}
+
+.login-link {
+  text-decoration: none;
+  color: var(--mood-color-11);
+  transition: all 0.3s ease;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+  color: var(--mood-color-5);
 }
 
 @media (min-width: 768px) {
