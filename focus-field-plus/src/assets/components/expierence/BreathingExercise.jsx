@@ -123,8 +123,8 @@ const BreathingExercise = ({ config, moodName }) => {
           style={{
             transform: `scale(${scaleValue})`,
             backgroundColor: "var(--mood-color-6)",
-            filter: phaseName === t("breathing.hold") ? "blur(2px)" : "none",
-            backdropFilter: phaseName === t("breathing.hold") ? "blur(2px)" : "none",
+            filter: phaseName === t("hold") ? "blur(2px)" : "none",
+            backdropFilter: phaseName === t("hold") ? "blur(2px)" : "none",
             transition:
               "transform 0.1s linear, background-color 0.5s ease, filter 0.5s ease, backdrop-filter 0.5s ease",
           }}
