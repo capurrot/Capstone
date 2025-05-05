@@ -6,11 +6,16 @@ import Logo from "../../../../public/images/logo.png";
 import { useEffect, useState } from "react";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../redux/actions";
 
 function FocusNavBar() {
   const { t } = useTranslation();
   const [scroll, setScroll] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     const handleScroll = () => setScroll(window.scrollY);
@@ -20,6 +25,11 @@ function FocusNavBar() {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
   };
 
   return (
@@ -43,15 +53,26 @@ function FocusNavBar() {
             <Link className="nav-link" to="/">
               {t("navbar.home")}
             </Link>
-            <Link className="nav-link" to="/login">
-              {t("navbar.login")}
-            </Link>
+            {token ? (
+              <button onClick={handleLogout} className="nav-link btn btn-link text-white text-decoration-none">
+                {t("navbar.logout")}
+              </button>
+            ) : (
+              <Link className="nav-link" to="/login">
+                {t("navbar.login")}
+              </Link>
+            )}
 
-            <Nav.Link href="#link">{t("navbar.history")}</Nav.Link>
-            <NavDropdown title={t("navbar.settings")} id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">{t("navbar.profile")}</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">{t("navbar.preferences")}</NavDropdown.Item>
-            </NavDropdown>
+            {token && (
+              <>
+                <Nav.Link href="#link">{t("navbar.history")}</Nav.Link>
+                <NavDropdown title={t("navbar.settings")} id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">{t("navbar.profile")}</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">{t("navbar.preferences")}</NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
+
             {/* Selettore lingue */}
             <div className="d-flex align-items-center ms-3">
               <button onClick={() => changeLanguage("it")} className="btn btn-sm bg-transparent text-white px-1">

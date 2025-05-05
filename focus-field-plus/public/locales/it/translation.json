@@ -54,7 +54,8 @@
   },
   "navbar": {
     "home": "Home",
-    "login": "Login",
+    "login": "Accedi",
+    "logout": "Esci",
     "history": "Storico",
     "settings": "Impostazioni",
     "profile": "Profilo utente",
