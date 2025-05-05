@@ -18,7 +18,7 @@ export const login = (username, password) => async (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
 
   try {
-    const response = await fetch("http://localhost:8080/api/auth/login", {
+    const response = await fetch("http://localhost:8080/api/focus-field/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -45,6 +45,11 @@ export const login = (username, password) => async (dispatch) => {
 
 export const logout = () => ({
   type: LOGOUT,
+});
+
+export const setUser = (user) => ({
+  type: SET_USER,
+  payload: user,
 });
 
 export {
