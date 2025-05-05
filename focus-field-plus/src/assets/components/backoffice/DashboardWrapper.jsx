@@ -13,7 +13,6 @@ const DashboardWrapper = () => {
   const user = useSelector((state) => state.auth.user);
   const [loading, setLoading] = useState(true);
 
-  // Effettua la chiamata al backend per ottenere i dati utente
   useEffect(() => {
     const fetchUser = async () => {
       if (!token) return;
@@ -58,11 +57,11 @@ const DashboardWrapper = () => {
     <>
       <FocusNavBar />
       {roles.includes("ROLE_ADMIN") ? (
-        <AdminDashboard />
+        <AdminDashboard user={user} />
       ) : roles.includes("ROLE_USER") ? (
-        <UserDashboard />
+        <UserDashboard user={user} />
       ) : roles.includes("ROLE_SELLER") ? (
-        <SellerDashboard />
+        <SellerDashboard user={user} />
       ) : (
         <Navigate to="/unauthorized" replace />
       )}
