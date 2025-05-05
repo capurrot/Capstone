@@ -1,9 +1,27 @@
 import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import FocusNavBar from "../home/FocusNavBar";
 import Footer from "../home/Footer";
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
+import { login } from "../../../redux/actions";
+import { useEffect } from "react";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const username = e.target.elements.username.value;
+    const password = e.target.elements.password.value;
+    dispatch(login(username, password));
+  };
+  const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [token, navigate]);
+
   return (
     <Container fluid className="d-flex flex-column min-vh-100 px-0">
       <FocusNavBar />
@@ -15,9 +33,20 @@ const Login = () => {
                 <i className="fas fa-sign-in-alt me-2"></i>Login
               </h2>
               <div className="login-form-container mx-4 mb-4">
-                <Form className="mt-5 w-100 px-4">
-                  <Form.Control className="mb-3" type="text" placeholder="Username" autoComplete="username" />
-                  <Form.Control type="password" placeholder="Password" autoComplete="current-password" />
+                <Form className="mt-5 w-100 px-4" onSubmit={handleLogin}>
+                  <Form.Control
+                    className="mb-3"
+                    type="text"
+                    placeholder="Username"
+                    autoComplete="username"
+                    name="username"
+                  />
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    autoComplete="current-password"
+                    name="password"
+                  />
                   <button className="focusfield-btn mt-4 mb-3">Login</button>
                 </Form>
                 <div className="d-flex flex-column justify-content-between  w-100 px-4 login-text">
