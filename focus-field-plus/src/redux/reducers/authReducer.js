@@ -1,4 +1,12 @@
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SET_USER } from "../actions";
+import {
+  LOGIN_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
+  SET_USER,
+} from "../actions";
 
 const initialState = {
   user: null,
@@ -26,6 +34,17 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        user: action.payload.user,
+        error: null,
+      };
+    case REGISTER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

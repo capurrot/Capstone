@@ -8,6 +8,9 @@ const LOGIN_REQUEST = "LOGIN_REQUEST";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGIN_FAILURE = "LOGIN_FAILURE";
 const LOGOUT = "LOGOUT";
+const REGISTER_USER = "REGISTER_USER";
+const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+const REGISTER_FAIL = "REGISTER_FAIL";
 
 export const setMood = (mood) => ({
   type: SET_MOOD,
@@ -43,6 +46,36 @@ export const login = (username, password) => async (dispatch) => {
   }
 };
 
+export const registerUser = (formData) => async (dispatch) => {
+  try {
+    const cleanData = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      nome: formData.nome,
+      cognome: formData.cognome,
+    };
+
+    const response = await fetch("http://localhost:8080/api/focus-field/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cleanData),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Errore nella registrazione");
+    }
+
+    const data = await response.json();
+    dispatch({ type: REGISTER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: REGISTER_FAIL, payload: error.message });
+  }
+};
+
 export const logout = () => ({
   type: LOGOUT,
 });
@@ -63,4 +96,7 @@ export {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
+  REGISTER_USER,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
 };

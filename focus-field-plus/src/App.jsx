@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router";
 import MoodPageWrapper from "./assets/components/expierence/MoodPageWrapper.jsx";
 import Login from "./assets/components/backoffice/Login.jsx";
 import DashboardWrapper from "./assets/components/backoffice/DashboardWrapper.jsx";
+import RegisterPage from "./assets/components/backoffice/RegisterPage.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -73,6 +74,7 @@ function App() {
       <Routes>
         <Route path="/" element={<FocusField />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/mood/:moodName" element={<MoodPageWrapper />} />
         <Route path="/dashboard" element={<DashboardWrapper />} />
       </Routes>

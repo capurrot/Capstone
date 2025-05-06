@@ -778,6 +778,10 @@ body {
   color: var(--mood-color-5);
 }
 
+.remember-checkbox label {
+  cursor: pointer;
+}
+
 @media (min-width: 768px) {
   .border-md-none {
     border-bottom: none !important;

@@ -2,16 +2,26 @@ import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FocusNavBar from "../home/FocusNavBar";
 import Footer from "../home/Footer";
-import { Link, Navigate, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { login } from "../../../redux/actions";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const [rememberMe, setRememberMe] = useState(false);
+  const [savedUsername, setSavedUsername] = useState("");
+
   const handleLogin = (e) => {
     e.preventDefault();
     const username = e.target.elements.username.value;
     const password = e.target.elements.password.value;
+
+    if (rememberMe) {
+      localStorage.setItem("rememberedUsername", username);
+    } else {
+      localStorage.removeItem("rememberedUsername");
+    }
+
     dispatch(login(username, password));
   };
   const token = useSelector((state) => state.auth.token);
@@ -21,6 +31,14 @@ const Login = () => {
       navigate("/dashboard");
     }
   }, [token, navigate]);
+
+  useEffect(() => {
+    const remembered = localStorage.getItem("rememberedUsername");
+    if (remembered) {
+      setSavedUsername(remembered);
+      setRememberMe(true);
+    }
+  }, []);
 
   return (
     <Container fluid className="d-flex flex-column min-vh-100 px-0">
@@ -40,6 +58,7 @@ const Login = () => {
                     placeholder="Username"
                     autoComplete="username"
                     name="username"
+                    defaultValue={savedUsername}
                   />
                   <Form.Control
                     type="password"
@@ -50,7 +69,20 @@ const Login = () => {
                   <button className="focusfield-btn mt-4 mb-3">Login</button>
                 </Form>
                 <div className="d-flex flex-column justify-content-between  w-100 px-4 login-text">
-                  <Form.Check type="checkbox" label="Remember me" />
+                  <div
+                    className="remember-checkbox d-flex align-items-center gap-2"
+                    onClick={() => setRememberMe((prev) => !prev)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Form.Check
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                    <span>Remember me</span>
+                  </div>
+
                   <Link to="/register" className="d-flex login-link">
                     Don't have an account? Register
                   </Link>
