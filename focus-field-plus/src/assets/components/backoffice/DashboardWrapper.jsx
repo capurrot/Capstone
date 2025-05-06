@@ -6,6 +6,7 @@ import FocusNavBar from "../home/FocusNavBar";
 import UserDashboard from "./dashboards/UserDashboard";
 import SellerDashboard from "./dashboards/SellerDashboard";
 import { setUser } from "../../../redux/actions";
+import Footer from "../home/Footer";
 
 const DashboardWrapper = () => {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ const DashboardWrapper = () => {
       ) : (
         <Navigate to="/unauthorized" replace />
       )}
+      <Footer />
     </>
   );
 };
