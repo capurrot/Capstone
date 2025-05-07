@@ -65,7 +65,9 @@ function FocusNavBar() {
 
             {token && (
               <>
-                <Nav.Link href="#link">{t("navbar.history")}</Nav.Link>
+                <Link className="nav-link" to="/dashboard">
+                  {t("navbar.history")}
+                </Link>
                 <NavDropdown title={t("navbar.settings")} id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">{t("navbar.profile")}</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">{t("navbar.preferences")}</NavDropdown.Item>
