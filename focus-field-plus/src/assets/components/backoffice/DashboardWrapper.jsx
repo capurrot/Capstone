@@ -18,6 +18,7 @@ const DashboardWrapper = () => {
     const fetchUser = async () => {
       if (!token) return;
 
+      console.log("Token:", token);
       try {
         const res = await fetch("http://localhost:8080/api/focus-field/auth/current-user", {
           headers: {

@@ -5,6 +5,7 @@ import Footer from "../home/Footer";
 import { Link, useNavigate } from "react-router";
 import { login } from "../../../redux/actions";
 import { useState, useEffect } from "react";
+import ButtonsLogin from "./ButtonsLogin";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -66,9 +67,9 @@ const Login = () => {
                     autoComplete="current-password"
                     name="password"
                   />
-                  <button className="focusfield-btn mt-4 mb-3">Login</button>
+                  <button className="focusfield-btn mt-4 d-flex w-100 justify-content-center">Login</button>
                 </Form>
-                <div className="d-flex flex-column justify-content-between  w-100 px-4 login-text">
+                <div className="d-flex flex-column justify-content-between  w-100 px-4 login-text gap-1">
                   <div
                     className="remember-checkbox d-flex align-items-center gap-2"
                     onClick={() => setRememberMe((prev) => !prev)}
@@ -90,20 +91,7 @@ const Login = () => {
                     Forgot Password?
                   </Link>
                 </div>
-                <div className="d-flex flex-column gap-2 mt-4  w-100 px-4 mb-5">
-                  <button className="focusfield-btn-outline d-flex align-items-center justify-content-center gap-2">
-                    <i className="bi bi-google"></i>
-                    Continua con Google
-                  </button>
-                  <button className="focusfield-btn-outline d-flex align-items-center justify-content-center gap-2">
-                    <i className="bi bi-apple"></i>
-                    Continue with Apple
-                  </button>
-                  <button className="focusfield-btn-outline d-flex align-items-center justify-content-center gap-2">
-                    <i className="bi bi-facebook"></i>
-                    Continue with Facebook
-                  </button>
-                </div>
+                <ButtonsLogin />
               </div>
             </div>
           </Col>

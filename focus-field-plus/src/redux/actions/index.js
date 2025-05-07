@@ -76,6 +76,51 @@ export const registerUser = (formData) => async (dispatch) => {
   }
 };
 
+export const loginWithGoogle = (userData) => async (dispatch) => {
+  dispatch({ type: LOGIN_REQUEST });
+
+  try {
+    const response = await fetch("http://localhost:8080/api/focus-field/auth/google", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error || "Google login failed");
+    }
+
+    const result = await response.json();
+    const token = result.token;
+
+    const userInfoResponse = await fetch("http://localhost:8080/api/focus-field/auth/current-user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!userInfoResponse.ok) {
+      throw new Error("Errore nel recupero dell’utente dopo login Google");
+    }
+
+    const fullUserData = await userInfoResponse.json();
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: {
+        token,
+        user: fullUserData,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: LOGIN_FAILURE,
+      payload: error.message,
+    });
+  }
+};
+
 export const logout = () => ({
   type: LOGOUT,
 });

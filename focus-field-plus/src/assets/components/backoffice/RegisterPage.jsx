@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import FocusNavBar from "../home/FocusNavBar";
 import Footer from "../home/Footer";
 import { registerUser } from "../../../redux/actions";
+import ButtonsLogin from "./ButtonsLogin";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -119,20 +120,7 @@ const RegisterPage = () => {
                   <button className="focusfield-btn mt-2 w-100">Registrati</button>
                 </Form>
 
-                <div className="d-flex flex-column gap-2 mt-4 w-100 px-4 mb-5">
-                  <button className="focusfield-btn-outline d-flex align-items-center justify-content-center gap-2">
-                    <i className="bi bi-google"></i>
-                    Continua con Google
-                  </button>
-                  <button className="focusfield-btn-outline d-flex align-items-center justify-content-center gap-2">
-                    <i className="bi bi-apple"></i>
-                    Continue with Apple
-                  </button>
-                  <button className="focusfield-btn-outline d-flex align-items-center justify-content-center gap-2">
-                    <i className="bi bi-facebook"></i>
-                    Continue with Facebook
-                  </button>
-                </div>
+                <ButtonsLogin />
               </div>
             </div>
           </Col>
