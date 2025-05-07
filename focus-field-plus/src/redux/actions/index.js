@@ -11,6 +11,11 @@ const LOGOUT = "LOGOUT";
 const REGISTER_USER = "REGISTER_USER";
 const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 const REGISTER_FAIL = "REGISTER_FAIL";
+const FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST";
+const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
+const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const setMood = (mood) => ({
   type: SET_MOOD,
@@ -19,13 +24,14 @@ export const setMood = (mood) => ({
 
 export const login = (username, password) => async (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
-
   try {
-    const response = await fetch("http://localhost:8080/api/focus-field/auth/login", {
+    console.log(apiUrl);
+    const response = await fetch(apiUrl + "api/focus-field/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
+    console.log(response);
 
     if (!response.ok) {
       const error = await response.json();
@@ -33,7 +39,6 @@ export const login = (username, password) => async (dispatch) => {
     }
 
     const data = await response.json();
-
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data,
@@ -56,7 +61,7 @@ export const registerUser = (formData) => async (dispatch) => {
       cognome: formData.cognome,
     };
 
-    const response = await fetch("http://localhost:8080/api/focus-field/auth/register", {
+    const response = await fetch(apiUrl + "api/focus-field/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +85,7 @@ export const loginWithGoogle = (userData) => async (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
 
   try {
-    const response = await fetch("http://localhost:8080/api/focus-field/auth/google", {
+    const response = await fetch(apiUrl + "api/focus-field/auth/google", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
@@ -94,7 +99,7 @@ export const loginWithGoogle = (userData) => async (dispatch) => {
     const result = await response.json();
     const token = result.token;
 
-    const userInfoResponse = await fetch("http://localhost:8080/api/focus-field/auth/current-user", {
+    const userInfoResponse = await fetch(apiUrl + "api/focus-field/auth/current-user", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -121,6 +126,30 @@ export const loginWithGoogle = (userData) => async (dispatch) => {
   }
 };
 
+export const fetchUsers = () => {
+  return async (dispatch, getState) => {
+    const { auth } = getState();
+    const token = auth.token;
+    console.log(token);
+    dispatch({ type: FETCH_USERS_REQUEST });
+    try {
+      const res = await fetch(apiUrl + "api/focus-field/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res);
+      if (!res.ok) {
+        throw new Error("Errore nel recupero utenti");
+      }
+      const data = await res.json();
+      dispatch({ type: FETCH_USERS_SUCCESS, payload: data });
+    } catch (err) {
+      dispatch({ type: FETCH_USERS_FAILURE, payload: err.message });
+    }
+  };
+};
+
 export const logout = () => ({
   type: LOGOUT,
 });
@@ -144,4 +173,7 @@ export {
   REGISTER_USER,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  FETCH_USERS_REQUEST,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_FAILURE,
 };

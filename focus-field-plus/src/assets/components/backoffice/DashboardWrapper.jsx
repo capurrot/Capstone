@@ -13,6 +13,7 @@ const DashboardWrapper = () => {
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
   const [loading, setLoading] = useState(true);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,7 +21,7 @@ const DashboardWrapper = () => {
 
       console.log("Token:", token);
       try {
-        const res = await fetch("http://localhost:8080/api/focus-field/auth/current-user", {
+        const res = await fetch(apiUrl + "api/focus-field/auth/current-user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -26,7 +26,7 @@ const GoogleLoginButton = () => {
           picture: data.picture,
         };
 
-        await dispatch(loginWithGoogle(userData));
+        dispatch(loginWithGoogle(userData));
 
         navigate("/dashboard");
       } catch (error) {

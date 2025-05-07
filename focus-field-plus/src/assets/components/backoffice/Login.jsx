@@ -22,7 +22,6 @@ const Login = () => {
     } else {
       localStorage.removeItem("rememberedUsername");
     }
-
     dispatch(login(username, password));
   };
   const token = useSelector((state) => state.auth.token);
