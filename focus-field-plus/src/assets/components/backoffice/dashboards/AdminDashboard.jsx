@@ -10,6 +10,7 @@ import {
   ArrowLeftCircle,
 } from "react-bootstrap-icons";
 import ListUsers from "./users/ListUsers";
+import ListMoods from "./moods/ListMoods";
 
 const AdminDashboard = ({ user }) => {
   const [view, setView] = useState("dashboard");
@@ -44,7 +45,7 @@ const AdminDashboard = ({ user }) => {
                       <Headphones size={48} className="mb-3" />
                       <Card.Title>Gestione Mood</Card.Title>
                       <Card.Text>Crea e aggiorna mood</Card.Text>
-                      <Button variant="primary" style={{ width: "10rem" }}>
+                      <Button variant="primary" style={{ width: "10rem" }} onClick={() => setView("moods")}>
                         Vai
                       </Button>
                     </Card.Body>
