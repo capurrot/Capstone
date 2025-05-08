@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router";
-import AdminDashboard from "./dashboards/AdminDashboard";
-import FocusNavBar from "../home/FocusNavBar";
-import UserDashboard from "./dashboards/UserDashboard";
-import SellerDashboard from "./dashboards/SellerDashboard";
-import { setUser } from "../../../redux/actions";
-import Footer from "../home/Footer";
+import AdminDashboard from "./AdminDashboard";
+import FocusNavBar from "../../home/FocusNavBar";
+import UserDashboard from "./UserDashboard";
+import SellerDashboard from "./SellerDashboard";
+import { setUser } from "../../../../redux/actions";
+import Footer from "../../home/Footer";
 
 const DashboardWrapper = () => {
   const dispatch = useDispatch();
