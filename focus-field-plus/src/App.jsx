@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div
-      className={`main-container mood-${slug}`}
+      className={`main-container mood-${slug} d-flex flex-column min-vh-100`}
       style={{
         "--mood-color-1": colors[0],
         "--mood-color-2": colors[1],

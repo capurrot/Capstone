@@ -65,10 +65,20 @@ const ListUsers = () => {
       </Alert>
     );
 
-  return (
-    <Container className="mt-4">
-      <h2 className="mb-4">Lista Utenti</h2>
+  const getUserImage = (user) => {
+    if (user.pictureUrl && /^https?:\/\/.+/.test(user.pictureUrl)) {
+      return user.pictureUrl;
+    }
 
+    const initials = `${user.nome || ""} ${user.cognome || ""}`.trim() || user.username || "Utente";
+
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(
+      initials
+    )}&background=0D8ABC&color=fff&size=64&rounded=true`;
+  };
+
+  return (
+    <Container className="mt-4 px-0">
       {users.length === 0 ? (
         <Alert variant="info">Nessun utente trovato.</Alert>
       ) : (
@@ -78,13 +88,27 @@ const ListUsers = () => {
 
             return (
               <Card key={user.id} className="shadow-sm p-3 d-flex flex-column flex-md-row align-items-md-center">
+                <Image
+                  src={getUserImage(user)}
+                  alt={`Foto di ${user.nome || ""} ${user.cognome || ""}`}
+                  width={64}
+                  height={64}
+                  roundedCircle
+                  className="me-md-3 mb-3 mb-md-0 object-fit-cover"
+                />
                 <div className="flex-fill mb-3 mb-md-0">
                   <h5 className="mb-1 d-flex align-items-center gap-2">
-                    {user.username || "Utente"}
+                    {user.nome && user.cognome ? `${user.nome} ${user.cognome}` : user.username || "Utente"}
                     <Badge bg="secondary">#{user.id}</Badge>
                   </h5>
-                  <div className="text-muted small">{user.email || "-"}</div>
-                  <div className="small">Nome: {user.nome && user.cognome ? `${user.nome} ${user.cognome}` : "-"}</div>
+
+                  <div className="small">
+                    <strong>Email:</strong> <span className="text-muted">{user.email || "-"}</span>
+                  </div>
+                  <div className="small">
+                    <strong>Username:</strong> <span className="text-muted">{user.username || "-"}</span>
+                  </div>
+
                   <div className="mt-2">
                     <Badge bg={roleInfo.variant} className="d-inline-flex align-items-center gap-1">
                       {roleInfo.icon}
