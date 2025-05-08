@@ -9,7 +9,7 @@ import {
   FileEarmarkSpreadsheet,
   ArrowLeftCircle,
 } from "react-bootstrap-icons";
-import ListUsers from "./ListUsers";
+import ListUsers from "./users/ListUsers";
 
 const AdminDashboard = ({ user }) => {
   const [view, setView] = useState("dashboard");
