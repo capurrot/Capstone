@@ -1,33 +1,62 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_MOOD } from "../../../redux/actions";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 const FocusHero = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [moodText, setMoodText] = useState("");
   const [notFound, setNotFound] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [detectedMood, setDetectedMood] = useState(null);
 
-  const dispatch = useDispatch();
   const selectedMood = useSelector((state) => state.mood.selectedMood);
   const allMoods = useSelector((state) => state.mood.allMoods);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const lowerText = moodText.toLowerCase();
+    setLoading(true);
+    setNotFound(false);
 
-    const detectedMood = allMoods.find((mood) => mood.tag?.some((tag) => lowerText.includes(tag.toLowerCase())));
+    try {
+      const response = await fetch(apiUrl + "api/openai/classify-mood", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: moodText }),
+      });
 
-    if (detectedMood) {
-      dispatch({ type: SET_MOOD, payload: detectedMood });
-      setNotFound(false);
-    } else {
+      const data = await response.json();
+
+      const found = allMoods.find((mood) => mood.slug === data.mood?.toLowerCase());
+
+      if (found) {
+        setDetectedMood(found);
+        setShowModal(true);
+        setNotFound(false);
+      } else {
+        setNotFound(true);
+      }
+    } catch (error) {
+      console.error("Errore durante la chiamata all'API:", error);
       setNotFound(true);
     }
 
     setMoodText("");
+    setLoading(false);
+  };
+
+  const handleConfirmMood = () => {
+    dispatch({ type: SET_MOOD, payload: detectedMood });
+    setShowModal(false);
+    navigate(`/mood/${detectedMood.slug}`); // opzionale: reindirizza alla pagina del mood
   };
 
   const backgroundImage =
@@ -55,7 +84,7 @@ const FocusHero = () => {
         <Form
           onSubmit={handleSubmit}
           className="mt-4 d-flex align-items-center rounded py-2 px-3"
-          style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
         >
           <Form.Control
             type="text"
@@ -63,9 +92,10 @@ const FocusHero = () => {
             value={moodText}
             onChange={(e) => setMoodText(e.target.value)}
             className="bg-transparent border-0 focus-0"
+            disabled={loading}
           />
-          <Button className="bg-transparent border-0 p-0 m-0" type="submit">
-            <Search style={{ fontSize: "1.5rem" }} />
+          <Button className="bg-transparent border-0 p-0 m-0" type="submit" disabled={loading}>
+            <Search style={{ fontSize: "1.5rem", color: "#000" }} />
           </Button>
         </Form>
 
@@ -75,6 +105,23 @@ const FocusHero = () => {
           </p>
         )}
       </div>
+
+      {/* Modale suggerimento mood */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{t("hero.modal_title")}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            {t("hero.modal_text")} <strong>{detectedMood?.label || detectedMood?.slug}</strong>
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleConfirmMood}>
+            {t("hero.modal_button")}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
