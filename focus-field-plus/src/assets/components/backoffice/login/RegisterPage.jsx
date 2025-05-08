@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Container, Row, Col, Form, Alert } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router";
-import FocusNavBar from "../home/FocusNavBar";
-import Footer from "../home/Footer";
-import { registerUser } from "../../../redux/actions";
+import FocusNavBar from "../../home/FocusNavBar";
+import Footer from "../../home/Footer";
+import { registerUser } from "../../../../redux/actions";
 import ButtonsLogin from "./ButtonsLogin";
 
 const RegisterPage = () => {

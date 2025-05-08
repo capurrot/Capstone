@@ -11,9 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { SET_ALL_MOODS, SET_MOOD } from "./redux/actions/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import MoodPageWrapper from "./assets/components/expierence/MoodPageWrapper.jsx";
-import Login from "./assets/components/backoffice/Login.jsx";
+import Login from "./assets/components/backoffice/login/Login.jsx";
 import DashboardWrapper from "./assets/components/backoffice/DashboardWrapper.jsx";
-import RegisterPage from "./assets/components/backoffice/RegisterPage.jsx";
+import RegisterPage from "./assets/components/backoffice/login/RegisterPage.jsx";
 
 function App() {
   const dispatch = useDispatch();
