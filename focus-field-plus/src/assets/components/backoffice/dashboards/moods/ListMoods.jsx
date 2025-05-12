@@ -1,20 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllMoods } from "../../../../../redux/actions";
-import { useNavigate } from "react-router";
 import { Container, Card, Spinner, Alert, Badge, Row, Col, Button, ButtonGroup, Image } from "react-bootstrap";
+import SingleMood from "./SingleMood";
+// Assicurati che questo file esista
 
 const ListMoods = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { allMoods, isLoading, hasError } = useSelector((state) => state.mood);
+  const [selectedMood, setSelectedMood] = useState(null); // Mood in modifica
 
   useEffect(() => {
     dispatch(fetchAllMoods());
   }, [dispatch]);
 
-  const handleEdit = (moodId) => {
-    navigate(`/admin/moods/edit/${moodId}`);
+  const handleEdit = (mood) => {
+    setSelectedMood(mood); // mostra il form con il mood selezionato
   };
 
   const handleDelete = (moodId) => {
@@ -23,6 +24,17 @@ const ListMoods = () => {
       // dispatch(deleteMood(moodId));
     }
   };
+
+  if (selectedMood) {
+    return (
+      <Container className="mt-4">
+        <Button variant="secondary" onClick={() => setSelectedMood(null)}>
+          ← Torna alla lista
+        </Button>
+        <SingleMood mood={selectedMood} />
+      </Container>
+    );
+  }
 
   if (isLoading)
     return (
@@ -63,7 +75,7 @@ const ListMoods = () => {
                   </div>
 
                   <ButtonGroup size="sm">
-                    <Button variant="outline-primary" onClick={() => handleEdit(mood.id)}>
+                    <Button variant="outline-primary" onClick={() => handleEdit(mood)}>
                       ✏️ Modifica
                     </Button>
                     <Button variant="outline-danger" onClick={() => handleDelete(mood.id)}>
