@@ -47,6 +47,12 @@ body {
   transition: opacity 0.2s ease;
 }
 
+#language-dropdown .dropdown-toggle {
+  font-size: 1.2rem;
+  background: transparent;
+  border: none;
+}
+
 .main-container {
   background-color: var(--mood-color-1);
   color: var(--mood-color-2);

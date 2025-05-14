@@ -27,7 +27,7 @@ const ListMoods = () => {
 
   if (selectedMood) {
     return (
-      <Container className="mt-4">
+      <Container fluid className="mt-4 px-0">
         <Button variant="secondary" onClick={() => setSelectedMood(null)}>
           ← Torna alla lista
         </Button>
