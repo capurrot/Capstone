@@ -523,6 +523,36 @@ const SingleMood = ({ mood }) => {
         )}
 
         <hr />
+
+        {translation?.music && (
+          <>
+            <h5 className="mb-4 fs-2">
+              <i className="bi bi-music-note-beamed me-2"></i> Musica consigliata
+            </h5>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Titolo Playlist</Form.Label>
+              <Form.Control type="text" value={musicTitle} onChange={(e) => setMusicTitle(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">URL Playlist</Form.Label>
+              <Form.Control type="text" value={playlistUrl} onChange={(e) => setPlaylistUrl(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Tag musicali</Form.Label>
+              <Form.Control type="text" value={musicTags} onChange={(e) => setMusicTags(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Scopo della musica</Form.Label>
+              <Form.Control type="text" value={musicScope} onChange={(e) => setMusicScope(e.target.value)} />
+            </Form.Group>
+          </>
+        )}
+
+        <hr />
         {translation?.breathing && (
           <>
             <h5 className="mb-4 fs-2">
@@ -659,37 +689,6 @@ const SingleMood = ({ mood }) => {
         )}
         <hr />
 
-        {translation?.music && (
-          <>
-            <h5 className="mb-4 fs-2">
-              <i className="bi bi-music-note-beamed me-2"></i> Musica consigliata
-            </h5>
-
-            <Form.Group className="mb-3">
-              <Form.Label className="fw-bold">Titolo Playlist</Form.Label>
-              <Form.Control type="text" value={musicTitle} onChange={(e) => setMusicTitle(e.target.value)} />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label className="fw-bold">URL Playlist</Form.Label>
-              <Form.Control type="text" value={playlistUrl} onChange={(e) => setPlaylistUrl(e.target.value)} />
-              <a href={playlistUrl} target="_blank" rel="noreferrer" className="d-block mt-2 text-decoration-underline">
-                Apri playlist
-              </a>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label className="fw-bold">Tag musicali</Form.Label>
-              <Form.Control type="text" value={musicTags} onChange={(e) => setMusicTags(e.target.value)} />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label className="fw-bold">Scopo della musica</Form.Label>
-              <Form.Control type="text" value={musicScope} onChange={(e) => setMusicScope(e.target.value)} />
-            </Form.Group>
-          </>
-        )}
-
         {translation?.relaxBody && (
           <>
             <hr />
@@ -792,8 +791,33 @@ const SingleMood = ({ mood }) => {
                     </Form.Group>
                   </Col>
                 </Row>
+
+                {/* Pulsante per eliminare l'esercizio */}
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  className="mt-2"
+                  onClick={() => {
+                    const updated = relaxExercises.filter((_, i) => i !== index);
+                    setRelaxExercises(updated);
+                  }}
+                >
+                  Elimina esercizio
+                </Button>
               </Card>
             ))}
+
+            {/* Pulsante per aggiungere un nuovo esercizio */}
+            <Button
+              variant="outline-primary"
+              size="sm"
+              className="mt-3"
+              onClick={() => {
+                setRelaxExercises([...relaxExercises, { name: "", instructions: "", duration: 0, image: "" }]);
+              }}
+            >
+              Aggiungi esercizio
+            </Button>
           </>
         )}
 
@@ -1032,22 +1056,79 @@ const SingleMood = ({ mood }) => {
                   />
                 </Form.Group>
 
-                <Form.Group className="mt-3">
-                  <Form.Label>Risposte (una per riga)</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={step.answers?.join("\n") || ""}
-                    onChange={(e) => {
-                      const updated = [...coachSteps];
-                      updated[idx].answers = e.target.value
-                        .split("\n")
-                        .map((a) => a.trim())
-                        .filter(Boolean);
-                      setCoachSteps(updated);
-                    }}
-                  />
-                </Form.Group>
+                <Form.Label className="fw-bold mt-3">Risposte</Form.Label>
+                {step.answers?.map((answer, answerIdx) => (
+                  <Row key={answer.id || answerIdx} className="mb-2 align-items-center">
+                    <Col md={1} />
+                    <Col md={4}>
+                      <Form.Control
+                        as="textarea"
+                        rows={2}
+                        value={answer.text}
+                        onChange={(e) => {
+                          const updated = [...coachSteps];
+                          updated[idx].answers[answerIdx].text = e.target.value;
+                          setCoachSteps(updated);
+                        }}
+                        placeholder="Testo della risposta"
+                      />
+                    </Col>
+                    <Col md={2} className="d-flex justify-content-center">
+                      <Form.Check
+                        type="checkbox"
+                        label="Corretta"
+                        checked={answer.correct}
+                        onChange={(e) => {
+                          const updated = [...coachSteps];
+                          updated[idx].answers[answerIdx].correct = e.target.checked;
+                          setCoachSteps(updated);
+                        }}
+                      />
+                    </Col>
+                    <Col md={4} className="text-center">
+                      <Form.Control
+                        as="textarea"
+                        rows={2}
+                        value={answer.feedback}
+                        onChange={(e) => {
+                          const updated = [...coachSteps];
+                          updated[idx].answers[answerIdx].feedback = e.target.value;
+                          setCoachSteps(updated);
+                        }}
+                        placeholder="Feedback (opzionale)"
+                      />
+                    </Col>
+                    <Col md={1}>
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={() => {
+                          const updated = [...coachSteps];
+                          updated[idx].answers.splice(answerIdx, 1);
+                          setCoachSteps(updated);
+                        }}
+                      >
+                        <i className="bi bi-trash"></i>
+                      </Button>
+                    </Col>
+                  </Row>
+                ))}
+
+                <Button
+                  variant="outline-primary"
+                  size="sm"
+                  className="mt-2"
+                  onClick={() => {
+                    const updated = [...coachSteps];
+                    updated[idx].answers = [
+                      ...(updated[idx].answers || []),
+                      { text: "", correct: false, feedback: "" },
+                    ];
+                    setCoachSteps(updated);
+                  }}
+                >
+                  Aggiungi risposta
+                </Button>
               </Card>
             ))}
 
@@ -1118,7 +1199,7 @@ const SingleMood = ({ mood }) => {
             <Row className="mb-4">
               <Col md={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Immagine di sfondo</Form.Label>
+                  <Form.Label>Immagine di sfondo del moood</Form.Label>
                   <Form.Control
                     type="text"
                     value={backgroundImage}
@@ -1127,31 +1208,46 @@ const SingleMood = ({ mood }) => {
                   <a href={backgroundImage} target="_blank" rel="noreferrer" className="d-block mt-2">
                     {backgroundImage}
                   </a>
-                  <Image src={backgroundImage} thumbnail className="mt-2" style={{ width: "100px" }} />
+                  <Image src={backgroundImage} thumbnail className="mt-2" style={{ maxHeight: "26rem" }} />
                 </Form.Group>
               </Col>
               <Col md={6}>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3 h-100">
                   <Form.Label>Video di sfondo</Form.Label>
                   <Form.Control
                     type="text"
                     value={backgroundVideo}
                     onChange={(e) => setBackgroundVideo(e.target.value)}
                   />
-                  <a href={backgroundVideo} target="_blank" rel="noreferrer" className="d-block mt-2">
-                    {backgroundVideo}
+                  {backgroundVideo && (
+                    <>
+                      <a href={backgroundVideo} target="_blank" rel="noreferrer" className="d-block mt-2">
+                        {backgroundVideo}
+                      </a>
+                      <div className="d-flex align-items-center mt-2 img-thumbnail">
+                        <video
+                          src={backgroundVideo}
+                          controls
+                          width="100%"
+                          className="my-auto rounded shadow-sm"
+                          style={{ maxHeight: "14rem", objectFit: "cover" }}
+                        >
+                          Il tuo browser non supporta il tag video.
+                        </video>
+                      </div>
+                    </>
+                  )}
+                  <Form.Label className="mt-2">File audio</Form.Label>
+                  <Form.Control type="text" value={audioSrc} onChange={(e) => setAudioSrc(e.target.value)} />
+                  <a href={audioSrc} target="_blank" rel="noreferrer" className="d-block mt-2">
+                    {audioSrc}
                   </a>
+                  <audio src={audioSrc} controls width="100%" className="mt-2 w-100">
+                    Il tuo browser non supporta il tag audio.
+                  </audio>
                 </Form.Group>
               </Col>
             </Row>
-
-            <Form.Group className="mb-3">
-              <Form.Label>File audio</Form.Label>
-              <Form.Control type="text" value={audioSrc} onChange={(e) => setAudioSrc(e.target.value)} />
-              <a href={audioSrc} target="_blank" rel="noreferrer" className="d-block mt-2">
-                {audioSrc}
-              </a>
-            </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Soundscape (uno per riga)</Form.Label>
