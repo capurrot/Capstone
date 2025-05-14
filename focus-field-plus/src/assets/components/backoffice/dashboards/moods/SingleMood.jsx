@@ -666,8 +666,13 @@ const SingleMood = ({ mood }) => {
                                 </Form.Select>
                               </Col>
                               <div className="col-1 text-center">
-                                <Button variant="outline-danger" size="sm" onClick={() => removePhase(idx)}>
-                                  <i className="bi bi-trash"></i>
+                                <Button
+                                  variant="danger"
+                                  className="fs-3 rounded-circle d-inline-flex align-items-center justify-content-center"
+                                  style={{ width: 25, height: 25, paddingBottom: "10px" }}
+                                  onClick={() => removePhase(idx)}
+                                >
+                                  -
                                 </Button>
                               </div>
                             </Row>
@@ -679,9 +684,15 @@ const SingleMood = ({ mood }) => {
                   )}
                 </Droppable>
               </DragDropContext>
+
               <div className="text-end mt-3">
-                <Button variant="outline-primary" size="sm" onClick={addPhase}>
-                  + Aggiungi fase
+                <Button
+                  variant="success"
+                  className="fs-1 rounded-circle d-inline-flex align-items-center justify-content-center"
+                  style={{ width: 40, height: 40 }}
+                  onClick={addPhase}
+                >
+                  +
                 </Button>
               </div>
             </div>
@@ -725,8 +736,20 @@ const SingleMood = ({ mood }) => {
             </Form.Group>
 
             <Form.Label className="fw-bold mt-4 mb-2">Esercizi</Form.Label>
+
             {relaxExercises.map((exercise, index) => (
               <Card className="mb-3 p-3 shadow-sm text-muted" key={index}>
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  className="position-absolute top-0 end-0 m-2"
+                  onClick={() => {
+                    const updated = relaxExercises.filter((_, i) => i !== index);
+                    setRelaxExercises(updated);
+                  }}
+                >
+                  <i className="bi bi-trash"></i>
+                </Button>
                 <Row>
                   <Col md={6}>
                     <Form.Group className="mb-2">
@@ -791,33 +814,20 @@ const SingleMood = ({ mood }) => {
                     </Form.Group>
                   </Col>
                 </Row>
-
-                {/* Pulsante per eliminare l'esercizio */}
-                <Button
-                  variant="outline-danger"
-                  size="sm"
-                  className="mt-2"
-                  onClick={() => {
-                    const updated = relaxExercises.filter((_, i) => i !== index);
-                    setRelaxExercises(updated);
-                  }}
-                >
-                  Elimina esercizio
-                </Button>
               </Card>
             ))}
 
-            {/* Pulsante per aggiungere un nuovo esercizio */}
-            <Button
-              variant="outline-primary"
-              size="sm"
-              className="mt-3"
-              onClick={() => {
-                setRelaxExercises([...relaxExercises, { name: "", instructions: "", duration: 0, image: "" }]);
-              }}
-            >
-              Aggiungi esercizio
-            </Button>
+            <div className="text-end mt-2">
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={() => {
+                  setRelaxExercises([...relaxExercises, { name: "", instructions: "", duration: 0, image: "" }]);
+                }}
+              >
+                + Aggiungi un esercizio
+              </Button>
+            </div>
           </>
         )}
 
@@ -1100,35 +1110,38 @@ const SingleMood = ({ mood }) => {
                     </Col>
                     <Col md={1}>
                       <Button
-                        variant="outline-danger"
-                        size="sm"
+                        variant="danger"
+                        className="fs-3 rounded-circle d-inline-flex align-items-center justify-content-center"
+                        style={{ width: 25, height: 25, paddingBottom: "10px" }}
                         onClick={() => {
                           const updated = [...coachSteps];
                           updated[idx].answers.splice(answerIdx, 1);
                           setCoachSteps(updated);
                         }}
                       >
-                        <i className="bi bi-trash"></i>
+                        -
                       </Button>
                     </Col>
                   </Row>
                 ))}
 
-                <Button
-                  variant="outline-primary"
-                  size="sm"
-                  className="mt-2"
-                  onClick={() => {
-                    const updated = [...coachSteps];
-                    updated[idx].answers = [
-                      ...(updated[idx].answers || []),
-                      { text: "", correct: false, feedback: "" },
-                    ];
-                    setCoachSteps(updated);
-                  }}
-                >
-                  Aggiungi risposta
-                </Button>
+                <div className="text-end mt-2">
+                  <Button
+                    variant="success"
+                    className="fs-1 rounded-circle d-inline-flex align-items-center justify-content-center"
+                    style={{ width: 40, height: 40 }}
+                    onClick={() => {
+                      const updated = [...coachSteps];
+                      updated[idx].answers = [
+                        ...(updated[idx].answers || []),
+                        { text: "", correct: false, feedback: "" },
+                      ];
+                      setCoachSteps(updated);
+                    }}
+                  >
+                    +
+                  </Button>
+                </div>
               </Card>
             ))}
 
@@ -1306,7 +1319,7 @@ const SingleMood = ({ mood }) => {
 
         <div className="text-end mt-4">
           <Button variant="success" onClick={handleSave} disabled={isSaving}>
-            {isSaving ? "Salvataggio..." : "Salva modifiche"}
+            {isSaving ? "Salvataggio..." : "Salva"}
           </Button>
           {saveSuccess === true && (
             <Alert variant="success" className="mt-3">
