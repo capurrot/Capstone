@@ -27,16 +27,32 @@ const SingleMood = ({ mood }) => {
   const [breathingEnabled, setBreathingEnabled] = useState(false);
   const [technique, setTechnique] = useState("");
   const [totalDuration, setTotalDuration] = useState(0);
+  const [rounds, setRounds] = useState("");
+  const [scope, setScope] = useState("");
+  const [startBreathLabel, setStartBreathLabel] = useState("");
+  const [stopBreathLabel, setStopBreathLabel] = useState("");
+  const [techniqueLabel, setTechniqueLabel] = useState("");
+  const [breathingDurationLabel, setBreathingDurationLabel] = useState("");
 
   const [musicTitle, setMusicTitle] = useState("");
   const [playlistUrl, setPlaylistUrl] = useState("");
   const [musicTags, setMusicTags] = useState("");
   const [musicScope, setMusicScope] = useState("");
 
+  const [relaxExercises, setRelaxExercises] = useState([]);
   const [relaxBodyEnabled, setRelaxBodyEnabled] = useState(false);
+  const [relaxBodyTitle, setRelaxBodyTitle] = useState("");
   const [relaxBodyDescription, setRelaxBodyDescription] = useState("");
   const [pauseDuration, setPauseDuration] = useState(5);
-  const [relaxExercises, setRelaxExercises] = useState([]);
+  const [scrollDownLabel, setScrollDownLabel] = useState("");
+  const [scrollUpLabel, setScrollUpLabel] = useState("");
+  const [completedLabel, setCompletedLabel] = useState("");
+  const [repeatInLabel, setRepeatInLabel] = useState("");
+  const [startRelaxLabel, setStartRelaxLabel] = useState("");
+  const [stopRelaxLabel, setStopRelaxLabel] = useState("");
+  const [pauseRelaxText, setPauseRelaxText] = useState("");
+  const [pauseRelaxLabel, setPauseRelaxLabel] = useState("");
+  const [durationRelax, setDurationRelax] = useState(0);
 
   const [journalPreEnabled, setJournalPreEnabled] = useState(false);
   const [journalPrePrompt, setJournalPrePrompt] = useState("");
@@ -81,6 +97,24 @@ const SingleMood = ({ mood }) => {
   const [fullscreenLabel, setFullscreenLabel] = useState("");
   const [exitFullscreenLabel, setExitFullscreenLabel] = useState("");
 
+  const [modalLoadingText, setModalLoadingText] = useState("");
+  const [modalNotFoundText, setModalNotFoundText] = useState("");
+  const [modalInfoTitle, setModalInfoTitle] = useState("");
+  const [modalCtaDefaultText, setModalCtaDefaultText] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalDesc, setModalDesc] = useState("");
+  const [modalSectionLabels, setModalSectionLabels] = useState({
+    music: "",
+    goals: "",
+    preJournal: "",
+    breathing: "",
+    relaxBody: "",
+    coach: "",
+    ambient: "",
+    spiritual: "",
+    postJournal: "",
+  });
+
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = useSelector((state) => state.auth.token);
 
@@ -113,6 +147,12 @@ const SingleMood = ({ mood }) => {
       setTechnique(data.breathing?.technique || "");
       setTotalDuration(data.breathing?.totalDuration || 0);
       setInstructions(data.breathing?.phases || []);
+      setRounds(data.breathing?.rounds || "");
+      setScope(data.breathing?.scope || "");
+      setStartBreathLabel(data.breathing?.start || "");
+      setStopBreathLabel(data.breathing?.stop || "");
+      setTechniqueLabel(data.breathing?.techniqueLabel || "");
+      setBreathingDurationLabel(data.breathing?.totalDurationLabel || "");
 
       setMusicTitle(data.music?.title || "");
       setPlaylistUrl(data.music?.playlistUrl || "");
@@ -123,6 +163,16 @@ const SingleMood = ({ mood }) => {
       setRelaxBodyDescription(data.relaxBody?.description || "");
       setPauseDuration(data.relaxBody?.pauseDuration || 5);
       setRelaxExercises(data.relaxBody?.exercises || []);
+      setRelaxBodyTitle(data.relaxBody?.title || "");
+      setScrollDownLabel(data.relaxBody?.scrollDown || "");
+      setScrollUpLabel(data.relaxBody?.scrollUp || "");
+      setCompletedLabel(data.relaxBody?.completed || "");
+      setRepeatInLabel(data.relaxBody?.repeatIn || "");
+      setStartRelaxLabel(data.relaxBody?.start || "");
+      setStopRelaxLabel(data.relaxBody?.stop || "");
+      setPauseRelaxLabel(data.relaxBody?.pause || "");
+      setPauseRelaxText(data.relaxBody?.pauseText || "");
+      setDurationRelax(data.relaxBody?.duration || 0);
 
       setJournalPreEnabled(data.journalPre?.enabled || false);
       setJournalPrePrompt(data.journalPre?.prompt || "");
@@ -166,6 +216,24 @@ const SingleMood = ({ mood }) => {
       setUnmuteLabel(data.environment?.unmute || "");
       setFullscreenLabel(data.environment?.fullscreen || "");
       setExitFullscreenLabel(data.environment?.exitFullscreen || "");
+
+      setModalLoadingText(data.moodModal?.loading || "");
+      setModalNotFoundText(data.moodModal?.notFound || "");
+      setModalInfoTitle(data.moodModal?.infoModal?.title || "");
+      setModalCtaDefaultText(data.moodModal?.ctaModal?.defaultText || "");
+      setModalTitle(data.moodModal?.title?.[mood.slug] || "");
+      setModalDesc(data.moodModal?.desc?.[mood.slug] || "");
+      setModalSectionLabels({
+        music: data.moodModal?.sections?.music || "",
+        goals: data.moodModal?.sections?.goals || "",
+        preJournal: data.moodModal?.sections?.preJournal || "",
+        breathing: data.moodModal?.sections?.breathing || "",
+        relaxBody: data.moodModal?.sections?.relaxBody || "",
+        coach: data.moodModal?.sections?.coach || "",
+        ambient: data.moodModal?.sections?.ambient || "",
+        spiritual: data.moodModal?.sections?.spiritual || "",
+        postJournal: data.moodModal?.sections?.postJournal || "",
+      });
     } catch (err) {
       setError("Traduzione non disponibile. " + err.message);
     }
@@ -261,12 +329,28 @@ const SingleMood = ({ mood }) => {
         technique,
         totalDuration,
         phases: instructions,
+        rounds,
+        scope,
+        start: startBreathLabel,
+        stop: stopBreathLabel,
+        techniqueLabel: techniqueLabel,
+        totalDurationLabel: breathingDurationLabel,
       },
       relaxBody: {
         enabled: relaxBodyEnabled,
         description: relaxBodyDescription,
         pauseDuration,
         exercises: relaxExercises,
+        title: relaxBodyTitle,
+        scrollDown: scrollDownLabel,
+        scrollUp: scrollUpLabel,
+        completed: completedLabel,
+        repeatIn: repeatInLabel,
+        start: startRelaxLabel,
+        stop: stopRelaxLabel,
+        pause: pauseRelaxLabel,
+        pauseText: pauseRelaxText,
+        duration: durationRelax,
       },
       journalPre: {
         enabled: journalPreEnabled,
@@ -319,10 +403,35 @@ const SingleMood = ({ mood }) => {
         fullscreen: fullscreenLabel,
         exitFullscreen: exitFullscreenLabel,
       },
+      moodModal: {
+        loading: modalLoadingText,
+        notFound: modalNotFoundText,
+        infoModal: {
+          title: modalInfoTitle,
+        },
+        ctaModal: {
+          defaultText: modalCtaDefaultText,
+        },
+        title: {
+          calm: modalTitle,
+        },
+        desc: {
+          calm: modalDesc,
+        },
+        sections: modalSectionLabels,
+      },
+      cta: {
+        // Aggiungi qui la parte `cta` correttamente
+        actionCta: modalCtaDefaultText, // Usa il valore corretto
+        text: modalCtaDefaultText,
+      },
+      moodListId: mood.id,
     };
 
     console.log("moodListNew", moodListNew);
     console.log("moodRequest", moodRequest);
+
+    setIsSaving(false);
 
     try {
       const res = await fetch(`${apiUrl}api/focus-field/moods/${mood.id}`, {
@@ -343,7 +452,7 @@ const SingleMood = ({ mood }) => {
       setIsSaving(false);
     }
 
-    /*     try {
+    try {
       const res = await fetch(`${apiUrl}api/focus-field/mood/${mood.slug}/${selectedLang}`, {
         method: "PUT",
         headers: {
@@ -360,7 +469,7 @@ const SingleMood = ({ mood }) => {
       setSaveSuccess(false);
     } finally {
       setIsSaving(false);
-    } */
+    }
   };
 
   return (
@@ -474,6 +583,91 @@ const SingleMood = ({ mood }) => {
             </Form.Group>
             <hr />
 
+            <hr />
+            <h5 className="mb-4 fs-2">
+              <i className="bi bi-ui-checks-grid me-2"></i> Modale informativo
+            </h5>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Testo "Loading..."</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={modalLoadingText}
+                    onChange={(e) => setModalLoadingText(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Testo "Non trovato"</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={modalNotFoundText}
+                    onChange={(e) => setModalNotFoundText(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Titolo finestra informativa</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={modalInfoTitle}
+                    onChange={(e) => setModalInfoTitle(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Testo predefinito pulsante CTA</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={modalCtaDefaultText}
+                    onChange={(e) => setModalCtaDefaultText(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Titolo (specifico per {mood.slug})</Form.Label>
+                  <Form.Control type="text" value={modalTitle} onChange={(e) => setModalTitle(e.target.value)} />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Descrizione (specifica per {mood.slug})</Form.Label>
+                  <Form.Control type="text" value={modalDesc} onChange={(e) => setModalDesc(e.target.value)} />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <h6 className="fw-bold mt-4 mb-3">Etichette sezioni</h6>
+            {Object.entries(modalSectionLabels).map(([key, value]) => (
+              <Form.Group key={key} className="mb-2">
+                <Form.Label>{key}</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={value}
+                  onChange={(e) =>
+                    setModalSectionLabels((prev) => ({
+                      ...prev,
+                      [key]: e.target.value,
+                    }))
+                  }
+                />
+              </Form.Group>
+            ))}
+
+            <hr />
+
             <h5 className="mb-4 fs-2">
               <i className="bi bi-palette me-2"></i> Paletta dei colori
             </h5>
@@ -562,7 +756,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="enabledBreathing"
               label="Abilitato"
-              defaultChecked={translation.breathing.enabled}
+              checked={breathingEnabled}
               onChange={(e) => setBreathingEnabled(e.target.checked)}
               className="mb-2"
             />
@@ -581,6 +775,55 @@ const SingleMood = ({ mood }) => {
                     value={totalDuration}
                     onChange={(e) => setTotalDuration(parseInt(e.target.value))}
                   />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group controlId="rounds">
+                  <Form.Label className="fw-bold">Round</Form.Label>
+                  <Form.Control type="text" value={rounds} onChange={(e) => setRounds(e.target.value)} />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="scope">
+                  <Form.Label className="fw-bold">Scopo</Form.Label>
+                  <Form.Control type="text" value={scope} onChange={(e) => setScope(e.target.value)} />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group controlId="startLabel">
+                  <Form.Label className="fw-bold">Etichetta Avvio</Form.Label>
+                  <Form.Control type="text" value={startLabel} onChange={(e) => setStartLabel(e.target.value)} />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="stopLabel">
+                  <Form.Label className="fw-bold">Etichetta Ferma</Form.Label>
+                  <Form.Control type="text" value={stopLabel} onChange={(e) => setStopLabel(e.target.value)} />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={6}>
+                <Form.Group controlId="startLabel">
+                  <Form.Label className="fw-bold">Etichetta Durata</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={breathingDurationLabel}
+                    onChange={(e) => setStartLabel(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="stopLabel">
+                  <Form.Label className="fw-bold">Etichetta "Tecnica"</Form.Label>
+                  <Form.Control type="text" value={techniqueLabel} onChange={(e) => setStopLabel(e.target.value)} />
                 </Form.Group>
               </Col>
             </Row>
@@ -657,7 +900,8 @@ const SingleMood = ({ mood }) => {
                                     });
                                   }}
                                 >
-                                  <option value="">Seleziona una modalità</option>
+                                  <option value="Seleziona">Seleziona una modalità</option>
+                                  <option value=""></option>
                                   {[...new Set(instructions.map((p) => p.mode).filter(Boolean))].map((mode, i) => (
                                     <option key={i} value={mode}>
                                       {mode}
@@ -717,12 +961,73 @@ const SingleMood = ({ mood }) => {
             />
 
             <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Titolo</Form.Label>
+              <Form.Control type="text" value={relaxBodyTitle} onChange={(e) => setRelaxBodyTitle(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
               <Form.Label className="fw-bold">Descrizione</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={2}
                 value={relaxBodyDescription}
                 onChange={(e) => setRelaxBodyDescription(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Scorri verso il basso</Form.Label>
+              <Form.Control type="text" value={scrollDownLabel} onChange={(e) => setScrollDownLabel(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Torna su</Form.Label>
+              <Form.Control type="text" value={scrollUpLabel} onChange={(e) => setScrollUpLabel(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Messaggio completato</Form.Label>
+              <Form.Control type="text" value={completedLabel} onChange={(e) => setCompletedLabel(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Ripeti tra</Form.Label>
+              <Form.Control type="text" value={repeatInLabel} onChange={(e) => setRepeatInLabel(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Testo "Durata:"</Form.Label>
+              <Form.Control
+                type="text"
+                value={durationRelax}
+                onChange={(e) => setDurationRelax(parseInt(e.target.value))}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Etichetta "Start"</Form.Label>
+              <Form.Control
+                type="text"
+                value={startRelaxLabel}
+                onChange={(e) => setStartRelaxLabel(parseInt(e.target.value))}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Etichetta "Stop"</Form.Label>
+              <Form.Control
+                type="text"
+                value={stopRelaxLabel}
+                onChange={(e) => setStopRelaxLabel(parseInt(e.target.value))}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Etichetta "Pause"</Form.Label>
+              <Form.Control
+                type="text"
+                value={pauseRelaxLabel}
+                onChange={(e) => setPauseRelaxLabel(parseInt(e.target.value))}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">Testo periodo di pausa</Form.Label>
+              <Form.Control
+                type="text"
+                value={pauseRelaxText}
+                onChange={(e) => setPauseRelaxText(parseInt(e.target.value))}
               />
             </Form.Group>
 
@@ -1152,7 +1457,6 @@ const SingleMood = ({ mood }) => {
                   setCoachSteps((prev) => [
                     ...prev,
                     {
-                      id: Date.now(),
                       situation: "",
                       answers: [],
                     },
