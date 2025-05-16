@@ -734,14 +734,14 @@ const SingleMood = ({ mood }) => {
                                 <Button
                                   variant="danger"
                                   className="fs-3 rounded-circle d-inline-flex align-items-center justify-content-center"
-                                  style={{ width: 25, height: 25, paddingBottom: "10px" }}
+                                  style={{ width: 25, height: 25 }}
                                   onClick={() => {
                                     const updated = [...instructions];
                                     updated.splice(idx, 1);
                                     dispatch(setDashboardMoodField("breathing.phases", updated));
                                   }}
                                 >
-                                  -
+                                  <i class="fas fa-minus fs-6"></i>
                                 </Button>
                               </div>
                             </Row>
@@ -764,7 +764,7 @@ const SingleMood = ({ mood }) => {
                     dispatch(setDashboardMoodField("breathing.phases", updated));
                   }}
                 >
-                  +
+                  <i class="fas fa-plus fs-4"></i>
                 </Button>
               </div>
             </div>
@@ -1310,7 +1310,7 @@ const SingleMood = ({ mood }) => {
                       <Button
                         variant="danger"
                         className="fs-3 rounded-circle d-inline-flex align-items-center justify-content-center"
-                        style={{ width: 25, height: 25, paddingBottom: "10px" }}
+                        style={{ width: 25, height: 25 }}
                         onClick={() => {
                           const updated = [...coachSteps];
                           const answers = [...updated[idx].answers];
@@ -1319,7 +1319,7 @@ const SingleMood = ({ mood }) => {
                           dispatch(setDashboardMoodField("coach.steps", updated));
                         }}
                       >
-                        -
+                        <i class="fas fa-minus fs-6"></i>
                       </Button>
                     </Col>
                   </Row>
@@ -1338,7 +1338,7 @@ const SingleMood = ({ mood }) => {
                       dispatch(setDashboardMoodField("coach.steps", updated));
                     }}
                   >
-                    +
+                    <i class="fas fa-plus fs-4"></i>
                   </Button>
                 </div>
               </Card>
