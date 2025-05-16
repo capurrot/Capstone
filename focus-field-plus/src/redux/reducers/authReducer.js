@@ -13,6 +13,7 @@ const initialState = {
   token: null,
   loading: false,
   error: null,
+  loginSuccess: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -25,6 +26,8 @@ const authReducer = (state = initialState, action) => {
         loading: false,
         token: action.payload.token,
         user: action.payload.user,
+        loginSuccess: true,
+        error: null,
       };
     case LOGIN_FAILURE:
       return { ...state, loading: false, error: action.payload };

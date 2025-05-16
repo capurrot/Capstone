@@ -76,7 +76,12 @@ function FocusNavBar() {
             )}
 
             {/* Selettore lingue */}
-            <NavDropdown title="🌐" id="language-dropdown" className="ms-3" align="end">
+            <NavDropdown
+              id="language-dropdown"
+              title={<i className="bi bi-globe me-2"></i>}
+              className="ms-3"
+              align="end"
+            >
               <NavDropdown.Item onClick={() => changeLanguage("it")}>🇮🇹 Italiano</NavDropdown.Item>
               <NavDropdown.Item onClick={() => changeLanguage("en")}>🇬🇧 English</NavDropdown.Item>
               <NavDropdown.Item onClick={() => changeLanguage("es")}>🇪🇸 Español</NavDropdown.Item>

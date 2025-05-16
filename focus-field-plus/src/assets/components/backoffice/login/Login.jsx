@@ -1,4 +1,4 @@
-import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { Alert, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FocusNavBar from "../../home/FocusNavBar";
 import Footer from "../../home/Footer";
@@ -11,6 +11,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [rememberMe, setRememberMe] = useState(false);
   const [savedUsername, setSavedUsername] = useState("");
+  const auth = useSelector((state) => state.auth);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -28,7 +29,9 @@ const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (token) {
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1000);
     }
   }, [token, navigate]);
 
@@ -67,6 +70,16 @@ const Login = () => {
                     name="password"
                   />
                   <button className="focusfield-btn mt-4 d-flex w-100 justify-content-center">Login</button>
+                  {auth.error && (
+                    <Alert variant="danger" className="mt-4 mb-0 text-center">
+                      <i class="bi bi-exclamation-triangle-fill me-2"></i>Login failed
+                    </Alert>
+                  )}
+                  {auth.loginSuccess && (
+                    <Alert variant="success" className="mt-4 mb-0 text-center">
+                      <i class="bi bi-check-circle-fill me-2"></i>Login successful
+                    </Alert>
+                  )}
                 </Form>
                 <div className="d-flex flex-column justify-content-between  w-100 px-4 login-text gap-1">
                   <div
