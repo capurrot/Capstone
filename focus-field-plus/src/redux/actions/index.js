@@ -23,8 +23,21 @@ export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
 export const SET_MOODS_LOADING = "SET_MOODS_LOADING";
 export const SET_MOODS_ERROR = "SET_MOODS_ERROR";
 
+export const SET_DASHBOARD_MOOD = "SET_DASHBOARD_MOOD";
+export const SET_DASHBOARD_MOOD_LOADING = "SET_DASHBOARD_MOOD_LOADING";
+export const SET_DASHBOARD_MOOD_ERROR = "SET_DASHBOARD_MOOD_ERROR";
+
+export const SET_DASHBOARD_MOOD_FIELD = "SET_DASHBOARD_MOOD_FIELD";
+export const SET_DASHBOARD_MOOD_INFO = "SET_DASHBOARD_MOOD_INFO";
+
+export const SAVE_MOOD_START = "SAVE_MOOD_START";
+export const SAVE_MOOD_SUCCESS = "SAVE_MOOD_SUCCESS";
+export const SAVE_MOOD_FAILURE = "SAVE_MOOD_FAILURE";
+export const SAVE_MOOD_RESET = "SAVE_MOOD_RESET";
+
 // 🌍 API base URL
 const apiUrl = import.meta.env.VITE_API_URL;
+let isUpdate = false;
 
 // ✅ Action Creators
 
@@ -57,7 +70,10 @@ export const logout = () => ({
   type: LOGOUT,
 });
 
-// ✅ Thunks
+export const setDashboardMoodField = (path, value) => ({
+  type: SET_DASHBOARD_MOOD_FIELD,
+  payload: { path, value },
+});
 
 export const fetchAllMoods = () => {
   return async (dispatch) => {
@@ -195,3 +211,191 @@ export const fetchUsers = () => {
     }
   };
 };
+
+export const fetchMood = (slug, lang) => async (dispatch) => {
+  dispatch({ type: SET_DASHBOARD_MOOD_LOADING, payload: true });
+  try {
+    const response = await fetch(`${apiUrl}api/focus-field/mood/${slug}/${lang}`);
+    if (response.status === 404) {
+      dispatch({
+        type: SET_DASHBOARD_MOOD,
+        payload: getEmptyMoodTemplate(slug, lang),
+      });
+      dispatch({ type: SET_DASHBOARD_MOOD_INFO, payload: "Traduzione da inserire" });
+      isUpdate = false;
+    } else if (!response.ok) {
+      throw new Error("Errore nel recupero del mood");
+    } else {
+      const data = await response.json();
+      dispatch({ type: SET_DASHBOARD_MOOD, payload: data });
+      dispatch({ type: SET_DASHBOARD_MOOD_INFO, payload: "" });
+      isUpdate = true;
+      console.log("Dati mood:", data);
+    }
+  } catch (error) {
+    dispatch({ type: SET_DASHBOARD_MOOD_ERROR, payload: error.message });
+
+    return null;
+  } finally {
+    dispatch({ type: SET_DASHBOARD_MOOD_LOADING, payload: false });
+  }
+};
+
+const getEmptyMoodTemplate = (slug, lang) => ({
+  slug,
+  lang,
+  name: "",
+  description: "",
+  imagine: "",
+  helpYou: "",
+  durationSuggestion: "",
+  music: {
+    title: "",
+    playlistUrl: "",
+    tags: "",
+    scope: "",
+  },
+  breathing: {
+    enabled: false,
+    technique: "",
+    totalDuration: 0,
+    phases: [],
+    rounds: "",
+    scope: "",
+    start: "",
+    stop: "",
+    techniqueLabel: "",
+    totalDurationLabel: "",
+  },
+  relaxBody: {
+    enabled: false,
+    description: "",
+    pauseDuration: 5,
+    exercises: [],
+    title: "",
+    scrollDown: "",
+    scrollUp: "",
+    completed: "",
+    repeatIn: "",
+    start: "",
+    stop: "",
+    pause: "",
+    pauseText: "",
+    duration: 0,
+  },
+  journalPre: {
+    enabled: false,
+    prompt: "",
+    placeholder: "",
+    save: "",
+    optional: false,
+  },
+  journalPost: {
+    enabled: false,
+    prompt: "",
+    placeholder: "",
+    save: "",
+    optional: false,
+  },
+  spiritual: {
+    enabled: false,
+    type: "",
+    verse: "",
+    text: "",
+  },
+  coach: {
+    enabled: false,
+    intro: "",
+    obstacle: "",
+    situation: "",
+    feedback: "",
+    next: "",
+    finished: "",
+    noSteps: "",
+    steps: [],
+  },
+  environment: {
+    enabled: false,
+    title: "",
+    suggestion: "",
+    duration: 0,
+    suggestedDuration: "",
+    backgroundImage: "",
+    backgroundVideo: "",
+    audioSrc: "",
+    soundscape: "",
+    start: "",
+    stop: "",
+    mute: "",
+    unmute: "",
+    fullscreen: "",
+    exitFullscreen: "",
+  },
+  moodModal: {
+    loading: "",
+    notFound: "",
+    infoModal: {
+      title: "",
+    },
+    ctaModal: {
+      defaultText: "",
+    },
+    title: {
+      [slug]: "",
+    },
+    desc: {
+      [slug]: "",
+    },
+    sections: {
+      music: "",
+      goals: "",
+      preJournal: "",
+      breathing: "",
+      relaxBody: "",
+      coach: "",
+      ambient: "",
+      spiritual: "",
+      postJournal: "",
+    },
+  },
+  cta: {
+    actionCta: "",
+    text: "",
+  },
+});
+
+export const saveMoodAndTranslation =
+  (moodListId, moodListNew, moodRequest, token, selectedLang) => async (dispatch) => {
+    dispatch({ type: SAVE_MOOD_START });
+    try {
+      const res1 = await fetch(`${apiUrl}api/focus-field/moods/${moodListId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(moodListNew),
+      });
+
+      if (!res1.ok) throw new Error("Errore durante il salvataggio dei dati principali del mood.");
+
+      const method = isUpdate ? "PUT" : "POST";
+      const url = isUpdate
+        ? `${apiUrl}api/focus-field/mood/${moodRequest.slug}/${selectedLang}`
+        : `${apiUrl}api/focus-field/mood`;
+      const res2 = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(moodRequest),
+      });
+
+      if (!res2.ok) throw new Error("Errore durante il salvataggio della traduzione del mood.");
+      dispatch({ type: SAVE_MOOD_SUCCESS });
+    } catch (error) {
+      console.error("Errore salvataggio mood:", error);
+      dispatch({ type: SAVE_MOOD_FAILURE, payload: error.message });
+    }
+  };
