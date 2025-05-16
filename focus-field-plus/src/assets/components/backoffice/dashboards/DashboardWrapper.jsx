@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router";
-import AdminDashboard from "./dashboards/AdminDashboard";
-import FocusNavBar from "../home/FocusNavBar";
-import UserDashboard from "./dashboards/UserDashboard";
-import SellerDashboard from "./dashboards/SellerDashboard";
-import { setUser } from "../../../redux/actions";
-import Footer from "../home/Footer";
+import AdminDashboard from "./AdminDashboard";
+import FocusNavBar from "../../home/FocusNavBar";
+import UserDashboard from "./UserDashboard";
+import SellerDashboard from "./SellerDashboard";
+import { setUser } from "../../../../redux/actions";
+import Footer from "../../home/Footer";
 
 const DashboardWrapper = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
   const [loading, setLoading] = useState(true);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,7 +21,7 @@ const DashboardWrapper = () => {
 
       console.log("Token:", token);
       try {
-        const res = await fetch("http://localhost:8080/api/focus-field/auth/current-user", {
+        const res = await fetch(apiUrl + "api/focus-field/auth/current-user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

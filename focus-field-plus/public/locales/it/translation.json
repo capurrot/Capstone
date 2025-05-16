@@ -50,13 +50,16 @@
     "title": "Ritrova il tuo equilibrio mentale",
     "subtitle": "Scrivi come ti senti. FocusField+ farà il resto.",
     "placeholder": "Es.: cerco un ambiente ideale per concentrarmi...",
-    "not_found": "Nessun mood riconosciuto. Riprova con un'altra descrizione."
+    "not_found": "Nessun mood riconosciuto. Riprova con un'altra descrizione.",
+    "modal_title": "Mood suggerito",
+    "modal_text": "In base alla tua ricerca, il mood più adatto a te è",
+    "modal_button": "Vai al mood"
   },
   "navbar": {
     "home": "Home",
     "login": "Accedi",
     "logout": "Esci",
-    "history": "Storico",
+    "dashboard": "Dashboard",
     "settings": "Impostazioni",
     "profile": "Profilo utente",
     "preferences": "Impostazioni"

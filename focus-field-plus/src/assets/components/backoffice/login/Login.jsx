@@ -1,9 +1,9 @@
 import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import FocusNavBar from "../home/FocusNavBar";
-import Footer from "../home/Footer";
+import FocusNavBar from "../../home/FocusNavBar";
+import Footer from "../../home/Footer";
 import { Link, useNavigate } from "react-router";
-import { login } from "../../../redux/actions";
+import { login } from "../../../../redux/actions";
 import { useState, useEffect } from "react";
 import ButtonsLogin from "./ButtonsLogin";
 
@@ -22,7 +22,6 @@ const Login = () => {
     } else {
       localStorage.removeItem("rememberedUsername");
     }
-
     dispatch(login(username, password));
   };
   const token = useSelector((state) => state.auth.token);

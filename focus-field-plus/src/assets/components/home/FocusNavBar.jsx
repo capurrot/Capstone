@@ -65,7 +65,9 @@ function FocusNavBar() {
 
             {token && (
               <>
-                <Nav.Link href="#link">{t("navbar.history")}</Nav.Link>
+                <Link className="nav-link" to="/dashboard">
+                  {t("navbar.dashboard")}
+                </Link>
                 <NavDropdown title={t("navbar.settings")} id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">{t("navbar.profile")}</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">{t("navbar.preferences")}</NavDropdown.Item>
@@ -74,23 +76,13 @@ function FocusNavBar() {
             )}
 
             {/* Selettore lingue */}
-            <div className="d-flex align-items-center ms-3">
-              <button onClick={() => changeLanguage("it")} className="btn btn-sm bg-transparent text-white px-1">
-                🇮🇹
-              </button>
-              <button onClick={() => changeLanguage("en")} className="btn btn-sm bg-transparent text-white px-1">
-                🇬🇧
-              </button>
-              <button onClick={() => changeLanguage("es")} className="btn btn-sm bg-transparent text-white px-1">
-                🇪🇸
-              </button>
-              <button onClick={() => changeLanguage("fr")} className="btn btn-sm bg-transparent text-white px-1">
-                🇫🇷
-              </button>
-              <button onClick={() => changeLanguage("de")} className="btn btn-sm bg-transparent text-white px-1">
-                🇩🇪
-              </button>
-            </div>
+            <NavDropdown title="🌐" id="language-dropdown" className="ms-3" align="end">
+              <NavDropdown.Item onClick={() => changeLanguage("it")}>🇮🇹 Italiano</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => changeLanguage("en")}>🇬🇧 English</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => changeLanguage("es")}>🇪🇸 Español</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => changeLanguage("fr")}>🇫🇷 Français</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => changeLanguage("de")}>🇩🇪 Deutsch</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

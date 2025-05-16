@@ -9,6 +9,7 @@ import moodReducer from "../reducers/moodReducer";
 import soundReducer from "../reducers/soundReducer";
 import playerPreferencesReducer from "../reducers/playerPreferencesReducer";
 import authReducer from "../reducers/authReducer";
+import usersReducer from "../reducers/usersReducer";
 
 // Root-level persist config
 const persistConfig = {
@@ -28,6 +29,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   session: sessionReducer,
   user: userReducer,
+  users: usersReducer,
   mood: moodReducer,
   sound: soundReducer,
   playerPrefs: playerPreferencesReducer,

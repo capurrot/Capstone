@@ -5,56 +5,48 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./App.css";
+
 import FocusField from "./assets/components/FocusField.jsx";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_ALL_MOODS, SET_MOOD } from "./redux/actions/index.js";
+import { fetchAllMoods, setMood } from "./redux/actions/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import MoodPageWrapper from "./assets/components/expierence/MoodPageWrapper.jsx";
-import Login from "./assets/components/backoffice/Login.jsx";
-import DashboardWrapper from "./assets/components/backoffice/DashboardWrapper.jsx";
-import RegisterPage from "./assets/components/backoffice/RegisterPage.jsx";
+import Login from "./assets/components/backoffice/login/Login.jsx";
+import DashboardWrapper from "./assets/components/backoffice/dashboards/DashboardWrapper.jsx";
+import RegisterPage from "./assets/components/backoffice/login/RegisterPage.jsx";
 
 function App() {
   const dispatch = useDispatch();
   const mood = useSelector((state) => state.mood.selectedMood);
+  const allMoods = useSelector((state) => state.mood.allMoods);
 
   useEffect(() => {
-    const fetchMoods = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/api/focus-field/moods");
-        const data = await response.json();
-        dispatch({ type: SET_ALL_MOODS, payload: data });
-      } catch (error) {
-        console.error("Errore nel caricamento dei mood:", error);
-      }
-    };
-
-    fetchMoods();
+    dispatch(fetchAllMoods());
   }, [dispatch]);
 
   useEffect(() => {
-    if (mood === null) {
-      dispatch({ type: SET_MOOD, payload: "focus" });
+    // Se il mood è nullo, seleziona "focus" come default (oggetto, non solo stringa)
+    if (!mood && allMoods.length > 0) {
+      const defaultMood = allMoods.find((m) => m.slug === "focus") || allMoods[0];
+      dispatch(setMood(defaultMood));
     }
-  }, [dispatch, mood]);
+  }, [dispatch, mood, allMoods]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const colors = mood?.colors || ["#4e495d", "#ffffff", "#6c5ce7", "#ffffff", "#ffffff", "#ffffff"];
+  const colors = mood?.colors?.length === 12 ? mood.colors : new Array(12).fill("#ffffff");
   const slug = mood?.slug || "standard";
   const opacity = mood?.opacity || 0.5;
 
   useEffect(() => {
     const meta = document.querySelector('meta[name="theme-color"]');
-    const primaryColor = colors[0];
-    if (meta && primaryColor) {
-      meta.setAttribute("content", primaryColor);
+    if (meta) {
+      meta.setAttribute("content", colors[0]);
     }
   }, [colors]);
 
   return (
     <div
-      className={`main-container mood-${slug}`}
+      className={`main-container mood-${slug} d-flex flex-column min-vh-100`}
       style={{
         "--mood-color-1": colors[0],
         "--mood-color-2": colors[1],
