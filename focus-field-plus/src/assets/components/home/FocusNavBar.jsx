@@ -65,7 +65,7 @@ function FocusNavBar() {
                   {t("navbar.dashboard")}
                 </NavLink>
 
-                <NavDropdown title={t("navbar.settings")} id="basic-nav-dropdown ">
+                <NavDropdown title={t("navbar.settings")} id="basic-nav-dropdown nav-link nav-link-underline">
                   <NavDropdown.Item as={NavLink} to="/profile">
                     {t("navbar.profile")}
                   </NavDropdown.Item>

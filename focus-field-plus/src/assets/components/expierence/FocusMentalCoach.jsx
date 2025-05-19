@@ -49,33 +49,33 @@ const FocusMentalCoach = ({ coach, moodName }) => {
           <strong>{t("situation")}:</strong> {currentStep.situation}
         </p>
         <div className="d-flex flex-column gap-2">
-          {currentStep.options.map((option, index) => (
+          {currentStep.answers?.map((answer, index) => (
             <Button
               className="focusfield-btn"
               key={index}
               variant={
                 showFeedback
-                  ? option.correct
+                  ? answer.correct
                     ? "success"
-                    : option === selectedOption
+                    : answer === selectedOption
                     ? "danger"
                     : "outline-secondary"
                   : "outline-primary"
               }
-              onClick={() => handleOptionClick(option)}
+              onClick={() => handleOptionClick(answer)}
               disabled={showFeedback}
             >
-              {option.text}
+              {answer.text}
             </Button>
           ))}
         </div>
         {showFeedback && (
-          <div className="position-absolute bottom-0 end-0 p-4">
-            <p className="mb-1">
+          <div className="mt-4 text-center">
+            <p className="mb-2">
               <strong>{t("feedback")}:</strong>
             </p>
-            <p>{selectedOption?.correct ? currentStep.feedback.correct : currentStep.feedback.wrong}</p>
-            <Button variant="primary" onClick={handleNext} className="focusfield-btn d-block mx-auto">
+            <p>{selectedOption?.feedback || t("noFeedback")}</p>
+            <Button variant="primary" onClick={handleNext} className="focusfield-btn mt-3">
               {t("next")}
             </Button>
           </div>

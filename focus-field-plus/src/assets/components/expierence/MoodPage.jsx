@@ -22,14 +22,22 @@ function MoodPage({ moodName }) {
   const allMoods = useSelector((state) => state.mood.allMoods);
   const { t, i18n } = useTranslation(moodName, { keyPrefix: "moodPage" });
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
       try {
         const lang = i18n.language?.split("-")[0] || "it";
-        const res = await fetch(`/locales/${lang}/${moodName}.json`);
+        const res = await fetch(`${apiUrl}api/focus-field/mood/${moodName}/${lang}`);
         const json = await res.json();
-        setMoodData(json);
+
+        if (!res.ok || json?.error || !json?.environment) {
+          console.warn("Mood non trovato o incompleto:", json);
+          setMoodData(null);
+        } else {
+          setMoodData(json);
+        }
 
         const fullMood = allMoods.find((m) => m.slug === moodName);
         if (fullMood) {
@@ -44,10 +52,22 @@ function MoodPage({ moodName }) {
     };
 
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moodName, dispatch, allMoods, i18n.language]);
 
   if (loading) return <p>{t("loading")}</p>;
-  if (!moodData) return <p>{t("notFound")}</p>;
+  if (!moodData) {
+    return (
+      <Container className="text-center py-5 bg-light">
+        <h2>{t("notFound", "Mood non disponibile")}</h2>
+        <p>{t("translationMissing", "Questo mood non è ancora disponibile nella lingua selezionata.")}</p>
+
+        <button className="focusfield-btn mt-4" onClick={() => window.history.back()}>
+          ⬅️ {t("goBack", "Torna indietro")}
+        </button>
+      </Container>
+    );
+  }
 
   const tr = (key, fallback) => {
     const keys = key.split(".");

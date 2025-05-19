@@ -54,7 +54,7 @@ const Login = () => {
               <h2 className="my-2 mood-text mx-4 ps-3 my-3">
                 <i className="fas fa-sign-in-alt me-2"></i>Login
               </h2>
-              <div className="login-form-container mx-4 mb-4">
+              <div className="login-form-container mx-4 mb-4" style={{ width: "19rem" }}>
                 <Form className="mt-5 w-100 px-4" onSubmit={handleLogin}>
                   <Form.Control
                     className="mb-3"
