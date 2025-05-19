@@ -95,6 +95,9 @@ const RegisterPage = () => {
                   <Alert variant="success" className="text-center">
                     ✅ Registrazione avvenuta con successo!
                     <br />
+                    📧 È stata inviata un'email di verifica alla tua casella di posta. Controlla la tua email per
+                    attivare l'account.
+                    <br />
                     <Link to="/login" className="btn btn-link mt-3">
                       Torna al login
                     </Link>
