@@ -41,7 +41,8 @@ const GoogleLoginButton = () => {
   return (
     <button
       onClick={() => login()}
-      className="focusfield-btn-outline d-flex align-items-center justify-content-center gap-2"
+      className="focusfield-btn-outline d-flex align-items-center justify-content-center gap-2 mx-auto"
+      style={{ width: "16rem" }}
     >
       <i className="bi bi-google"></i>
       Google

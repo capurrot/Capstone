@@ -10,6 +10,9 @@ import ButtonsLogin from "./ButtonsLogin";
 const RegisterPage = () => {
   const dispatch = useDispatch();
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -22,10 +25,21 @@ const RegisterPage = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    const newValue = type === "checkbox" ? checked : value;
+
+    setForm((prev) => {
+      const updatedForm = { ...prev, [name]: newValue };
+
+      if (name === "password" || name === "confirmPassword") {
+        setPasswordMatchError(
+          updatedForm.password && updatedForm.confirmPassword && updatedForm.password !== updatedForm.confirmPassword
+        );
+      }
+
+      return updatedForm;
+    });
+
+    setError("");
   };
 
   const resetForm = () => {
@@ -38,16 +52,26 @@ const RegisterPage = () => {
       cognome: "",
       acceptedTerms: false,
     });
+    setPasswordMatchError(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (form.password !== form.confirmPassword) {
-      alert("Le password non coincidono");
+
+    const { username, email, password, confirmPassword, nome, cognome, acceptedTerms } = form;
+
+    if (!username || !email || !password || !confirmPassword || !nome || !cognome) {
+      setError("⚠️ Tutti i campi sono obbligatori.");
       return;
     }
-    if (!form.acceptedTerms) {
-      alert("Devi accettare i termini");
+
+    if (password !== confirmPassword) {
+      setError("❌ Le password non coincidono.");
+      return;
+    }
+
+    if (!acceptedTerms) {
+      setError("❗ Devi accettare i termini e le condizioni.");
       return;
     }
 
@@ -77,65 +101,92 @@ const RegisterPage = () => {
                   </Alert>
                 ) : (
                   <>
+                    {error && (
+                      <Alert variant="danger" className="text-center">
+                        {error}
+                      </Alert>
+                    )}
                     <Form className="mt-4 w-100 px-4" onSubmit={handleSubmit}>
-                      <Form.Control
-                        className="mb-3"
-                        type="text"
-                        placeholder="Nome"
-                        name="nome"
-                        value={form.nome}
-                        onChange={handleChange}
-                        required
-                      />
-                      <Form.Control
-                        className="mb-3"
-                        type="text"
-                        placeholder="Cognome"
-                        name="cognome"
-                        value={form.cognome}
-                        onChange={handleChange}
-                        required
-                      />
-                      <Form.Control
-                        className="mb-3"
-                        type="text"
-                        placeholder="Username"
-                        name="username"
-                        value={form.username}
-                        onChange={handleChange}
-                        autoComplete="username"
-                        required
-                      />
-                      <Form.Control
-                        className="mb-3"
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        autoComplete="email"
-                        required
-                      />
-                      <Form.Control
-                        className="mb-3"
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                        value={form.password}
-                        onChange={handleChange}
-                        autoComplete="new-password"
-                        required
-                      />
-                      <Form.Control
-                        className="mb-3"
-                        type="password"
-                        placeholder="Conferma Password"
-                        name="confirmPassword"
-                        value={form.confirmPassword}
-                        onChange={handleChange}
-                        autoComplete="new-password"
-                        required
-                      />
+                      <Row>
+                        <Col md={6}>
+                          <Form.Control
+                            className="mb-3"
+                            type="text"
+                            placeholder="Nome"
+                            name="nome"
+                            value={form.nome}
+                            onChange={handleChange}
+                            required
+                          />
+                        </Col>
+                        <Col md={6}>
+                          <Form.Control
+                            className="mb-3"
+                            type="text"
+                            placeholder="Cognome"
+                            name="cognome"
+                            value={form.cognome}
+                            onChange={handleChange}
+                            required
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={6}>
+                          <Form.Control
+                            className="mb-3"
+                            type="text"
+                            placeholder="Username"
+                            name="username"
+                            value={form.username}
+                            onChange={handleChange}
+                            autoComplete="username"
+                            required
+                          />
+                        </Col>
+                        <Col md={6}>
+                          <Form.Control
+                            className="mb-3"
+                            type="email"
+                            placeholder="Email"
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
+                            autoComplete="email"
+                            required
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={6}>
+                          <Form.Control
+                            className="mb-3"
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                            value={form.password}
+                            onChange={handleChange}
+                            autoComplete="new-password"
+                            required
+                          />
+                        </Col>
+                        <Col md={6}>
+                          <Form.Control
+                            className="mb-1"
+                            type="password"
+                            placeholder="Conferma Password"
+                            name="confirmPassword"
+                            value={form.confirmPassword}
+                            onChange={handleChange}
+                            autoComplete="new-password"
+                            isInvalid={passwordMatchError}
+                            required
+                          />
+                          {passwordMatchError && (
+                            <Form.Text className="text-danger mb-3">Le password non corrispondono.</Form.Text>
+                          )}
+                        </Col>
+                      </Row>
                       <Form.Check
                         type="checkbox"
                         label="Accetto i termini e le condizioni"
@@ -143,8 +194,24 @@ const RegisterPage = () => {
                         checked={form.acceptedTerms}
                         onChange={handleChange}
                         className="mb-3"
+                        required
                       />
-                      <button className="focusfield-btn mt-2 w-100">Registrati</button>
+                      <button
+                        type="submit"
+                        className="focusfield-btn mt-2 d-flex align-items-center justify-content-center mx-auto"
+                        style={{ width: "16rem" }}
+                        disabled={passwordMatchError}
+                      >
+                        Registrati
+                      </button>
+
+                      <Link
+                        to="/login"
+                        className="focusfield-btn-outline mt-2 d-flex align-items-center justify-content-center mx-auto"
+                        style={{ width: "16rem", textDecoration: "none" }}
+                      >
+                        Annulla
+                      </Link>
                     </Form>
 
                     <ButtonsLogin />

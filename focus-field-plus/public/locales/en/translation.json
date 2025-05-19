@@ -3,7 +3,7 @@
   "mood": {
     "energized": "Energized",
     "creative": "Creative",
-    "anxious": "Anxious",
+    "ansious": "Anxious",
     "sad": "Sad",
     "spiritual": "Spiritual",
     "overwhelmed": "Overwhelmed",
@@ -26,7 +26,7 @@
   "desc": {
     "energized": "You feel full of energy and ready to move, act, and get things done.",
     "creative": "You're inspired, full of ideas, and eager to express yourself.",
-    "anxious": "You feel a sense of restlessness or inner worry.",
+    "ansious": "You feel a sense of restlessness or inner worry.",
     "sad": "You need comfort and emotional space.",
     "spiritual": "You're seeking connection with God or a moment to reflect.",
     "overwhelmed": "Too many thoughts. You need to slow down.",

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FocusNavBar from "../../home/FocusNavBar";
 import Footer from "../../home/Footer";
 import { Link, useNavigate } from "react-router";
-import { login } from "../../../../redux/actions";
+import { login, LOGIN_FAILURE } from "../../../../redux/actions";
 import { useState, useEffect } from "react";
 import ButtonsLogin from "./ButtonsLogin";
 
@@ -28,6 +28,7 @@ const Login = () => {
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
   useEffect(() => {
+    dispatch({ type: LOGIN_FAILURE, payload: "" });
     if (token) {
       setTimeout(() => {
         navigate("/dashboard");
@@ -69,7 +70,9 @@ const Login = () => {
                     autoComplete="current-password"
                     name="password"
                   />
-                  <button className="focusfield-btn mt-4 d-flex w-100 justify-content-center">Login</button>
+                  <button className="focusfield-btn mt-4 d-flex justify-content-center" style={{ width: "16rem" }}>
+                    Login
+                  </button>
                   {auth.error && (
                     <Alert variant="danger" className="mt-4 mb-0 text-center">
                       <i class="bi bi-exclamation-triangle-fill me-2"></i>Login failed

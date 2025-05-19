@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Form, Button, Modal } from "react-bootstrap";
+import { useState } from "react";
+import { Form, Button } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_MOOD } from "../../../redux/actions";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
+import FocusHeroModal from "./FocusHeroModal";
 
 const FocusHero = () => {
   const { t } = useTranslation();
@@ -27,13 +28,14 @@ const FocusHero = () => {
     setNotFound(false);
 
     try {
-      const response = await fetch(apiUrl + "api/openai/classify-mood", {
+      const response = await fetch(apiUrl + "api/focus-field/openai/classify-mood", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: moodText }),
       });
 
       const data = await response.json();
+      console.log(data);
 
       const found = allMoods.find((mood) => mood.slug === data.mood?.toLowerCase());
 
@@ -56,7 +58,7 @@ const FocusHero = () => {
   const handleConfirmMood = () => {
     dispatch({ type: SET_MOOD, payload: detectedMood });
     setShowModal(false);
-    navigate(`/mood/${detectedMood.slug}`); // opzionale: reindirizza alla pagina del mood
+    navigate(`/mood/${detectedMood.slug}`);
   };
 
   const backgroundImage =
@@ -69,7 +71,7 @@ const FocusHero = () => {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "calc(100vh - 76px)",
+        height: "calc(100vh - 66px)",
         color: "#fff",
         display: "flex",
         justifyContent: "center",
@@ -106,22 +108,13 @@ const FocusHero = () => {
         )}
       </div>
 
-      {/* Modale suggerimento mood */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{t("hero.modal_title")}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            {t("hero.modal_text")} <strong>{detectedMood?.label || detectedMood?.slug}</strong>
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleConfirmMood}>
-            {t("hero.modal_button")}
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <FocusHeroModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleConfirmMood}
+        detectedMood={detectedMood}
+        t={t}
+      />
     </div>
   );
 };
