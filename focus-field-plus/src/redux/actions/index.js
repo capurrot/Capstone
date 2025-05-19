@@ -20,6 +20,8 @@ export const FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST";
 export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
 export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
 
+export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
+
 export const SET_MOODS_LOADING = "SET_MOODS_LOADING";
 export const SET_MOODS_ERROR = "SET_MOODS_ERROR";
 
@@ -210,6 +212,27 @@ export const fetchUsers = () => {
       dispatch({ type: FETCH_USERS_FAILURE, payload: err.message });
     }
   };
+};
+
+export const fetchCurrentUser = () => async (dispatch, getState) => {
+  const { auth } = getState();
+  const token = auth.token;
+  if (!token) return;
+
+  try {
+    const res = await fetch(`${apiUrl}api/focus-field/auth/current-user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) throw new Error("Errore nel recupero dell'utente");
+
+    const userData = await res.json();
+    dispatch(setUser(userData));
+  } catch (error) {
+    dispatch({ type: FETCH_USER_FAILURE, payload: error.message });
+  }
 };
 
 export const fetchMood = (slug, lang) => async (dispatch) => {

@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import "./i18n";
 import "./index.css";
+import "animate.css";
 import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store, { persistor } from "./redux/store/index.js";

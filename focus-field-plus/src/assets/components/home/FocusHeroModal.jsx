@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import { EmojiSmile } from "react-bootstrap-icons";
 import { SET_MOOD } from "../../../redux/actions";
+import MoodPage from "../expierence/MoodPage";
 
 const FocusHeroModal = ({ show, onClose, onConfirm, detectedMood, t }) => {
   const [visible, setVisible] = useState(false);
@@ -13,13 +14,14 @@ const FocusHeroModal = ({ show, onClose, onConfirm, detectedMood, t }) => {
       setVisible(false);
       const timer = setTimeout(() => {
         setVisible(true);
-      }, 1500);
+      }, 1000);
       setTimeout(() => {
         dispatch({ type: SET_MOOD, payload: detectedMood });
       }, 2500);
 
       return () => clearTimeout(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
   const hasMood = detectedMood && detectedMood.slug;
@@ -51,32 +53,29 @@ const FocusHeroModal = ({ show, onClose, onConfirm, detectedMood, t }) => {
           </p>
         </div>
 
-        {/* IFRAME PREVIEW */}
-        <div className="position-relative mt-4" style={{ minHeight: "320px" }}>
-          {!visible && (
-            <div className="d-flex justify-content-center align-items-center w-100 h-100 position-absolute top-0 start-0 z-2">
-              <Spinner animation="border" role="status" variant="primary">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
+        {hasMood && (
+          <div className="position-relative mt-4">
+            {!visible && (
+              <div className="d-flex justify-content-center align-items-center w-100 h-100 position-absolute top-0 start-0 z-2">
+                <Spinner animation="border" role="status" variant="primary">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            )}
+
+            <div
+              className="bg-white rounded-4 shadow-sm overflow-hidden"
+              style={{
+                opacity: visible ? 1 : 0,
+                pointerEvents: visible ? "auto" : "none",
+                transition: "opacity 0.3s ease",
+                height: "320px",
+              }}
+            >
+              <MoodPage moodName={detectedMood.slug} isModal={true} />
             </div>
-          )}
-          <iframe
-            width="100%"
-            height="315"
-            src={hasMood ? `mood/${detectedMood.slug}/` : ""}
-            title={hasMood ? `Anteprima mood ${detectedMood.slug}` : "Anteprima mood"}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            scrolling="no"
-            style={{
-              borderRadius: "1rem",
-              opacity: visible ? 1 : 0,
-              pointerEvents: visible ? "auto" : "none",
-              transition: "opacity 0.3s ease",
-            }}
-          ></iframe>
-        </div>
+          </div>
+        )}
 
         {/* FOOTER */}
         <div className="text-center mt-4">

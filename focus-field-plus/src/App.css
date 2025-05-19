@@ -829,6 +829,21 @@ body {
   display: block;
 }
 
+.mood-intro {
+  animation: fadeBlurIn 1s ease-out;
+}
+
+@keyframes fadeBlurIn {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
 @media (min-width: 768px) {
   .border-md-none {
     border-bottom: none !important;

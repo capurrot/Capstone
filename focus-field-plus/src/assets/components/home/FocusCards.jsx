@@ -10,11 +10,13 @@ import { Link } from "react-router";
 const FocusCards = () => {
   const { t } = useTranslation();
   const moods = useSelector((state) => state.mood.allMoods);
-  const selectedMood = useSelector((state) => state.mood.selectedMood);
+  /*   const selectedMood = useSelector((state) => state.mood.selectedMood); */
 
-  const moodsToDisplay = Array.isArray(moods)
+  /*   const moodsToDisplay = Array.isArray(moods)
     ? moods.filter((mood) => !mood.slug.includes(selectedMood?.slug)).slice(0, 4)
-    : [];
+    : []; */
+
+  const moodsToDisplay = Array.isArray(moods) ? moods.slice(0, 4) : [];
 
   return (
     <Container fluid className="mt-5 px-md-5 pb-5">
