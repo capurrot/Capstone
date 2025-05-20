@@ -33,7 +33,7 @@ function FocusNavBar() {
   };
 
   return (
-    <Navbar className={`sticky-top navbar ${scroll > 76 ? "scrolled" : ""}`} expand="md">
+    <Navbar className={`py-1 sticky-top navbar ${scroll > 76 ? "scrolled" : ""}`} expand="md">
       <Container fluid>
         <Navbar.Brand as={NavLink} to="/" className="d-flex align-items-center">
           <img
@@ -43,7 +43,6 @@ function FocusNavBar() {
             style={{
               transform: `rotate(${scroll * 0.1}deg)`,
               transition: "transform 0.05s linear",
-              height: "40px",
             }}
           />
           <span className="ms-2 fw-bold">FocusField+</span>

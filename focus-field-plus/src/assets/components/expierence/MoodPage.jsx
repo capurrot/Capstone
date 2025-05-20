@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { SET_MOOD } from "../../../redux/actions";
+import { endMoodLog, SET_MOOD, startMoodLog } from "../../../redux/actions";
 import FocusPlayer from "./FocusPlayer";
 import BreathingExercise from "./BreathingExercise";
 import RelaxBodyExercises from "./RelaxBodyExercises";
@@ -23,9 +23,10 @@ function MoodPage({ moodName, isModal }) {
   const dispatch = useDispatch();
   const allMoods = useSelector((state) => state.mood.allMoods);
   const { t, i18n } = useTranslation(moodName, { keyPrefix: "moodPage" });
+  const userId = useSelector((state) => state.auth.user?.id);
+  const logId = localStorage.getItem("logId");
 
   const apiUrl = import.meta.env.VITE_API_URL;
-  console.log("Current location in MoodPage (before login):", location);
 
   useEffect(() => {
     const loadData = async () => {
@@ -40,6 +41,7 @@ function MoodPage({ moodName, isModal }) {
           setMoodData(null);
         } else {
           setMoodData(json);
+          console.log("Dati mood:", json);
         }
 
         const fullMood = allMoods.find((m) => m.slug === moodName);
@@ -53,11 +55,23 @@ function MoodPage({ moodName, isModal }) {
         setLoading(false);
       }
     };
-    console.log(location);
 
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moodName, dispatch, allMoods, i18n.language]);
+
+  const handleStart = async () => {
+    const lang = i18n.language?.split("-")[0] || "it";
+    const moodSlug = moodData?.slug || moodName;
+
+    await dispatch(startMoodLog(userId ?? null, moodSlug, lang));
+    setHasStarted(true);
+  };
+
+  const handleEnd = () => {
+    console.log("logId", logId);
+    if (logId) dispatch(endMoodLog(logId));
+  };
 
   if (loading) {
     return (
@@ -170,7 +184,7 @@ function MoodPage({ moodName, isModal }) {
               </p>
             )}
 
-            <button className="focusfield-btn fs-5 px-4 py-2 mt-2" onClick={() => setHasStarted(true)}>
+            <button className="focusfield-btn fs-5 px-4 py-2 mt-2" onClick={handleStart}>
               {t("cta.start", "Inizia il percorso")}
             </button>
           </div>
@@ -298,7 +312,9 @@ function MoodPage({ moodName, isModal }) {
         )}
 
         <footer className="p-4 text-center">
-          <button className="focusfield-btn fs-4">{moodData.cta?.text || t("cta.default")}</button>
+          <button className="focusfield-btn fs-4" onClick={handleEnd}>
+            {moodData.cta?.text || t("cta.default")}
+          </button>
         </footer>
 
         <FocusMoodInfoModal show={showInfoModal} handleClose={() => setShowInfoModal(false)} mood={moodData} />
