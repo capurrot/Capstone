@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_MOOD } from "../../../redux/actions";
@@ -100,6 +100,30 @@ const FocusHero = () => {
             <Search style={{ fontSize: "1.5rem", color: "#000" }} />
           </Button>
         </Form>
+
+        {loading && (
+          <div
+            className="position-fixed top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center"
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backdropFilter: "blur(6px)",
+              zIndex: 1055, // sopra tutto
+            }}
+          >
+            <Spinner
+              animation="border"
+              role="status"
+              variant="light"
+              style={{ width: "4rem", height: "4rem", borderWidth: "5px" }}
+            />
+            <div
+              className="mt-4 shimmer-text text-white fs-4 fw-semibold"
+              style={{ letterSpacing: "0.5px", textAlign: "center" }}
+            >
+              🎧 {t("hero.loading") || "Analisi in corso..."}
+            </div>
+          </div>
+        )}
 
         {notFound && (
           <p className="mt-3 fw-bold" style={{ color: "#ffcdd2" }}>

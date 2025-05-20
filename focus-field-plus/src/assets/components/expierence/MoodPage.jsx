@@ -230,7 +230,33 @@ function MoodPage({ moodName, isModal }) {
             <h2 className="mood-text mb-3 ps-3">
               <i className="fas fa-pencil-alt me-1"></i> - {t("sections.goals")}
             </h2>
-            <FocusGoals goals={moodData.journalGoals} moodName={moodName} />
+            {user ? (
+              <FocusGoals goals={moodData.journalGoals} moodName={moodName} />
+            ) : (
+              <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
+                <div className="mb-3">
+                  <i className="bi bi-journal-text fs-1" />
+                </div>
+                <p className="fs-5 fw-semibold mb-2">{t("journal.loginTitle", "Vuoi salvare i tuoi pensieri?")}</p>
+                <p className="mb-4 ">{t("journal.loginSub", "Accedi o registrati per usare il diario personale.")}</p>
+                <div className="d-flex justify-content-center gap-3 flex-wrap">
+                  <Link
+                    to="/login"
+                    className="focusfield-btn px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("login", "Accedi")}
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="focusfield-btn-outline px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("register", "Registrati")}
+                  </Link>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
@@ -239,7 +265,33 @@ function MoodPage({ moodName, isModal }) {
             <h2 className="mood-text mb-3 ps-3">
               <i className="fas fa-pencil-alt me-1"></i> - {t("sections.preJournal")}
             </h2>
-            <FocusJournal journal={moodData.journalPre} moodName={moodName} />
+            {user ? (
+              <FocusJournal journal={moodData.journalPre} moodName={moodName} />
+            ) : (
+              <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
+                <div className="mb-3">
+                  <i className="bi bi-journal-text fs-1" />
+                </div>
+                <p className="fs-5 fw-semibold mb-2">{t("journal.loginTitle", "Vuoi salvare i tuoi pensieri?")}</p>
+                <p className="mb-4 ">{t("journal.loginSub", "Accedi o registrati per usare il diario personale.")}</p>
+                <div className="d-flex justify-content-center gap-3 flex-wrap">
+                  <Link
+                    to="/login"
+                    className="focusfield-btn px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("login", "Accedi")}
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="focusfield-btn-outline px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("register", "Registrati")}
+                  </Link>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
@@ -307,7 +359,33 @@ function MoodPage({ moodName, isModal }) {
             <h2 className="mood-text mb-3 ps-3">
               <i className="fas fa-pencil-alt me-1"></i> - {t("sections.postJournal")}
             </h2>
-            <FocusJournal journal={moodData.journalPost} />
+            {user ? (
+              <FocusJournal journal={moodData.journalPost} />
+            ) : (
+              <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
+                <div className="mb-3">
+                  <i className="bi bi-journal-text fs-1" />
+                </div>
+                <p className="fs-5 fw-semibold mb-2">{t("journal.loginTitle", "Vuoi salvare i tuoi pensieri?")}</p>
+                <p className="mb-4 ">{t("journal.loginSub", "Accedi o registrati per usare il diario personale.")}</p>
+                <div className="d-flex justify-content-center gap-3 flex-wrap">
+                  <Link
+                    to="/login"
+                    className="focusfield-btn px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("login", "Accedi")}
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="focusfield-btn-outline px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("register", "Registrati")}
+                  </Link>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
