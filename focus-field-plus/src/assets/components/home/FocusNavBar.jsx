@@ -45,7 +45,9 @@ function FocusNavBar() {
               transition: "transform 0.05s linear",
             }}
           />
-          <span className="ms-2 fw-bold">FocusField+</span>
+          <span className="ms-2 fw-bold" style={{ fontFamily: "Fjalla One", fontSize: "2rem" }}>
+            FocusField+
+          </span>
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

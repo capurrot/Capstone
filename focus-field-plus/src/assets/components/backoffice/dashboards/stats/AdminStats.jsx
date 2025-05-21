@@ -16,13 +16,15 @@ import {
   LabelList,
 } from "recharts";
 
-const COLORS = ["#007bff", "#28a745", "#ffc107", "#dc3545", "#6610f2", "#20c997"];
-
 const AdminStats = () => {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = useSelector((state) => state.auth.token);
+  const allMoods = useSelector((state) => state.mood.allMoods);
+
+  // Mappa slug => colore principale
+  const moodColorMap = Object.fromEntries(allMoods.map((mood) => [mood.slug, mood.colors?.[0] || "#999"]));
 
   const fetchLogs = async () => {
     try {
@@ -174,8 +176,8 @@ const AdminStats = () => {
                 outerRadius={100}
                 dataKey="value"
               >
-                {moodData.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                {moodData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={moodColorMap[entry.name] || "#ccc"} />
                 ))}
               </Pie>
               <Tooltip />
@@ -195,7 +197,10 @@ const AdminStats = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="avg" fill="#007bff">
+              <Bar dataKey="avg">
+                {moodDurations.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={moodColorMap[entry.name] || "#007bff"} />
+                ))}
                 <LabelList dataKey="avg" position="top" />
               </Bar>
             </BarChart>
@@ -213,7 +218,10 @@ const AdminStats = () => {
               <YAxis domain={[0, 100]} />
               <Tooltip />
               <Legend />
-              <Bar dataKey="percent" fill="#28a745">
+              <Bar dataKey="percent">
+                {moodCompletion.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={moodColorMap[entry.name] || "#28a745"} />
+                ))}
                 <LabelList dataKey="percent" position="top" formatter={(val) => `${val.toFixed(0)}%`} />
               </Bar>
             </BarChart>

@@ -36,7 +36,8 @@ function App() {
     if (!mood) return;
 
     const root = document.documentElement;
-    const colors = mood.colors?.length === 12 ? mood.colors : new Array(12).fill("#ffffff");
+
+    const colors = mood.colors;
 
     colors.forEach((color, i) => {
       root.style.setProperty(`--mood-color-${i + 1}`, color);

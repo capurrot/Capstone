@@ -1,14 +1,6 @@
 import { useState } from "react";
 import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
-import {
-  PeopleFill,
-  Headphones,
-  BarChart,
-  LockFill,
-  FileEarmarkText,
-  FileEarmarkSpreadsheet,
-  ArrowLeftCircle,
-} from "react-bootstrap-icons";
+import { PeopleFill, Headphones, BarChart, ArrowLeftCircle } from "react-bootstrap-icons";
 import ListUsers from "./users/ListUsers";
 import ListMoods from "./moods/ListMoods";
 import AdminStats from "./stats/AdminStats";
@@ -17,8 +9,8 @@ const AdminDashboard = ({ user }) => {
   const [view, setView] = useState("dashboard");
 
   return (
-    <Container fluid className="px-0 d-flex flex-column">
-      <div className="p-4 shadow-sm border-0 bg-light" style={{ minHeight: "calc(100vh - 11rem)" }}>
+    <Container fluid className="px-0 d-flex flex-column" style={{ fontFamily: "Outfit" }}>
+      <div className="p-4 shadow-sm border-0 bg-light text-dark" style={{ minHeight: "calc(100vh - 10.5rem)" }}>
         <Container>
           {view === "dashboard" && (
             <>

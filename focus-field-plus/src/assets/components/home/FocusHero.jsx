@@ -79,7 +79,7 @@ const FocusHero = () => {
         padding: "2rem",
       }}
     >
-      <div className="mt-5">
+      <div className="mt-5 position-relative z-index-1">
         <h1 className="display-3 fw-bold">{t("hero.title")}</h1>
         <p className="display-6">{t("hero.subtitle")}</p>
 
