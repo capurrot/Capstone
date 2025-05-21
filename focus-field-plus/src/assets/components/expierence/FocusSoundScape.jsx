@@ -6,7 +6,15 @@ import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import { Alert } from "react-bootstrap";
 
-const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestion, duration = 300, moodName }) => {
+const FocusSoundScape = ({
+  backgroundVideo,
+  audioSrc,
+  soundScape = [],
+  suggestion,
+  duration = 300,
+  moodName,
+  onIOSFullscreenChange,
+}) => {
   const { t } = useTranslation(moodName, { keyPrefix: "environment" });
 
   const dispatch = useDispatch();
@@ -48,6 +56,12 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
     if (document.fullscreenElement) {
       document.exitFullscreen();
     }
+    if (containerRef.current?.classList.contains("ios-fullscreen")) {
+      containerRef.current.classList.remove("ios-fullscreen");
+      if (typeof onIOSFullscreenChange === "function") {
+        onIOSFullscreenChange(true); // o false
+      }
+    }
 
     setStarted(false);
     setTimer(0);
@@ -67,8 +81,14 @@ const FocusSoundScape = ({ backgroundVideo, audioSrc, soundScape = [], suggestio
     const el = containerRef.current;
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-    if (isIOS && videoRef.current?.webkitEnterFullscreen) {
-      videoRef.current.webkitEnterFullscreen();
+    if (isIOS) {
+      if (el) {
+        const nowFullscreen = !el.classList.contains("ios-fullscreen");
+        el.classList.toggle("ios-fullscreen");
+        if (typeof onIOSFullscreenChange === "function") {
+          onIOSFullscreenChange(nowFullscreen);
+        }
+      }
       return;
     }
 

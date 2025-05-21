@@ -25,6 +25,7 @@ function MoodPage({ moodName, isModal }) {
   const { t, i18n } = useTranslation(moodName, { keyPrefix: "moodPage" });
   const userId = useSelector((state) => state.auth.user?.id);
   const logId = localStorage.getItem("logId");
+  const [isIOSFullscreen, setIsIOSFullscreen] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -339,10 +340,11 @@ function MoodPage({ moodName, isModal }) {
             suggestion={moodData.environment.suggestion}
             duration={moodData.environment.duration}
             moodName={moodName}
+            onIOSFullscreenChange={(active) => setIsIOSFullscreen(active)}
           />
         </section>
 
-        {moodData.spiritual?.enabled && (
+        {moodData.spiritual?.enabled && !isIOSFullscreen && (
           <section className="mood-section spiritual p-4 mt-4">
             <h2 className="mood-text mb-3 ps-3">
               <MdAutoStories /> - {t("sections.spiritual")}
@@ -354,7 +356,7 @@ function MoodPage({ moodName, isModal }) {
           </section>
         )}
 
-        {moodData.journalPost?.enabled && (
+        {moodData.journalPost?.enabled && !isIOSFullscreen && (
           <section className="mood-section journal p-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
               <i className="fas fa-pencil-alt me-1"></i> - {t("sections.postJournal")}
