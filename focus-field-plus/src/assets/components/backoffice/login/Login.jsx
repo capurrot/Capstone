@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FocusNavBar from "../../home/FocusNavBar";
 import Footer from "../../home/Footer";
 import { Link, useNavigate } from "react-router";
-import { login } from "../../../../redux/actions";
+import { fetchCurrentUser, login, LOGIN_FAILURE } from "../../../../redux/actions";
 import { useState, useEffect } from "react";
 import ButtonsLogin from "./ButtonsLogin";
 
@@ -12,6 +12,10 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [savedUsername, setSavedUsername] = useState("");
   const auth = useSelector((state) => state.auth);
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
+  const fromPath = location.state?.from || sessionStorage.getItem("redirectAfterLogin") || "/";
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -25,15 +29,26 @@ const Login = () => {
     }
     dispatch(login(username, password));
   };
-  const token = useSelector((state) => state.auth.token);
-  const navigate = useNavigate();
+
   useEffect(() => {
-    if (token) {
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1000);
+    dispatch({ type: LOGIN_FAILURE, payload: "" });
+
+    if (token && !user) {
+      dispatch(fetchCurrentUser());
     }
-  }, [token, navigate]);
+
+    if (token && user) {
+      console.log("user:", user);
+      setTimeout(() => {
+        if (user.roles?.includes("ROLE_ADMIN")) {
+          navigate("/dashboard");
+        } else {
+          navigate(fromPath);
+          sessionStorage.removeItem("redirectAfterLogin");
+        }
+      }, 500);
+    }
+  }, [token, user, dispatch, navigate, fromPath]);
 
   useEffect(() => {
     const remembered = localStorage.getItem("rememberedUsername");
@@ -53,7 +68,7 @@ const Login = () => {
               <h2 className="my-2 mood-text mx-4 ps-3 my-3">
                 <i className="fas fa-sign-in-alt me-2"></i>Login
               </h2>
-              <div className="login-form-container mx-4 mb-4">
+              <div className="login-form-container mx-4 mb-4" style={{ width: "19rem" }}>
                 <Form className="mt-5 w-100 px-4" onSubmit={handleLogin}>
                   <Form.Control
                     className="mb-3"
@@ -69,15 +84,17 @@ const Login = () => {
                     autoComplete="current-password"
                     name="password"
                   />
-                  <button className="focusfield-btn mt-4 d-flex w-100 justify-content-center">Login</button>
+                  <button className="focusfield-btn mt-4 d-flex justify-content-center" style={{ width: "16rem" }}>
+                    Login
+                  </button>
                   {auth.error && (
                     <Alert variant="danger" className="mt-4 mb-0 text-center">
-                      <i class="bi bi-exclamation-triangle-fill me-2"></i>Login failed
+                      <i className="bi bi-exclamation-triangle-fill me-2"></i>Login failed
                     </Alert>
                   )}
                   {auth.loginSuccess && (
                     <Alert variant="success" className="mt-4 mb-0 text-center">
-                      <i class="bi bi-check-circle-fill me-2"></i>Login successful
+                      <i className="bi bi-check-circle-fill me-2"></i>Login successful
                     </Alert>
                   )}
                 </Form>

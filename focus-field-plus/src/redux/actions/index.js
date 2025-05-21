@@ -20,6 +20,8 @@ export const FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST";
 export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
 export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
 
+export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
+
 export const SET_MOODS_LOADING = "SET_MOODS_LOADING";
 export const SET_MOODS_ERROR = "SET_MOODS_ERROR";
 
@@ -34,6 +36,10 @@ export const SAVE_MOOD_START = "SAVE_MOOD_START";
 export const SAVE_MOOD_SUCCESS = "SAVE_MOOD_SUCCESS";
 export const SAVE_MOOD_FAILURE = "SAVE_MOOD_FAILURE";
 export const SAVE_MOOD_RESET = "SAVE_MOOD_RESET";
+
+export const START_LOG = "START_LOG";
+export const END_LOG = "END_LOG";
+export const SET_LOGS = "SET_LOGS";
 
 // 🌍 API base URL
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -210,6 +216,27 @@ export const fetchUsers = () => {
       dispatch({ type: FETCH_USERS_FAILURE, payload: err.message });
     }
   };
+};
+
+export const fetchCurrentUser = () => async (dispatch, getState) => {
+  const { auth } = getState();
+  const token = auth.token;
+  if (!token) return;
+
+  try {
+    const res = await fetch(`${apiUrl}api/focus-field/auth/current-user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) throw new Error("Errore nel recupero dell'utente");
+
+    const userData = await res.json();
+    dispatch(setUser(userData));
+  } catch (error) {
+    dispatch({ type: FETCH_USER_FAILURE, payload: error.message });
+  }
 };
 
 export const fetchMood = (slug, lang) => async (dispatch) => {
@@ -399,3 +426,37 @@ export const saveMoodAndTranslation =
       dispatch({ type: SAVE_MOOD_FAILURE, payload: error.message });
     }
   };
+
+export const startMoodLog = (userId, moodSlug, language) => async (dispatch) => {
+  try {
+    const res = await fetch(apiUrl + "api/focus-field/log/start", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, moodSlug, language }),
+    });
+
+    if (!res.ok) throw new Error("Errore nell'avvio del log");
+
+    const data = await res.json();
+    console.log("Dati del log:", data);
+    dispatch({ type: START_LOG, payload: data });
+    localStorage.setItem("logId", data.id);
+  } catch (error) {
+    console.error("Errore durante startMoodLog:", error);
+  }
+};
+
+export const endMoodLog = (logId) => async (dispatch) => {
+  try {
+    const res = await fetch(`${apiUrl}api/focus-field/log/end/${logId}`, {
+      method: "PUT",
+    });
+
+    if (!res.ok) throw new Error("Errore nella chiusura del log");
+
+    await res.json();
+    dispatch({ type: END_LOG });
+  } catch (error) {
+    console.error("Errore durante endMoodLog:", error);
+  }
+};

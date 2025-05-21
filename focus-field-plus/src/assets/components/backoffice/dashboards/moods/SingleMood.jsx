@@ -741,7 +741,7 @@ const SingleMood = ({ mood }) => {
                                     dispatch(setDashboardMoodField("breathing.phases", updated));
                                   }}
                                 >
-                                  <i class="fas fa-minus fs-6"></i>
+                                  <i className="fas fa-minus fs-6"></i>
                                 </Button>
                               </div>
                             </Row>
@@ -764,7 +764,7 @@ const SingleMood = ({ mood }) => {
                     dispatch(setDashboardMoodField("breathing.phases", updated));
                   }}
                 >
-                  <i class="fas fa-plus fs-4"></i>
+                  <i className="fas fa-plus fs-4"></i>
                 </Button>
               </div>
             </div>
@@ -1319,7 +1319,7 @@ const SingleMood = ({ mood }) => {
                           dispatch(setDashboardMoodField("coach.steps", updated));
                         }}
                       >
-                        <i class="fas fa-minus fs-6"></i>
+                        <i className="fas fa-minus fs-6"></i>
                       </Button>
                     </Col>
                   </Row>
@@ -1338,7 +1338,7 @@ const SingleMood = ({ mood }) => {
                       dispatch(setDashboardMoodField("coach.steps", updated));
                     }}
                   >
-                    <i class="fas fa-plus fs-4"></i>
+                    <i className="fas fa-plus fs-4"></i>
                   </Button>
                 </div>
               </Card>

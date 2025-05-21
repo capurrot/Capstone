@@ -1,46 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router";
 import AdminDashboard from "./AdminDashboard";
 import FocusNavBar from "../../home/FocusNavBar";
 import UserDashboard from "./UserDashboard";
 import SellerDashboard from "./SellerDashboard";
-import { setUser } from "../../../../redux/actions";
+import { fetchCurrentUser } from "../../../../redux/actions";
 import Footer from "../../home/Footer";
 
 const DashboardWrapper = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
-  const [loading, setLoading] = useState(true);
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const loading = useSelector((state) => state.auth.loading);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      if (!token) return;
-
-      console.log("Token:", token);
-      try {
-        const res = await fetch(apiUrl + "api/focus-field/auth/current-user", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!res.ok) throw new Error("Errore nel recupero dell'utente");
-
-        const userData = await res.json();
-        console.log("Dati utente:", userData);
-        dispatch(setUser(userData));
-      } catch (error) {
-        console.error("Errore nel recuperare il profilo:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (!user) fetchUser();
-    else setLoading(false);
+    if (!user && token) {
+      dispatch(fetchCurrentUser());
+    }
   }, [dispatch, token, user]);
 
   if (!token) return <Navigate to="/login" replace />;

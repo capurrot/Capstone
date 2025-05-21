@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { SET_MOOD } from "../../../redux/actions";
+import { endMoodLog, SET_MOOD, startMoodLog } from "../../../redux/actions";
 import FocusPlayer from "./FocusPlayer";
 import BreathingExercise from "./BreathingExercise";
 import RelaxBodyExercises from "./RelaxBodyExercises";
@@ -12,24 +12,38 @@ import FocusGoals from "./FocusGoals";
 import FocusSoundScape from "./FocusSoundScape";
 import FocusMentalCoach from "./FocusMentalCoach";
 import { MdAutoStories } from "react-icons/md";
+import { Link } from "react-router";
 
-function MoodPage({ moodName }) {
+function MoodPage({ moodName, isModal }) {
   const [moodData, setMoodData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showInfoModal, setShowInfoModal] = useState(false);
-
+  const [hasStarted, setHasStarted] = useState(false);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const allMoods = useSelector((state) => state.mood.allMoods);
   const { t, i18n } = useTranslation(moodName, { keyPrefix: "moodPage" });
+  const userId = useSelector((state) => state.auth.user?.id);
+  const logId = localStorage.getItem("logId");
+  const [isIOSFullscreen, setIsIOSFullscreen] = useState(false);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
       try {
         const lang = i18n.language?.split("-")[0] || "it";
-        const res = await fetch(`/locales/${lang}/${moodName}.json`);
+        const res = await fetch(`${apiUrl}api/focus-field/mood/${moodName}/${lang}`);
         const json = await res.json();
-        setMoodData(json);
+
+        if (!res.ok || json?.error || !json?.environment) {
+          console.warn("Mood non trovato o incompleto:", json);
+          setMoodData(null);
+        } else {
+          setMoodData(json);
+          console.log("Dati mood:", json);
+        }
 
         const fullMood = allMoods.find((m) => m.slug === moodName);
         if (fullMood) {
@@ -44,10 +58,47 @@ function MoodPage({ moodName }) {
     };
 
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moodName, dispatch, allMoods, i18n.language]);
 
-  if (loading) return <p>{t("loading")}</p>;
-  if (!moodData) return <p>{t("notFound")}</p>;
+  const handleStart = async () => {
+    const lang = i18n.language?.split("-")[0] || "it";
+    const moodSlug = moodData?.slug || moodName;
+
+    await dispatch(startMoodLog(userId ?? null, moodSlug, lang));
+    setHasStarted(true);
+  };
+
+  const handleEnd = () => {
+    console.log("logId", logId);
+    if (logId) dispatch(endMoodLog(logId));
+  };
+
+  if (loading) {
+    return (
+      <section className="d-flex justify-content-center align-items-center vh-100 bg-light">
+        <div className="text-center">
+          <div className="spinner-border text-primary mb-4" role="status" style={{ width: "3rem", height: "3rem" }}>
+            <span className="visually-hidden">{t("loading")}</span>
+          </div>
+          <p className="fs-5 text-muted">{t("loading", "Caricamento in corso...")}</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!moodData) {
+    return (
+      <Container className="text-center py-5 bg-light">
+        <h2>{t("notFound", "Mood non disponibile")}</h2>
+        <p>{t("translationMissing", "Questo mood non è ancora disponibile nella lingua selezionata.")}</p>
+
+        <button className="focusfield-btn mt-4" onClick={() => window.history.back()}>
+          ⬅️ {t("goBack", "Torna indietro")}
+        </button>
+      </Container>
+    );
+  }
 
   const tr = (key, fallback) => {
     const keys = key.split(".");
@@ -61,6 +112,87 @@ function MoodPage({ moodName }) {
     }
     return value;
   };
+
+  if (!hasStarted && !isModal) {
+    return (
+      <Container
+        fluid
+        className="mood-page position-relative text-center d-flex align-items-center justify-content-center"
+        style={{
+          minHeight: "100vh",
+          backgroundImage: `url(${moodData?.environment?.backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div
+          className="bg-white bg-opacity-75 p-5 rounded-4 shadow-lg text-start animate__animated animate__fadeIn"
+          style={{
+            maxWidth: "600px",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.2)",
+          }}
+        >
+          {user ? (
+            <div className="mb-4 p-4 rounded-4 bg-success bg-opacity-10 shadow-sm border border-success-subtle">
+              <div className="d-flex align-items-center mb-3">
+                <div
+                  className="bg-success bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center me-3"
+                  style={{ width: "42px", height: "42px" }}
+                >
+                  <i className="bi bi-person-check-fill text-success fs-4"></i>
+                </div>
+                <div>
+                  <h5 className="mb-0 fw-semibold text-success">Ciao{user?.nome ? `, ${user.nome}` : ""} 👋</h5>
+                  <small className="text-muted">
+                    Il tuo profilo è attivo e i progressi verranno salvati automaticamente.
+                  </small>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="mb-4 p-3 rounded-3 bg-warning bg-opacity-25 border-start border-warning border-4">
+              <div className="d-flex align-items-center mb-1">
+                <i className="bi bi-person-plus-fill text-warning me-2 fs-5"></i>
+                <span className="fw-semibold text-dark">Prima volta qui?</span>
+              </div>
+              <p className="mb-1 text-dark" style={{ lineHeight: "1.4" }}>
+                Registrati gratuitamente per <strong>salvare i tuoi stati d’animo</strong>, le <strong>sessioni</strong>{" "}
+                e i <strong>journaling</strong> così da rendere la tua esperienza unica.
+              </p>
+              <div className="d-flex flex-column">
+                <Link to="/register" className="btn btn-warning fw-semibold mt-2">
+                  <i className="bi bi-stars me-1"></i> Registrati ora
+                </Link>
+                <small className="mt-2 text-muted">
+                  Hai già un account?{" "}
+                  <Link to="/login" onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}>
+                    Accedi
+                  </Link>
+                </small>
+              </div>
+            </div>
+          )}
+
+          <div className="d-flex flex-column align-items-center">
+            <h1 className="mb-2 fw-bold">{tr("title", moodName)}</h1>
+            <p className="lead mb-4">{tr("desc", "")}</p>
+
+            {moodData?.durationSuggestion && (
+              <p className="text-muted mb-4">
+                ⏱️ {t("durationSuggestionLabel", "Durata suggerita")}: {moodData.durationSuggestion}
+              </p>
+            )}
+
+            <button className="focusfield-btn fs-5 px-4 py-2 mt-2" onClick={handleStart}>
+              {t("cta.start", "Inizia il percorso")}
+            </button>
+          </div>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container
@@ -99,7 +231,33 @@ function MoodPage({ moodName }) {
             <h2 className="mood-text mb-3 ps-3">
               <i className="fas fa-pencil-alt me-1"></i> - {t("sections.goals")}
             </h2>
-            <FocusGoals goals={moodData.journalGoals} moodName={moodName} />
+            {user ? (
+              <FocusGoals goals={moodData.journalGoals} moodName={moodName} />
+            ) : (
+              <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
+                <div className="mb-3">
+                  <i className="bi bi-journal-text fs-1" />
+                </div>
+                <p className="fs-5 fw-semibold mb-2">{t("journal.loginTitle", "Vuoi salvare i tuoi pensieri?")}</p>
+                <p className="mb-4 ">{t("journal.loginSub", "Accedi o registrati per usare il diario personale.")}</p>
+                <div className="d-flex justify-content-center gap-3 flex-wrap">
+                  <Link
+                    to="/login"
+                    className="focusfield-btn px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("login", "Accedi")}
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="focusfield-btn-outline px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("register", "Registrati")}
+                  </Link>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
@@ -108,7 +266,33 @@ function MoodPage({ moodName }) {
             <h2 className="mood-text mb-3 ps-3">
               <i className="fas fa-pencil-alt me-1"></i> - {t("sections.preJournal")}
             </h2>
-            <FocusJournal journal={moodData.journalPre} moodName={moodName} />
+            {user ? (
+              <FocusJournal journal={moodData.journalPre} moodName={moodName} />
+            ) : (
+              <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
+                <div className="mb-3">
+                  <i className="bi bi-journal-text fs-1" />
+                </div>
+                <p className="fs-5 fw-semibold mb-2">{t("journal.loginTitle", "Vuoi salvare i tuoi pensieri?")}</p>
+                <p className="mb-4 ">{t("journal.loginSub", "Accedi o registrati per usare il diario personale.")}</p>
+                <div className="d-flex justify-content-center gap-3 flex-wrap">
+                  <Link
+                    to="/login"
+                    className="focusfield-btn px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("login", "Accedi")}
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="focusfield-btn-outline px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("register", "Registrati")}
+                  </Link>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
@@ -156,10 +340,11 @@ function MoodPage({ moodName }) {
             suggestion={moodData.environment.suggestion}
             duration={moodData.environment.duration}
             moodName={moodName}
+            onIOSFullscreenChange={(active) => setIsIOSFullscreen(active)}
           />
         </section>
 
-        {moodData.spiritual?.enabled && (
+        {moodData.spiritual?.enabled && !isIOSFullscreen && (
           <section className="mood-section spiritual p-4 mt-4">
             <h2 className="mood-text mb-3 ps-3">
               <MdAutoStories /> - {t("sections.spiritual")}
@@ -171,17 +356,45 @@ function MoodPage({ moodName }) {
           </section>
         )}
 
-        {moodData.journalPost?.enabled && (
+        {moodData.journalPost?.enabled && !isIOSFullscreen && (
           <section className="mood-section journal p-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
               <i className="fas fa-pencil-alt me-1"></i> - {t("sections.postJournal")}
             </h2>
-            <FocusJournal journal={moodData.journalPost} />
+            {user ? (
+              <FocusJournal journal={moodData.journalPost} />
+            ) : (
+              <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
+                <div className="mb-3">
+                  <i className="bi bi-journal-text fs-1" />
+                </div>
+                <p className="fs-5 fw-semibold mb-2">{t("journal.loginTitle", "Vuoi salvare i tuoi pensieri?")}</p>
+                <p className="mb-4 ">{t("journal.loginSub", "Accedi o registrati per usare il diario personale.")}</p>
+                <div className="d-flex justify-content-center gap-3 flex-wrap">
+                  <Link
+                    to="/login"
+                    className="focusfield-btn px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("login", "Accedi")}
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="focusfield-btn-outline px-4 fw-semibold text-decoration-none"
+                    onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
+                  >
+                    {t("register", "Registrati")}
+                  </Link>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
         <footer className="p-4 text-center">
-          <button className="focusfield-btn fs-4">{moodData.cta?.text || t("cta.default")}</button>
+          <button className="focusfield-btn fs-4" onClick={handleEnd}>
+            {moodData.cta?.text || t("cta.default")}
+          </button>
         </footer>
 
         <FocusMoodInfoModal show={showInfoModal} handleClose={() => setShowInfoModal(false)} mood={moodData} />

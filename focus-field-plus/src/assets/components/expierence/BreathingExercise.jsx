@@ -3,80 +3,79 @@ import { useTranslation } from "react-i18next";
 
 const BreathingExercise = ({ config, moodName }) => {
   const { t } = useTranslation(moodName, { keyPrefix: "breathing" });
-  console.log(moodName);
-  const { technique, phases, duration, instructions } = config;
+  const { technique, phases, totalDuration } = config;
 
-  const [phaseName, setPhaseName] = useState(t("in"));
+  const [phaseName, setPhaseName] = useState("");
   const [isRunning, setIsRunning] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [step, setStep] = useState(0);
   const [phaseSecondsLeft, setPhaseSecondsLeft] = useState(0);
   const [scaleValue, setScaleValue] = useState(1);
-  const [totalTimeLeft, setTotalTimeLeft] = useState(duration || 0);
+  const [totalTimeLeft, setTotalTimeLeft] = useState(totalDuration || 0);
 
   const steps = useMemo(() => {
-    const arr = [];
-    if (phases.in) arr.push({ name: t("in"), time: phases.in });
-    if (phases.hold) arr.push({ name: t("hold"), time: phases.hold });
-    if (phases.out) arr.push({ name: t("out"), time: phases.out });
-    if (phases.hold2) arr.push({ name: t("hold"), time: phases.hold2 });
-    return arr;
+    if (!Array.isArray(phases)) return [];
+
+    return phases.map((p) => {
+      console.log("Phase in map:", p);
+      return {
+        name: t(p.phase) || p.phase,
+        phase: p.phase,
+        duration: p.duration,
+      };
+    });
   }, [phases, t]);
 
   useEffect(() => {
     if (!isRunning || steps.length === 0) return;
 
     const current = steps[step % steps.length];
-    const totalTime = current.time;
-    let timeLeft = totalTime;
-
     setPhaseName(current.name);
-    setPhaseSecondsLeft(timeLeft);
+    setPhaseSecondsLeft(current.duration);
 
     const start = Date.now();
 
     const countdownInterval = setInterval(() => {
       const elapsed = (Date.now() - start) / 1000;
-      const timeLeftNow = Math.max(current.time - elapsed, 0);
+      const remaining = Math.max(current.duration - elapsed, 0);
+      setPhaseSecondsLeft(Math.ceil(remaining));
 
-      setPhaseSecondsLeft(Math.ceil(timeLeftNow));
+      const progress = Math.min(elapsed / current.duration, 1);
 
-      const progress = Math.min(elapsed / current.time, 1);
-
-      if (current.name === t("in")) {
+      if (current.phase === "in") {
         setScaleValue(1 + 0.3 * progress);
-      } else if (current.name === t("out")) {
-        setScaleValue(1.3 - 0.6 * progress);
+      } else if (current.phase === "out") {
+        setScaleValue(1.3 - 0.3 * progress);
       } else {
         setScaleValue(1.3);
       }
 
-      if (elapsed >= current.time) {
+      if (elapsed >= current.duration) {
         clearInterval(countdownInterval);
         setStep((prev) => prev + 1);
       }
     }, 100);
 
     return () => clearInterval(countdownInterval);
-  }, [isRunning, step, steps, t]);
+  }, [isRunning, step, steps]);
 
   useEffect(() => {
-    if (!isRunning || !duration) return;
+    if (!isRunning || !totalDuration) return;
 
-    const stopTimer = setTimeout(() => {
+    const timeout = setTimeout(() => {
       setIsRunning(false);
       setHasStarted(false);
       setStep(0);
-      setPhaseName(t("in"));
+      setPhaseName("");
       setPhaseSecondsLeft(0);
       setScaleValue(1);
-    }, duration * 1000);
+    }, totalDuration * 1000);
 
-    return () => clearTimeout(stopTimer);
-  }, [isRunning, duration, t]);
+    return () => clearTimeout(timeout);
+  }, [isRunning, totalDuration]);
 
   useEffect(() => {
-    if (!isRunning || !duration) return;
+    if (!isRunning || !totalDuration) return;
 
     const interval = setInterval(() => {
       setTotalTimeLeft((prev) => {
@@ -89,23 +88,36 @@ const BreathingExercise = ({ config, moodName }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isRunning, duration]);
+  }, [isRunning, totalDuration]);
 
   const handleStartStop = () => {
     if (isRunning) {
       setIsRunning(false);
       setHasStarted(false);
       setStep(0);
-      setPhaseName(t("in"));
+      setPhaseName("");
       setPhaseSecondsLeft(0);
       setScaleValue(1);
-      setTotalTimeLeft(duration);
+      setTotalTimeLeft(totalDuration);
     } else {
       setHasStarted(true);
-      setTotalTimeLeft(duration);
       setIsRunning(true);
+      setTotalTimeLeft(totalDuration);
     }
   };
+
+  const instructions = useMemo(() => {
+    if (!Array.isArray(phases)) return [];
+
+    return phases.map((p) => {
+      const label = p.phaseLabel || p.phase;
+      const mode = p.mode ? `${p.mode.toLowerCase()}` : "";
+      return `${label}${mode ? " " + mode : ""} per ${p.duration} secondi`;
+    });
+  }, [phases]);
+
+  console.log("BreathingExercise config:", config);
+  console.log("Steps:", steps);
 
   return (
     <div className="breathing-container">
@@ -114,7 +126,7 @@ const BreathingExercise = ({ config, moodName }) => {
       </p>
 
       <div className="breathing-phase-text mb-2">
-        {isRunning ? phaseName : <span style={{ color: "transparent" }}>{t("selectPhase")}</span>}
+        {isRunning ? phaseName : <span style={{ color: "transparent" }}>{t("phaseLabel")}</span>}
       </div>
 
       <div className="breathing-circle-wrapper">
@@ -148,22 +160,22 @@ const BreathingExercise = ({ config, moodName }) => {
             {isRunning ? t("stop") : t("start")}
           </button>
 
-          {duration && !hasStarted && (
+          {!hasStarted && (
             <p
               className="breathing-instructions fw-semibold mb-0"
               style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-6)" }}
             >
-              {t("durationLabel")}: {Math.floor(duration / 60)} min
-              {duration % 60 !== 0 ? ` e ${duration % 60} sec` : ""}
+              {t("durationLabel")}: {Math.floor(totalDuration / 60)} min
+              {totalDuration % 60 !== 0 ? ` e ${totalDuration % 60} sec` : ""}
             </p>
           )}
 
-          {duration && hasStarted && (
+          {hasStarted && (
             <div
               className="progressbar-container position-absolute"
               style={{ bottom: "25px", left: "10%", width: "80%" }}
             >
-              <div className="progressbar-fill" style={{ width: `${(totalTimeLeft / duration) * 100}%` }}></div>
+              <div className="progressbar-fill" style={{ width: `${(totalTimeLeft / totalDuration) * 100}%` }}></div>
             </div>
           )}
         </>
