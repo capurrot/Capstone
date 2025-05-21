@@ -163,6 +163,51 @@ export const loginWithGoogle = (userData) => async (dispatch) => {
   }
 };
 
+export const loginWithFacebook = (userData) => async (dispatch) => {
+  dispatch({ type: LOGIN_REQUEST });
+
+  try {
+    const response = await fetch(`${apiUrl}api/focus-field/auth/facebook`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error || "Facebook login failed");
+    }
+
+    const result = await response.json();
+    const token = result.token;
+
+    const userInfoResponse = await fetch(`${apiUrl}api/focus-field/auth/current-user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!userInfoResponse.ok) {
+      throw new Error("Errore nel recupero dell’utente dopo login Facebook");
+    }
+
+    const fullUserData = await userInfoResponse.json();
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: {
+        token,
+        user: fullUserData,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: LOGIN_FAILURE,
+      payload: error.message,
+    });
+  }
+};
+
 export const registerUser = (formData) => async (dispatch) => {
   try {
     const cleanData = {

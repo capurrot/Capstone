@@ -1039,6 +1039,117 @@ const SingleMood = ({ mood }) => {
           </>
         )}
 
+        {translation?.journalGoals && (
+          <>
+            <hr />
+            <h5 className="mb-4 fs-2">
+              <i className="bi bi-bullseye me-2"></i> Obiettivi del Giorno
+            </h5>
+
+            <Form.Check
+              type="switch"
+              id="enabledJournalGoals"
+              label="Abilitato"
+              checked={data.journalGoals.enabled}
+              onChange={(e) => dispatch(setDashboardMoodField("journalGoals.enabled", e.target.checked))}
+              className="mb-2"
+            />
+
+            <Form.Group className="mb-3">
+              <Form.Label>Prompt</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={2}
+                value={data.journalGoals.prompt}
+                onChange={(e) => dispatch(setDashboardMoodField("journalGoals.prompt", e.target.value))}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Placeholder</Form.Label>
+              <Form.Control
+                type="text"
+                value={data.journalGoals.placeholder}
+                onChange={(e) => dispatch(setDashboardMoodField("journalGoals.placeholder", e.target.value))}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Etichetta Salvataggio</Form.Label>
+              <Form.Control
+                type="text"
+                value={data.journalGoals.save}
+                onChange={(e) => dispatch(setDashboardMoodField("journalGoals.save", e.target.value))}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Etichetta Obiettivo (es. "Obiettivo n. {"{{index}}"}")</Form.Label>
+              <Form.Control
+                type="text"
+                value={data.journalGoals.goalLabel}
+                onChange={(e) => dispatch(setDashboardMoodField("journalGoals.goalLabel", e.target.value))}
+              />
+            </Form.Group>
+
+            <Form.Check
+              type="switch"
+              id="optionalJournalGoals"
+              label="Facoltativo"
+              checked={data.journalGoals.optional}
+              onChange={(e) => dispatch(setDashboardMoodField("journalGoals.optional", e.target.checked))}
+            />
+
+            {data.journalGoals.goals.map((goal, index) => (
+              <div key={index} className="border rounded p-3 mb-3">
+                <Form.Group className="mb-2">
+                  <Form.Label>{data.journalGoals.goalLabel.replace("{{index}}", index + 1)}</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Obiettivo"
+                    value={goal.goal}
+                    onChange={(e) =>
+                      dispatch(setDashboardMoodField(`journalGoals.goals.${index}.goal`, e.target.value))
+                    }
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Cosa farai per raggiungerlo?</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Come"
+                    value={goal.how}
+                    onChange={(e) => dispatch(setDashboardMoodField(`journalGoals.goals.${index}.how`, e.target.value))}
+                  />
+                </Form.Group>
+              </div>
+            ))}
+
+            <div className="d-flex gap-2">
+              <Button
+                variant="outline-primary"
+                onClick={() =>
+                  dispatch(
+                    setDashboardMoodField(`journalGoals.goals`, [...data.journalGoals.goals, { goal: "", how: "" }])
+                  )
+                }
+              >
+                + Aggiungi Obiettivo
+              </Button>
+              {data.journalGoals.goals.length > 0 && (
+                <Button
+                  variant="outline-danger"
+                  onClick={() =>
+                    dispatch(setDashboardMoodField(`journalGoals.goals`, data.journalGoals.goals.slice(0, -1)))
+                  }
+                >
+                  - Rimuovi ultimo
+                </Button>
+              )}
+            </div>
+          </>
+        )}
+
         {translation?.journalPost && (
           <>
             <hr />
