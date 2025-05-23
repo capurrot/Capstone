@@ -1,11 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import { Image } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
 import Pause from "../../../../public/images/pause.png";
 
-const RelaxBodyExercises = ({ config, moodName }) => {
-  const { t } = useTranslation(moodName, { keyPrefix: "relaxBody" });
-  const { description, exercises } = config;
+const RelaxBodyExercises = ({ config }) => {
+  const { description, exercises, scrollDown, scrollUp, start, stop, duration, pause, pauseText, completed, repeatIn } =
+    config;
   const scrollRef = useRef(null);
   const [isRunning, setIsRunning] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -161,7 +160,7 @@ const RelaxBodyExercises = ({ config, moodName }) => {
                 });
               }}
               className="scroll-down-arrow"
-              title={atBottom ? t("scrollUp") : t("scrollDown")}
+              title={atBottom ? scrollUp : scrollDown}
             >
               {atBottom ? "↑" : "↓"}
             </button>
@@ -175,7 +174,7 @@ const RelaxBodyExercises = ({ config, moodName }) => {
           style={{ bottom: "65px" }}
           onClick={handleStart}
         >
-          {t("start")}
+          {start}
         </button>
       )}
 
@@ -184,13 +183,13 @@ const RelaxBodyExercises = ({ config, moodName }) => {
           className="breathing-instructions fw-semibold mb-0"
           style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-6)" }}
         >
-          {t("duration")} {Math.floor(totalDuration / 60)} min e {totalDuration % 60} sec
+          {duration} {Math.floor(totalDuration / 60)} min e {totalDuration % 60} sec
         </p>
       )}
 
       {isRunning && (
         <div className="exercise-box mt-4 text-center px-4">
-          <h4>{isPauseStep ? t("pause") : exercises[currentStep]?.name}</h4>
+          <h4>{isPauseStep ? pause : exercises[currentStep]?.name}</h4>
           {isPauseStep ? (
             <Image src={Pause} alt="Pause" className="img-fluid mx-auto mb-2" style={{ maxHeight: "140px" }} />
           ) : (
@@ -203,7 +202,8 @@ const RelaxBodyExercises = ({ config, moodName }) => {
               />
             )
           )}
-          <p className="mb-0">{isPauseStep ? t("pauseText") : exercises[currentStep]?.instructions}</p>
+          <p className="mb-0">{isPauseStep ? pauseText : exercises[currentStep]?.instructions}</p>
+
           <div className={`${isPauseStep ? "pause-mode" : ""}`}>
             <div className="relax-timer">{secondsLeft}s</div>
           </div>
@@ -217,7 +217,7 @@ const RelaxBodyExercises = ({ config, moodName }) => {
             style={{ bottom: "65px" }}
             onClick={handleStop}
           >
-            {t("stop")}
+            {stop}
           </button>
           <div
             className="progressbar-container position-absolute"
@@ -235,8 +235,8 @@ const RelaxBodyExercises = ({ config, moodName }) => {
 
       {isCompleted && (
         <div className="mt-4 text-center px-4">
-          <p className="text-success fw-semibold">{t("completed")}</p>
-          <p>{t("repeatIn", { seconds: restartCountdown })}</p>
+          <p className="text-success fw-semibold">{completed}</p>
+          <p>{repeatIn + { seconds: restartCountdown }}</p>
         </div>
       )}
     </div>

@@ -17,10 +17,11 @@ const FocusMoodModal = ({ show, onHide }) => {
       dialogClassName="focusfield-modal-dialog"
       backdropClassName="focusfield-backdrop"
     >
-      <Modal.Header closeButton className="border-0 pb-0">
+      <Modal.Header className="border-0 pb-0">
         <Modal.Title className="w-100 text-center fs-1 fw-bold text-focusfield" style={{ fontFamily: "Fjalla One" }}>
           {t("try.modalTitle", "Scegli un Mood")}
         </Modal.Title>
+        <Button variant="close" onClick={onHide} className="btn-close-focusfield" style={{ alignSelf: "baseline" }} />
       </Modal.Header>
       <Modal.Body className="bg-transparent">
         <Container className="d-flex flex-wrap justify-content-center gap-3 py-3">

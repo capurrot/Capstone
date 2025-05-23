@@ -1,9 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
-import { useTranslation } from "react-i18next";
 
-const BreathingExercise = ({ config, moodName }) => {
-  const { t } = useTranslation(moodName, { keyPrefix: "breathing" });
-  const { technique, phases, totalDuration } = config;
+const BreathingExercise = ({ config }) => {
+  const { technique, techniqueLabel, phases, start, stop, totalDuration, totalDurationLabel } = config;
 
   const [phaseName, setPhaseName] = useState("");
   const [isRunning, setIsRunning] = useState(false);
@@ -17,14 +15,23 @@ const BreathingExercise = ({ config, moodName }) => {
     if (!Array.isArray(phases)) return [];
 
     return phases.map((p) => {
-      console.log("Phase in map:", p);
       return {
-        name: t(p.phase) || p.phase,
+        name: p.phaseLabel,
         phase: p.phase,
         duration: p.duration,
       };
     });
-  }, [phases, t]);
+  }, [phases]);
+
+  const instructions = useMemo(() => {
+    if (!Array.isArray(phases)) return [];
+
+    return phases.map((p) => {
+      const label = p.phaseLabel || p.phase;
+      const mode = p.mode ? `${p.mode.toLowerCase()}` : "";
+      return `${label}${mode ? " " + mode : ""} per ${p.duration} secondi`;
+    });
+  }, [phases]);
 
   useEffect(() => {
     if (!isRunning || steps.length === 0) return;
@@ -91,7 +98,7 @@ const BreathingExercise = ({ config, moodName }) => {
   }, [isRunning, totalDuration]);
 
   const handleStartStop = () => {
-    if (isRunning) {
+    if (isRunning || hasStarted) {
       setIsRunning(false);
       setHasStarted(false);
       setStep(0);
@@ -101,32 +108,21 @@ const BreathingExercise = ({ config, moodName }) => {
       setTotalTimeLeft(totalDuration);
     } else {
       setHasStarted(true);
-      setIsRunning(true);
+      setStep(0);
+      setPhaseName(steps[0]?.name || "");
+      setPhaseSecondsLeft(steps[0]?.duration || 0);
+      setScaleValue(1);
       setTotalTimeLeft(totalDuration);
+      setIsRunning(true);
     }
   };
 
-  const instructions = useMemo(() => {
-    if (!Array.isArray(phases)) return [];
-
-    return phases.map((p) => {
-      const label = p.phaseLabel || p.phase;
-      const mode = p.mode ? `${p.mode.toLowerCase()}` : "";
-      return `${label}${mode ? " " + mode : ""} per ${p.duration} secondi`;
-    });
-  }, [phases]);
-
-  console.log("BreathingExercise config:", config);
-  console.log("Steps:", steps);
-
   return (
     <div className="breathing-container">
-      <p className="breathing-technique fst-italic mb-0 pt-4">
-        {t("techniqueLabel")}: {technique}
-      </p>
+      <p className="breathing-technique fst-italic mb-0 pt-4">{techniqueLabel + ": " + technique}</p>
 
       <div className="breathing-phase-text mb-2">
-        {isRunning ? phaseName : <span style={{ color: "transparent" }}>{t("phaseLabel")}</span>}
+        {isRunning ? phaseName : <span style={{ color: "transparent" }}> Attesa</span>}
       </div>
 
       <div className="breathing-circle-wrapper">
@@ -135,8 +131,8 @@ const BreathingExercise = ({ config, moodName }) => {
           style={{
             transform: `scale(${scaleValue})`,
             backgroundColor: "var(--mood-color-6)",
-            filter: phaseName === t("hold") ? "blur(2px)" : "none",
-            backdropFilter: phaseName === t("hold") ? "blur(2px)" : "none",
+            filter: phaseName === "hold" ? "blur(2px)" : "none",
+            backdropFilter: phaseName === "hold" ? "blur(2px)" : "none",
             transition:
               "transform 0.1s linear, background-color 0.5s ease, filter 0.5s ease, backdrop-filter 0.5s ease",
           }}
@@ -157,7 +153,7 @@ const BreathingExercise = ({ config, moodName }) => {
             style={{ bottom: "65px" }}
             onClick={handleStartStop}
           >
-            {isRunning ? t("stop") : t("start")}
+            {isRunning ? stop : start}
           </button>
 
           {!hasStarted && (
@@ -165,7 +161,7 @@ const BreathingExercise = ({ config, moodName }) => {
               className="breathing-instructions fw-semibold mb-0"
               style={{ position: "absolute", bottom: "25px", color: "var(--mood-color-6)" }}
             >
-              {t("durationLabel")}: {Math.floor(totalDuration / 60)} min
+              {totalDurationLabel}: {Math.floor(totalDuration / 60)} min
               {totalDuration % 60 !== 0 ? ` e ${totalDuration % 60} sec` : ""}
             </p>
           )}
