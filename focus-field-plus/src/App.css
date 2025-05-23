@@ -138,6 +138,7 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
+  height: 100%;
   z-index: 2;
   padding: 1.5rem;
   background: transparent;
@@ -168,6 +169,24 @@ body {
   object-fit: cover;
   display: block;
   filter: brightness(0.15);
+  transition: transform 0.5s ease;
+}
+
+.card-container-mood:hover .card-img-top-full {
+  transform: scale(1.05);
+  filter: brightness(1);
+}
+
+.card-img-overlay {
+  transition: background 0.5s ease;
+}
+
+.card-body-title i {
+  transition: transform 0.3s ease;
+}
+
+.card-container-mood:hover .card-body-title i {
+  transform: scale(1.1) rotate(3deg);
 }
 
 .try-you-to {
