@@ -14,6 +14,8 @@ import {
   CartesianGrid,
   Bar,
   LabelList,
+  LineChart,
+  Line,
 } from "recharts";
 
 const AdminStats = () => {
@@ -23,20 +25,16 @@ const AdminStats = () => {
   const token = useSelector((state) => state.auth.token);
   const allMoods = useSelector((state) => state.mood.allMoods);
 
-  // Mappa slug => colore principale
   const moodColorMap = Object.fromEntries(allMoods.map((mood) => [mood.slug, mood.colors?.[0] || "#999"]));
 
   const fetchLogs = async () => {
     try {
       const res = await fetch(`${apiUrl}api/focus-field/log/user/logs`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
       if (!res.ok) throw new Error("Errore nella risposta del server");
-
       const data = await res.json();
+      console.log("Esempio log ricevuto:", data.slice(0, 5));
       setLogs(data);
     } catch (err) {
       console.error("Errore nel fetch dei log:", err);
@@ -93,101 +91,110 @@ const AdminStats = () => {
     percent: (val.completed / val.total) * 100,
   }));
 
+  const renderTooltip = ({ payload }) => {
+    if (payload && payload.length && payload[0].payload) {
+      const { name, value } = payload[0].payload;
+      return (
+        <div className="custom-tooltip">
+          <strong>{name}</strong>
+          <br />
+          Valore: {value != null ? value.toFixed(0) : "N/A"}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const sessionsByDate = logs.reduce((acc, log) => {
+    const date = new Date(log.startTime).toLocaleDateString("it-IT"); // formato: gg/mm/aaaa
+    acc[date] = (acc[date] || 0) + 1;
+    return acc;
+  }, {});
+
+  const sessionTrendData = Object.entries(sessionsByDate)
+    .sort(([a], [b]) => {
+      const [da, ma, ya] = a.split("/");
+      const [db, mb, yb] = b.split("/");
+      return new Date(`${ya}-${ma}-${da}`) - new Date(`${yb}-${mb}-${db}`);
+    })
+    .map(([date, count]) => ({ date, count }));
+
   return (
     <>
       <Row className="mb-4">
-        <Col md={4}>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <h5>Totale Sessioni</h5>
-              <h2>{totalSessions}</h2>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <h5>Durata Media (s)</h5>
-              <h2>{Math.round(avgDuration)}</h2>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <h5>Sessioni Completate</h5>
-              <h2>
-                {completedSessions} ({Math.round((completedSessions / totalSessions) * 100)}%)
-              </h2>
-            </Card.Body>
-          </Card>
-        </Col>
+        {[
+          { title: "Totale Sessioni", value: totalSessions },
+          { title: "Durata Media (s)", value: Math.round(avgDuration) },
+          {
+            title: "Sessioni Completate",
+            value: `${completedSessions} (${Math.round((completedSessions / totalSessions) * 100)}%)`,
+          },
+          { title: "Sessioni Incomplete", value: incompleteSessions },
+          { title: "Utenti Autenticati", value: authenticatedSessions },
+          { title: "Utenti Anonimi", value: anonymousSessions },
+          { title: "Utenti Unici", value: uniqueUsers },
+        ].map((stat, i) => (
+          <Col md={4} className="mb-3" key={i}>
+            <Card className="text-center shadow stat-card">
+              <Card.Body>
+                <h5 className="text-muted">{stat.title}</h5>
+                <h2>{stat.value}</h2>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
       </Row>
 
-      <Row className="mb-4">
-        <Col md={4}>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <h5>Sessioni Incomplete</h5>
-              <h2>{incompleteSessions}</h2>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <h5>Utenti Autenticati</h5>
-              <h2>{authenticatedSessions}</h2>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <h5>Utenti Anonimi</h5>
-              <h2>{anonymousSessions}</h2>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className="mb-4">
-        <Col md={4}>
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <h5>Utenti Unici</h5>
-              <h2>{uniqueUsers}</h2>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Card className="shadow-sm mb-4">
+      <Card className="shadow mb-4">
         <Card.Body>
           <h5 className="mb-4 text-center">Distribuzione per Mood</h5>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={700}>
             <PieChart>
               <Pie
                 data={moodData}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                outerRadius={100}
+                outerRadius={220}
                 dataKey="value"
+                animationDuration={800}
+                label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
               >
                 {moodData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={moodColorMap[entry.name] || "#ccc"} />
+                  <Cell key={index} fill={moodColorMap[entry.name] || "#ccc"} />
                 ))}
               </Pie>
-              <Tooltip />
-              <Legend />
+              <Tooltip content={renderTooltip} />
+              <Legend verticalAlign="bottom" height={36} />
             </PieChart>
           </ResponsiveContainer>
         </Card.Body>
       </Card>
 
-      <Card className="shadow-sm mb-4">
+      <Card className="shadow mb-4">
+        <Card.Body>
+          <h5 className="mb-4 text-center">Andamento Giornaliero delle Sessioni</h5>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={sessionTrendData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="count"
+                stroke="#0d6efd"
+                strokeWidth={3}
+                dot={{ r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </Card.Body>
+      </Card>
+
+      <Card className="shadow mb-4">
         <Card.Body>
           <h5 className="mb-4 text-center">Durata Media per Mood</h5>
           <ResponsiveContainer width="100%" height={300}>
@@ -195,11 +202,11 @@ const AdminStats = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip content={renderTooltip} />
               <Legend />
-              <Bar dataKey="avg">
+              <Bar dataKey="avg" radius={[8, 8, 0, 0]} animationDuration={1000}>
                 {moodDurations.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={moodColorMap[entry.name] || "#007bff"} />
+                  <Cell key={index} fill={moodColorMap[entry.name] || "#007bff"} />
                 ))}
                 <LabelList dataKey="avg" position="top" />
               </Bar>
@@ -208,7 +215,7 @@ const AdminStats = () => {
         </Card.Body>
       </Card>
 
-      <Card className="shadow-sm">
+      <Card className="shadow mb-4">
         <Card.Body>
           <h5 className="mb-4 text-center">Completamento per Mood</h5>
           <ResponsiveContainer width="100%" height={300}>
@@ -216,11 +223,11 @@ const AdminStats = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis domain={[0, 100]} />
-              <Tooltip />
+              <Tooltip content={renderTooltip} />
               <Legend />
-              <Bar dataKey="percent">
+              <Bar dataKey="percent" radius={[8, 8, 0, 0]} animationDuration={1000}>
                 {moodCompletion.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={moodColorMap[entry.name] || "#28a745"} />
+                  <Cell key={index} fill={moodColorMap[entry.name] || "#28a745"} />
                 ))}
                 <LabelList dataKey="percent" position="top" formatter={(val) => `${val.toFixed(0)}%`} />
               </Bar>
