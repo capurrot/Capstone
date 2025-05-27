@@ -19,34 +19,58 @@ import RegisterPage from "./assets/components/backoffice/login/RegisterPage.jsx"
 function App() {
   const dispatch = useDispatch();
   const mood = useSelector((state) => state.mood.selectedMood);
-  const allMoods = useSelector((state) => state.mood.allMoods);
+
+  const defaultMood = {
+    slug: "standard",
+    name: "Standard",
+    description: "Mood di default",
+    background: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1080&auto=format",
+    image: "",
+    icon: "bi-stars",
+    opacity: 0.9,
+    tag: "neutro",
+    colors: [
+      "#4e495d",
+      "#ffffff",
+      "#773923",
+      "#c7c4b7",
+      "#773923",
+      "#4e495d",
+      "#E3D6A5",
+      "#FFE1B5",
+      "#8FC6D5",
+      "#5F95B7",
+      "#4e495d",
+      "#4e495d",
+      "#ffffff",
+      "#ffffff",
+      "#ffffff",
+    ],
+  };
 
   useEffect(() => {
     dispatch(fetchAllMoods());
   }, [dispatch]);
 
   useEffect(() => {
-    if (!mood && allMoods.length > 0) {
-      const defaultMood = allMoods.find((m) => m.slug === "standard") || allMoods[0];
+    if (!mood) {
       dispatch(setMood(defaultMood));
     }
-  }, [dispatch, mood, allMoods]);
+  }, [dispatch, mood]);
 
   useEffect(() => {
     if (!mood) return;
 
     const root = document.documentElement;
-
-    const colors = mood.colors;
+    const colors = mood.colors || defaultMood.colors;
 
     colors.forEach((color, i) => {
       root.style.setProperty(`--mood-color-${i + 1}`, color);
     });
 
-    root.style.setProperty("--mood-opacity", mood.opacity || 0.5);
+    root.style.setProperty("--mood-opacity", mood.opacity || defaultMood.opacity || 0.5);
   }, [mood]);
 
-  // Imposta il colore del browser mobile
   useEffect(() => {
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta && mood?.colors?.[0]) {
@@ -54,7 +78,7 @@ function App() {
     }
   }, [mood]);
 
-  const slug = mood?.slug || "standard";
+  const slug = mood?.slug || defaultMood.slug;
 
   return (
     <div className={`main-container mood-${slug} d-flex flex-column min-vh-100`}>

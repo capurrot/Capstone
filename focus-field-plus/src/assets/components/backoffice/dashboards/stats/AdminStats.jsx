@@ -148,26 +148,37 @@ const AdminStats = () => {
       <Card className="shadow mb-4">
         <Card.Body>
           <h5 className="mb-4 text-center">Distribuzione per Mood</h5>
-          <ResponsiveContainer width="100%" height={700}>
-            <PieChart>
-              <Pie
-                data={moodData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                outerRadius={220}
-                dataKey="value"
-                animationDuration={800}
-                label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-              >
-                {moodData.map((entry, index) => (
-                  <Cell key={index} fill={moodColorMap[entry.name] || "#ccc"} />
-                ))}
-              </Pie>
-              <Tooltip content={renderTooltip} />
-              <Legend verticalAlign="bottom" height={36} />
-            </PieChart>
-          </ResponsiveContainer>
+          <div style={{ width: "100%", height: "60vh", minHeight: "300px" }}>
+            <ResponsiveContainer>
+              <PieChart>
+                <Pie
+                  data={moodData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="30%"
+                  outerRadius="80%"
+                  labelLine={false}
+                  paddingAngle={1}
+                  dataKey="value"
+                  animationDuration={800}
+                  label={({ name, value, percent }) =>
+                    window.innerWidth >= 768 ? `${name}: ${value} (${(percent * 100).toFixed(0)}%)` : ""
+                  }
+                >
+                  {moodData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={moodColorMap[entry.name] || "#ccc"} />
+                  ))}
+                </Pie>
+                <Tooltip content={renderTooltip} />
+                <Legend
+                  verticalAlign="bottom"
+                  layout="horizontal"
+                  iconType="circle"
+                  wrapperStyle={{ paddingTop: 10 }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </Card.Body>
       </Card>
 

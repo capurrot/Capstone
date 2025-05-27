@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { useSelector, useDispatch } from "react-redux";
@@ -61,9 +61,18 @@ const FocusHero = () => {
     navigate(`/mood/${detectedMood.slug}`);
   };
 
+  const fallbackMood = allMoods.find((mood) => mood.slug === "standard") || allMoods[0];
   const backgroundImage =
-    selectedMood?.background || "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1080&auto=format";
+    selectedMood?.background ||
+    fallbackMood?.background ||
+    "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1080&auto=format";
 
+  useEffect(() => {
+    if (!selectedMood && allMoods.length > 0) {
+      const defaultMood = allMoods.find((m) => m.slug === "standard") || allMoods[0];
+      dispatch({ type: SET_MOOD, payload: defaultMood });
+    }
+  }, [selectedMood, allMoods, dispatch]);
   return (
     <div
       className="hero-section"
@@ -107,7 +116,7 @@ const FocusHero = () => {
             style={{
               backgroundColor: "rgba(0, 0, 0, 0.5)",
               backdropFilter: "blur(6px)",
-              zIndex: 1055, // sopra tutto
+              zIndex: 999,
             }}
           >
             <Spinner
