@@ -42,7 +42,6 @@ const FocusHeroModal = ({ show, onClose, onConfirm, detectedMood, t }) => {
           backdropFilter: "blur(10px)",
         }}
       >
-        {/* HEADER */}
         <div className="text-center mb-3">
           <div className="mb-3">
             <EmojiSmile size={64} className="text-primary" />
@@ -77,7 +76,6 @@ const FocusHeroModal = ({ show, onClose, onConfirm, detectedMood, t }) => {
           </div>
         )}
 
-        {/* FOOTER */}
         <div className="text-center mt-4">
           <Button className="focusfield-btn" onClick={onConfirm}>
             {t("hero.modal_button")}

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
 
-const FocusMentalCoach = ({ coach, moodName }) => {
-  const { t } = useTranslation(moodName, { keyPrefix: "coach" });
+const FocusMentalCoach = ({ coach }) => {
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -34,19 +32,21 @@ const FocusMentalCoach = ({ coach, moodName }) => {
       setSelectedOption(null);
       setShowFeedback(false);
     } else {
-      alert(t("finished", { score, total: steps.length }));
+      alert(coach?.finished?.replace("{{score}}", score)?.replace("{{total}}", steps.length));
     }
   };
 
-  if (!steps.length) return <p>{t("noSteps")}</p>;
+  if (!steps.length) return <p>{coach?.noSteps}</p>;
   if (!currentStep) return null;
 
   return (
     <div className="mental-coach-container">
       <div className="p-4">
-        <h4 className="mb-3">{t("obstacle", { current: currentStepIndex + 1, total: steps.length })}</h4>
+        <h4 className="mb-3">
+          {coach?.obstacle?.replace("{{current}}", currentStepIndex + 1)?.replace("{{total}}", steps.length)}
+        </h4>
         <p>
-          <strong>{t("situation")}:</strong> {currentStep.situation}
+          <strong>{coach?.situation}:</strong> {currentStep.situation}
         </p>
         <div className="d-flex flex-column gap-2">
           {currentStep.answers?.map((answer, index) => (
@@ -72,11 +72,11 @@ const FocusMentalCoach = ({ coach, moodName }) => {
         {showFeedback && (
           <div className="mt-4 text-center">
             <p className="mb-2">
-              <strong>{t("feedback")}:</strong>
+              <strong>{coach?.feedback}:</strong>
             </p>
-            <p>{selectedOption?.feedback || t("noFeedback")}</p>
+            <p>{selectedOption?.feedback}</p>
             <Button variant="primary" onClick={handleNext} className="focusfield-btn mt-3">
-              {t("next")}
+              {coach?.next}
             </Button>
           </div>
         )}

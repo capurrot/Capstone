@@ -4,9 +4,8 @@ import { Container, Image, ListGroup } from "react-bootstrap";
 import { MdShuffle, MdRepeat, MdRepeatOne } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_VOLUME, SET_PLAYER_PREFERENCE } from "../../../redux/actions";
-import { useTranslation } from "react-i18next";
 
-const FocusPlayer = ({ playlistUrl, moodName }) => {
+const FocusPlayer = ({ playlistUrl, audius }) => {
   const [songIndex, setSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [tracks, setTracks] = useState([]);
@@ -22,7 +21,6 @@ const FocusPlayer = ({ playlistUrl, moodName }) => {
 
   const audioRef = useRef(null);
   const dispatch = useDispatch();
-  const { t } = useTranslation(moodName);
 
   // Redux Persist Preferences
   const { isMuted, isListVisible, isControlsVisible, repeatMode, isShuffled } = useSelector(
@@ -332,7 +330,7 @@ const FocusPlayer = ({ playlistUrl, moodName }) => {
               rel="noopener noreferrer"
               style={{ color: "var(--mood-color-11)" }}
             >
-              {t("audius")}
+              {audius}
             </a>
           </span>
           <button onClick={toggleList} className="list-toggle-btn">

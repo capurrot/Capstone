@@ -64,7 +64,7 @@ const Login = () => {
       <Container fluid className="flex-grow-1 d-flex flex-column login-container">
         <Row className="flex-grow-1">
           <Col className="d-flex flex-column justify-content-center align-items-center">
-            <div className="mood-section">
+            <div className="mood-section my-3">
               <h2 className="my-2 mood-text mx-4 ps-3 my-3">
                 <i className="fas fa-sign-in-alt me-2"></i>Login
               </h2>

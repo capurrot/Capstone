@@ -3,20 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { SET_VOLUME } from "../../../redux/actions";
 import { FaVolumeMute, FaVolumeUp, FaExpand, FaStop, FaCompress } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
-import { useTranslation } from "react-i18next";
 import { Alert } from "react-bootstrap";
 
-const FocusSoundScape = ({
-  backgroundVideo,
-  audioSrc,
-  soundScape = [],
-  suggestion,
-  duration = 300,
-  moodName,
-  onIOSFullscreenChange,
-}) => {
-  const { t } = useTranslation(moodName, { keyPrefix: "environment" });
-
+const FocusSoundScape = ({ config, onIOSFullscreenChange }) => {
   const dispatch = useDispatch();
   const audioRef = useRef(null);
   const videoRef = useRef(null);
@@ -24,7 +13,7 @@ const FocusSoundScape = ({
 
   const [started, setStarted] = useState(false);
   const [timer, setTimer] = useState(0);
-  const [countdown, setCountdown] = useState(duration);
+  const [countdown, setCountdown] = useState(config?.duration);
   const [isMusicMuted, setIsMusicMuted] = useState(false);
   const [isWarning, setIsWarning] = useState(false);
   const previousVolumeRef = useRef(null);
@@ -39,7 +28,7 @@ const FocusSoundScape = ({
 
     setStarted(true);
     setTimer(0);
-    setCountdown(duration);
+    setCountdown(config?.duration);
   };
 
   const handleStop = () => {
@@ -107,7 +96,7 @@ const FocusSoundScape = ({
       interval = setInterval(() => {
         setTimer((prev) => {
           const updated = prev + 1;
-          if (updated <= duration) {
+          if (updated <= config?.duration) {
             setCountdown((prevCountdown) => Math.max(prevCountdown - 1, 0));
           } else {
             setIsWarning(true);
@@ -118,7 +107,7 @@ const FocusSoundScape = ({
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [started, duration]);
+  }, [started, config?.duration]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -131,7 +120,7 @@ const FocusSoundScape = ({
       <div ref={containerRef} className="focus-environment position-relative rounded overflow-hidden">
         <video
           ref={videoRef}
-          src={backgroundVideo}
+          src={config?.backgroundVideo}
           loop
           muted
           playsInline
@@ -140,7 +129,7 @@ const FocusSoundScape = ({
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
 
-        {audioSrc && <audio ref={audioRef} src={audioSrc} loop preload="auto" className="d-none" />}
+        {config?.audioSrc && <audio ref={audioRef} src={config?.audioSrc} loop preload="auto" className="d-none" />}
 
         <div
           className={`position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex flex-column justify-content-center align-items-center text-center p-4 z-3 overlay-container ${
@@ -150,23 +139,23 @@ const FocusSoundScape = ({
         >
           {!started && (
             <>
-              <h4 className="mb-3">{t("title")}</h4>
+              <h4 className="mb-3">{config?.title}</h4>
               <ul className="list-unstyled mb-3">
-                {soundScape.map((sound, idx) => (
+                {config?.soundscape.map((sound, idx) => (
                   <li key={idx}>
                     <i className="fas fa-music me-1 text-secondary"></i> {sound}
                   </li>
                 ))}
               </ul>
               <button className="focusfield-btn" onClick={handleStart}>
-                {t("start")}
+                {config?.start}
               </button>
-              {suggestion && (
+              {config?.suggestion && (
                 <Alert
                   variant="info"
                   className="rounded small mb-3 info-text fs-5 position-absolute bottom-0 start-0 end-0 m-3 d-none d-md-flex align-items-center"
                 >
-                  <i className="fas fa-info-circle me-1"></i> {t("suggestion")}
+                  <i className="fas fa-info-circle me-1"></i> {config?.suggestion}
                 </Alert>
               )}
             </>
@@ -177,14 +166,15 @@ const FocusSoundScape = ({
           <div className="position-absolute top-0 end-0 m-3 text-end z-2">
             <div className="bg-dark bg-opacity-50 text-white px-3 py-2 rounded-3 small d-flex flex-column align-items-center">
               <div className="text-light text-end small">
-                {t("suggestedDuration", { min: Math.floor(duration / 60) })}
+                {config?.suggestedDuration?.replace("{{min}}", Math.floor(config?.duration / 60))}
               </div>
+
               <div className="d-flex gap-2 mt-2">
                 <button
                   className="btn btn-sm btn-outline-light"
                   onClick={toggleMusicMute}
                   data-tooltip-id="tooltip"
-                  data-tooltip-content={isMusicMuted ? t("unmute") : t("mute")}
+                  data-tooltip-content={isMusicMuted ? config?.unmute : config?.mute}
                 >
                   {isMusicMuted ? <FaVolumeMute /> : <FaVolumeUp />}
                 </button>
@@ -192,7 +182,7 @@ const FocusSoundScape = ({
                   className="btn btn-sm btn-outline-light"
                   onClick={toggleFullscreen}
                   data-tooltip-id="tooltip"
-                  data-tooltip-content={document.fullscreenElement ? t("exitFullscreen") : t("fullscreen")}
+                  data-tooltip-content={document.fullscreenElement ? config?.exitFullscreen : config?.fullscreen}
                 >
                   {document.fullscreenElement ? <FaCompress /> : <FaExpand />}
                 </button>
@@ -200,7 +190,7 @@ const FocusSoundScape = ({
                   className="btn btn-sm btn-outline-danger"
                   onClick={handleStop}
                   data-tooltip-id="tooltip"
-                  data-tooltip-content={t("stop")}
+                  data-tooltip-content={config?.stop}
                 >
                   <FaStop />
                 </button>
@@ -212,7 +202,7 @@ const FocusSoundScape = ({
                 <div
                   className="progress-bar bg-success"
                   role="progressbar"
-                  style={{ width: `${(timer / duration) * 100}%` }}
+                  style={{ width: `${(timer / config?.duration) * 100}%` }}
                 ></div>
               </div>
             </div>

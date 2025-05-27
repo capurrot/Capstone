@@ -1,26 +1,23 @@
 import { Form } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
 
-const FocusGoals = ({ goals, moodName }) => {
-  const { t } = useTranslation(moodName, { keyPrefix: "goals" });
-
+const FocusGoals = ({ goals }) => {
   return (
     <div className="focus-scopes-container d-flex flex-column pt-3 px-3">
-      <p>{goals?.prompt || t("prompt")}</p>
+      <p>{goals?.prompt}</p>
 
       {[1, 2, 3].map((index) => (
         <div key={index} className="d-flex flex-column flex-md-row gap-3 align-items-start align-items-md-center my-2">
-          <Form.Control type="text" placeholder={t("goal", { index })} />
+          <Form.Control type="text" placeholder={goals?.goalLabel?.replace("{{index}}", index)} className="bg-input" />
           <span className="mx-auto">
             <i className="fas fa-arrow-right d-none d-md-flex"></i>
             <i className="fas fa-arrow-down d-flex d-md-none"></i>
           </span>
-          <Form.Control type="text" placeholder={t("how")} />
+          <Form.Control type="text" placeholder={goals?.how} className="bg-input" />
         </div>
       ))}
 
       <button className="focusfield-btn my-3 mx-auto" style={{ width: "15rem" }}>
-        {t("save")}
+        {goals?.save}
       </button>
     </div>
   );
