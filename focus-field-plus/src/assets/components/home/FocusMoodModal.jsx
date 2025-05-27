@@ -63,7 +63,7 @@ const FocusMoodModal = ({ show, onHide }) => {
                 color: mood.colors?.[1] || "#fff",
               }}
             >
-              {t(`mood.${mood.slug}`)}
+              {t(`mood.${mood.slug}`)} <i className={`bi ${mood.icon}`}></i>
             </Button>
           ))}
         </Container>

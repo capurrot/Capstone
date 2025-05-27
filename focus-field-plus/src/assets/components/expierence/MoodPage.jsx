@@ -113,7 +113,7 @@ function MoodPage({ moodName, isModal }) {
     return value;
   };
 
-  if (!hasStarted && !isModal && !userId === 1) {
+  if (!hasStarted && !isModal) {
     return (
       <Container
         fluid
