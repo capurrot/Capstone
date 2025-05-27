@@ -14,11 +14,11 @@
     "peaceful": "Sereno",
     "curious": "Curioso",
     "determined": "Determinato",
-    "seeking-inspiration": "In cerca di ispirazione",
+    "seeking-inspiration": "Ispirato",
     "reflective": "Riflessivo",
-    "at-peace": "In pace",
+    "at-peace": "Pacifico",
     "romantic": "Romantico",
-    "celebratory": "Festoso",
+    "celebratory": "Celebrativo",
     "active": "Sportivo",
     "playful": "Giocoso",
     "calm": "Calmo"
@@ -53,7 +53,8 @@
     "not_found": "Nessun mood riconosciuto. Riprova con un'altra descrizione.",
     "modal_title": "Mood suggerito",
     "modal_text": "In base alla tua ricerca, il mood più adatto a te è",
-    "modal_button": "Vai al mood"
+    "modal_button": "Vai al mood",
+    "loading": "Ricerca in corso..."
   },
   "navbar": {
     "home": "Home",

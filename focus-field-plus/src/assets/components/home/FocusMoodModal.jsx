@@ -6,6 +6,7 @@ import { Link } from "react-router";
 const FocusMoodModal = ({ show, onHide }) => {
   const { t } = useTranslation();
   const moods = useSelector((state) => state.mood.allMoods);
+  const shuffledMoods = [...moods].sort(() => Math.random() - 0.5);
 
   return (
     <Modal
