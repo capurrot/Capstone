@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -5,7 +6,8 @@ import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { useState } from "react";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const FocusCard = ({ mood }) => {
   const { t } = useTranslation();
@@ -42,7 +44,7 @@ const FocusCard = ({ mood }) => {
               }}
             >
               <Card.Title
-                className="pb-2 d-flex flex-column align-items-center  gap-2 card-body-title"
+                className="pb-2 d-flex flex-column align-items-center gap-2 card-body-title"
                 style={{ fontFamily: "Fjalla One", color: isHovered && mood.colors?.[1] }}
               >
                 <span className="display-3">{t(`mood.${mood.slug}`)}</span>
@@ -73,14 +75,32 @@ const FocusCard = ({ mood }) => {
 
 const FocusCards = () => {
   const { t } = useTranslation();
-  const moods = useSelector((state) => state.mood.allMoods);
-  const moodsToDisplay = Array.isArray(moods) ? moods.slice(0, 4) : [];
+  const allMoods = useSelector((state) => state.mood.allMoods);
+  const [popularMoods, setPopularMoods] = useState([]);
+
+  useEffect(() => {
+    const fetchPopularMoods = async () => {
+      try {
+        const res = await fetch(`${apiUrl}api/focus-field/log/top-moods`);
+        if (!res.ok) throw new Error("Errore nel fetch dei top moods");
+        const data = await res.json();
+
+        const matched = data.map((top) => allMoods.find((m) => m.slug === top.moodSlug)).filter(Boolean);
+
+        setPopularMoods(matched);
+      } catch (err) {
+        console.error("Errore nel caricamento dei top moods:", err);
+      }
+    };
+
+    fetchPopularMoods();
+  }, [allMoods]);
 
   return (
     <Container fluid className="mt-5 px-md-5 pb-5">
       <h2 className="text-center mb-4 fw-bold fs-1">{t("choose_mood")}</h2>
       <Row>
-        {moodsToDisplay.map((mood) => (
+        {popularMoods.map((mood) => (
           <FocusCard key={mood.id} mood={mood} />
         ))}
       </Row>
