@@ -684,6 +684,17 @@ body {
   color: var(--mood-color-2);
 }
 
+.focusfield-btn-modal {
+  transition: transform 0.2s ease;
+  border-radius: 100px;
+  border: none;
+  padding-block: 0.7rem;
+}
+
+.focusfield-btn-modal:hover {
+  transform: scale(2);
+}
+
 .breathing-instructions {
   list-style: none;
   padding: 0;
@@ -933,5 +944,32 @@ body {
   }
   .login-form-container {
     width: 50rem;
+  }
+}
+
+.mood-preview-container {
+  height: 180px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mood-preview-image {
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-image {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
   }
 }
