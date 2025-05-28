@@ -13,6 +13,9 @@ import {
   SET_DASHBOARD_MOOD_ERROR,
   setDashboardMoodField,
 } from "../../../../../redux/actions";
+import FocusNavBarPreview from "./preview/FocusNavBarPreview";
+import FocusHeroPreview from "./preview/FocusHeroPreview";
+import FocusCardsPreview from "./preview/FocusCardsPreview";
 
 const SingleMood = ({ mood }) => {
   const dispatch = useDispatch();
@@ -41,7 +44,12 @@ const SingleMood = ({ mood }) => {
   const [heroImage, setHeroImage] = useState("");
   const [iconMood, setIconMood] = useState("");
 
+  const [phaseTemplates, setPhaseTemplates] = useState([]);
+  const [breathingModes, setBreathingModes] = useState([]);
+
   const token = useSelector((state) => state.auth.token);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     loadTranslation("it");
@@ -50,15 +58,50 @@ const SingleMood = ({ mood }) => {
 
   const loadTranslation = async (lang) => {
     dispatch({ type: SAVE_MOOD_RESET });
+    dispatch({ type: SET_DASHBOARD_MOOD_ERROR, payload: null });
     setSelectedLang(lang);
+
     try {
+      // Carica traduzione mood
       await dispatch(fetchMood(mood?.slug, lang));
       setTranslation(data);
       setCardImage(mood?.image || "");
       setHeroImage(mood?.background || "");
       setIconMood(mood?.icon || "");
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      const [resPhases, resModes] = await Promise.all([
+        fetch(`${apiUrl}api/focus-field/breathing-phases?lang=${lang}`, { headers }),
+        fetch(`${apiUrl}api/focus-field/breathing-modes?lang=${lang}`, { headers }),
+      ]);
+
+      if (!resPhases.ok) {
+        const errText = await resPhases.text(); // <-- stampa l'errore reale del backend
+        console.error("Errore fasi:", resPhases.status, errText);
+        throw new Error("Errore nel caricamento delle fasi");
+      }
+
+      if (!resModes.ok) {
+        const errText = await resModes.text(); // <-- stampa l'errore reale del backend
+        console.error("Errore modes:", resModes.status, errText);
+        throw new Error("Errore nel caricamento dei modes");
+      }
+
+      const dataPhases = await resPhases.json();
+      const dataModes = await resModes.json();
+
+      setPhaseTemplates(dataPhases);
+      setBreathingModes(dataModes);
     } catch (err) {
-      dispatch({ type: SET_DASHBOARD_MOOD_ERROR, payload: "Traduzione non disponibile. " + err.message });
+      console.error(err);
+      dispatch({
+        type: SET_DASHBOARD_MOOD_ERROR,
+        payload: "Traduzione o dati non disponibili. " + err.message,
+      });
     }
   };
 
@@ -216,9 +259,6 @@ const SingleMood = ({ mood }) => {
       moodListId: mood.id,
     };
 
-    console.log("moodListNew", moodListNew);
-    console.log("moodRequest", moodRequest);
-
     dispatch(saveMoodAndTranslation(mood.id, moodListNew, moodRequest, token, selectedLang)).then(() => {
       dispatch({ type: SAVE_MOOD_SUCCESS });
     });
@@ -362,7 +402,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Testo "Loading..."</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data?.moodModal.loading}
+                    value={data?.moodModal?.loading}
                     onChange={(e) => dispatch(setDashboardMoodField("moodModal.loading", e.target.value))}
                   />
                 </Form.Group>
@@ -372,7 +412,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Testo "Non trovato"</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data?.moodModal.notFound}
+                    value={data?.moodModal?.notFound}
                     onChange={(e) => dispatch(setDashboardMoodField("moodModal.notFound", e.target.value))}
                   />
                 </Form.Group>
@@ -385,7 +425,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Titolo finestra informativa</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data?.moodModal.title.calm}
+                    value={data?.moodModal?.title?.calm}
                     onChange={(e) => dispatch(setDashboardMoodField("moodModal.title.calm", e.target.value))}
                   />
                 </Form.Group>
@@ -395,7 +435,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Testo predefinito pulsante CTA</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data?.moodModal.ctaModal.defaultText}
+                    value={data?.moodModal?.ctaModal?.defaultText}
                     onChange={(e) => dispatch(setDashboardMoodField("moodModal.ctaModal.defaultText", e.target.value))}
                   />
                 </Form.Group>
@@ -414,7 +454,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Descrizione (specifica per {mood?.slug})</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data?.moodModal.desc.calm}
+                    value={data?.moodModal?.desc?.calm}
                     onChange={(e) => dispatch(setDashboardMoodField("moodModal.desc.calm", e.target.value))}
                   />
                 </Form.Group>
@@ -422,7 +462,7 @@ const SingleMood = ({ mood }) => {
             </Row>
 
             <h6 className="fw-bold mt-4 mb-3">Etichette sezioni</h6>
-            {Object.entries(data?.moodModal.sections).map(
+            {Object.entries(data?.moodModal?.sections).map(
               ([key, value]) =>
                 key !== "id" && (
                   <Form.Group key={key} className="mb-2">
@@ -441,16 +481,80 @@ const SingleMood = ({ mood }) => {
             <h5 className="mb-4 fs-2">
               <i className="bi bi-palette me-2"></i> Paletta dei colori
             </h5>
-            {colors?.map((color, i) => (
-              <Row key={i} className="align-items-center mb-2">
-                <Col xs={3} md={2}>
-                  <Form.Control type="color" value={color} onChange={(e) => handleColorChange(i, e.target.value)} />
-                </Col>
-                <Col>
-                  <Form.Control type="text" value={color} onChange={(e) => handleColorChange(i, e.target.value)} />
-                </Col>
-              </Row>
-            ))}
+            <Row className="mb-4">
+              <Col md={2}>
+                {colors?.map((color, i) => (
+                  <Row key={i} className="mb-2 text-center align-items-center">
+                    <Col xs={12} className="d-flex align-items-center justify-content-between">
+                      <Form.Label className="fw-semibold mb-0" style={{ minWidth: "3rem" }}>
+                        #{i + 1}
+                      </Form.Label>
+                      <div className="d-flex align-items-center gap-2 w-100">
+                        <Form.Control
+                          type="color"
+                          value={color}
+                          onChange={(e) => handleColorChange(i, e.target.value)}
+                          title={`Seleziona colore ${i + 1}`}
+                        />
+                        <Form.Control
+                          type="text"
+                          value={color}
+                          onChange={(e) => handleColorChange(i, e.target.value)}
+                          placeholder="#RRGGBB"
+                          className="text-center"
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                ))}
+              </Col>
+              <Col md={5}>
+                <div className="border rounded-3 shadow-sm p-2 bg-white">
+                  <div className="d-flex align-items-center mb-1 ms-0">
+                    <Form.Control
+                      type="color"
+                      value={colors[0]}
+                      onChange={(e) => handleColorChange(0, e.target.value)}
+                      style={{ pointerEvents: "none", padding: "0" }}
+                    />
+                    <Form.Label className="fw-bold mb-0 ms-2">#1</Form.Label>
+                  </div>
+
+                  <div
+                    className="p-0 border rounded-3 shadow-sm"
+                    style={{
+                      background: `linear-gradient(
+        135deg,
+        ${colors[0]} 0%,      
+        ${colors[0]} 30%,     
+        ${colors[2]} 70%,    
+        ${colors[2]} 100%     
+      )`,
+                      transform: "scale(1)",
+                      transformOrigin: "top center",
+                      width: "100%",
+                      height: "36rem",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <FocusNavBarPreview mood={mood} colors={colors} />
+                    <FocusHeroPreview mood={mood} colors={colors} />
+                    <FocusCardsPreview colors={colors} />
+                  </div>
+
+                  <div className="d-flex align-items-center mt-1">
+                    <Form.Label className="fw-bold mb-0 ms-auto">#3</Form.Label>
+                    <Form.Control
+                      type="color"
+                      value={colors[2]}
+                      onChange={(e) => handleColorChange(2, e.target.value)}
+                      style={{ pointerEvents: "none", padding: "0" }}
+                      className="ms-2"
+                    />
+                  </div>
+                </div>
+              </Col>
+            </Row>
 
             <hr />
             <h5 className="mb-4 fs-2">
@@ -493,7 +597,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Titolo Playlist</Form.Label>
               <Form.Control
                 type="text"
-                value={data.music.title}
+                value={data?.music?.title}
                 onChange={(e) => dispatch(setDashboardMoodField("music.title", e.target.value))}
               />
             </Form.Group>
@@ -502,7 +606,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">URL Playlist</Form.Label>
               <Form.Control
                 type="text"
-                value={data.music.playlistUrl}
+                value={data?.music?.playlistUrl}
                 onChange={(e) => dispatch(setDashboardMoodField("music.playlistUrl", e.target.value))}
               />
             </Form.Group>
@@ -511,7 +615,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Tag musicali</Form.Label>
               <Form.Control
                 type="text"
-                value={data.music.tags}
+                value={data?.music?.tags}
                 onChange={(e) =>
                   dispatch(
                     setDashboardMoodField(
@@ -527,7 +631,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Scopo della musica</Form.Label>
               <Form.Control
                 type="text"
-                value={data.music.scope}
+                value={data?.music?.scope}
                 onChange={(e) => dispatch(setDashboardMoodField("music.scope", e.target.value))}
               />
             </Form.Group>
@@ -536,7 +640,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Etichetta Audius</Form.Label>
               <Form.Control
                 type="text"
-                value={data.music.audius}
+                value={data?.music?.audius}
                 onChange={(e) => dispatch(setDashboardMoodField("music.audius", e.target.value))}
               />
             </Form.Group>
@@ -553,7 +657,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="enabledBreathing"
               label="Abilitato"
-              checked={data.breathing.enabled}
+              checked={data?.breathing?.enabled}
               onChange={(e) => dispatch(setDashboardMoodField("breathing.enabled", e.target.checked))}
               className="mb-2"
             />
@@ -563,7 +667,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label className="fw-bold">Tecnica</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.breathing.technique}
+                    value={data?.breathing?.technique}
                     onChange={(e) => dispatch(setDashboardMoodField("breathing.technique", e.target.value))}
                   />
                 </Form.Group>
@@ -573,7 +677,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label className="fw-bold">Durata (secondi)</Form.Label>
                   <Form.Control
                     type="number"
-                    value={data.breathing.totalDuration}
+                    value={data?.breathing?.totalDuration}
                     onChange={(e) => dispatch(setDashboardMoodField("breathing.totalDuration", e.target.value))}
                   />
                 </Form.Group>
@@ -586,7 +690,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label className="fw-bold">Round</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.breathing.rounds}
+                    value={data?.breathing?.rounds}
                     onChange={(e) => dispatch(setDashboardMoodField("breathing.rounds", e.target.value))}
                   />
                 </Form.Group>
@@ -596,7 +700,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label className="fw-bold">Scopo</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.breathing.scope}
+                    value={data?.breathing?.scope}
                     onChange={(e) => dispatch(setDashboardMoodField("breathing.scope", e.target.value))}
                   />
                 </Form.Group>
@@ -609,7 +713,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label className="fw-bold">Etichetta Avvio</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.breathing.start}
+                    value={data?.breathing?.start}
                     onChange={(e) => dispatch(setDashboardMoodField("breathing.start", e.target.value))}
                   />
                 </Form.Group>
@@ -619,7 +723,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label className="fw-bold">Etichetta Ferma</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.breathing.stop}
+                    value={data?.breathing?.stop}
                     onChange={(e) => dispatch(setDashboardMoodField("breathing.stop", e.target.value))}
                   />
                 </Form.Group>
@@ -632,7 +736,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label className="fw-bold">Etichetta Durata</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.breathing.totalDuration}
+                    value={data?.breathing?.totalDuration}
                     onChange={(e) => dispatch(setDashboardMoodField("breathing.totalDuration", e.target.value))}
                   />
                 </Form.Group>
@@ -642,7 +746,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label className="fw-bold">Etichetta "Tecnica"</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.breathing.techniqueLabel}
+                    value={data?.breathing?.techniqueLabel}
                     onChange={(e) => dispatch(setDashboardMoodField("breathing.techniqueLabel", e.target.value))}
                   />
                 </Form.Group>
@@ -676,9 +780,9 @@ const SingleMood = ({ mood }) => {
                                   onChange={(e) => {
                                     const selectedPhase = e.target.value;
                                     const selectedLabel =
-                                      instructions.find((p) => p.phase === selectedPhase)?.phaseLabel || "";
+                                      phaseTemplates.find((p) => p.phase === selectedPhase)?.phaseLabel || "";
 
-                                    const updated = [...instructions];
+                                    const updated = cloneDeep(instructions);
                                     updated[idx].phase = selectedPhase;
                                     updated[idx].phaseLabel = selectedLabel;
 
@@ -686,19 +790,11 @@ const SingleMood = ({ mood }) => {
                                   }}
                                 >
                                   <option value="">Seleziona una fase</option>
-                                  {instructions
-                                    .filter((p) => p.phase && p.phaseLabel)
-                                    .reduce((unique, current) => {
-                                      if (!unique.find((item) => item.phase === current.phase)) {
-                                        unique.push({ phase: current.phase, phaseLabel: current.phaseLabel });
-                                      }
-                                      return unique;
-                                    }, [])
-                                    .map(({ phase, phaseLabel }) => (
-                                      <option key={phase} value={phase}>
-                                        {phaseLabel}
-                                      </option>
-                                    ))}
+                                  {phaseTemplates.map((template, i) => (
+                                    <option key={i} value={template.phase}>
+                                      {template.phaseLabel}
+                                    </option>
+                                  ))}
                                 </Form.Select>
                               </Col>
                               <Col md={2}>
@@ -716,16 +812,15 @@ const SingleMood = ({ mood }) => {
                                 <Form.Select
                                   value={phase.mode}
                                   onChange={(e) => {
-                                    const updated = [...instructions];
+                                    const updated = cloneDeep(instructions);
                                     updated[idx].mode = e.target.value;
                                     dispatch(setDashboardMoodField("breathing.phases", updated));
                                   }}
                                 >
-                                  <option value="seleziona">Seleziona una modalità</option>
-                                  <option value=""></option>
-                                  {[...new Set(instructions.map((p) => p.mode).filter(Boolean))].map((mode, i) => (
-                                    <option key={i} value={mode}>
-                                      {mode}
+                                  <option value="">Seleziona una modalità</option>
+                                  {breathingModes.map((mode, i) => (
+                                    <option key={i} value={mode.name}>
+                                      {mode.name}
                                     </option>
                                   ))}
                                 </Form.Select>
@@ -736,7 +831,7 @@ const SingleMood = ({ mood }) => {
                                   className="fs-3 rounded-circle d-inline-flex align-items-center justify-content-center"
                                   style={{ width: 25, height: 25 }}
                                   onClick={() => {
-                                    const updated = [...instructions];
+                                    const updated = cloneDeep(instructions);
                                     updated.splice(idx, 1);
                                     dispatch(setDashboardMoodField("breathing.phases", updated));
                                   }}
@@ -783,7 +878,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="enabledRelaxBody"
               label="Abilitato"
-              checked={data.relaxBody.enabled}
+              checked={data?.relaxBody?.enabled}
               onChange={(e) => dispatch(setDashboardMoodField("relaxBody.enabled", e.target.checked))}
               className="mb-2"
             />
@@ -792,7 +887,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Titolo</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.title}
+                value={data?.relaxBody?.title}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.title", e.target.value))}
               />
             </Form.Group>
@@ -802,7 +897,7 @@ const SingleMood = ({ mood }) => {
               <Form.Control
                 as="textarea"
                 rows={2}
-                value={data.relaxBody.description}
+                value={data?.relaxBody?.description}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.description", e.target.value))}
               />
             </Form.Group>
@@ -810,7 +905,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Scorri verso il basso</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.scrollDown}
+                value={data?.relaxBody?.scrollDown}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.scrollDown", e.target.value))}
               />
             </Form.Group>
@@ -818,7 +913,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Torna su</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.scrollUp}
+                value={data?.relaxBody?.scrollUp}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.scrollUp", e.target.value))}
               />
             </Form.Group>
@@ -826,7 +921,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Messaggio completato</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.completed}
+                value={data?.relaxBody?.completed}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.completed", e.target.value))}
               />
             </Form.Group>
@@ -834,7 +929,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Ripeti tra</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.repeatIn}
+                value={data?.relaxBody?.repeatIn}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.repeatIn", e.target.value))}
               />
             </Form.Group>
@@ -842,7 +937,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Testo "Durata:"</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.duration}
+                value={data?.relaxBody?.duration}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.duration", e.target.value))}
               />
             </Form.Group>
@@ -850,7 +945,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Etichetta "Start"</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.start}
+                value={data?.relaxBody?.start}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.start", e.target.value))}
               />
             </Form.Group>
@@ -858,7 +953,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Etichetta "Stop"</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.stop}
+                value={data?.relaxBody?.stop}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.stop", e.target.value))}
               />
             </Form.Group>
@@ -866,7 +961,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Etichetta "Pause"</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.pause}
+                value={data?.relaxBody?.pause}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.pause", e.target.value))}
               />
             </Form.Group>
@@ -874,7 +969,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Testo periodo di pausa</Form.Label>
               <Form.Control
                 type="text"
-                value={data.relaxBody.pauseText}
+                value={data?.relaxBody?.pauseText}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.pauseText", e.target.value))}
               />
             </Form.Group>
@@ -883,7 +978,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label className="fw-bold">Durata pausa tra esercizi (secondi)</Form.Label>
               <Form.Control
                 type="number"
-                value={data.relaxBody.pauseDuration}
+                value={data?.relaxBody?.pauseDuration}
                 onChange={(e) => dispatch(setDashboardMoodField("relaxBody.pauseDuration", e.target.value))}
               />
             </Form.Group>
@@ -996,7 +1091,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="enabledJournalPre"
               label="Abilitato"
-              checked={data.journalPre.enabled}
+              checked={data?.journalPre?.enabled}
               onChange={(e) => dispatch(setDashboardMoodField("journalPre.enabled", e.target.checked))}
               className="mb-2"
             />
@@ -1006,7 +1101,7 @@ const SingleMood = ({ mood }) => {
               <Form.Control
                 as="textarea"
                 rows={2}
-                value={data.journalPre.prompt}
+                value={data?.journalPre?.prompt}
                 onChange={(e) => dispatch(setDashboardMoodField("journalPre.prompt", e.target.value))}
               />
             </Form.Group>
@@ -1015,7 +1110,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Placeholder</Form.Label>
               <Form.Control
                 type="text"
-                value={data.journalPre.placeholder}
+                value={data?.journalPre?.placeholder}
                 onChange={(e) => dispatch(setDashboardMoodField("journalPre.placeholder", e.target.value))}
               />
             </Form.Group>
@@ -1024,7 +1119,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Etichetta Salvataggio</Form.Label>
               <Form.Control
                 type="text"
-                value={data.journalPre.save}
+                value={data?.journalPre?.save}
                 onChange={(e) => dispatch(setDashboardMoodField("journalPre.save", e.target.value))}
               />
             </Form.Group>
@@ -1033,7 +1128,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="optionalJournalPre"
               label="Facoltativo"
-              checked={data.journalPre.optional}
+              checked={data?.journalPre?.optional}
               onChange={(e) => dispatch(setDashboardMoodField("journalPre.optional", e.target.checked))}
             />
           </>
@@ -1050,7 +1145,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="enabledJournalGoals"
               label="Abilitato"
-              checked={data.journalGoals.enabled}
+              checked={data?.journalGoals?.enabled}
               onChange={(e) => dispatch(setDashboardMoodField("journalGoals.enabled", e.target.checked))}
               className="mb-2"
             />
@@ -1060,7 +1155,7 @@ const SingleMood = ({ mood }) => {
               <Form.Control
                 as="textarea"
                 rows={2}
-                value={data.journalGoals.prompt}
+                value={data?.journalGoals?.prompt}
                 onChange={(e) => dispatch(setDashboardMoodField("journalGoals.prompt", e.target.value))}
               />
             </Form.Group>
@@ -1069,7 +1164,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Placeholder</Form.Label>
               <Form.Control
                 type="text"
-                value={data.journalGoals.placeholder}
+                value={data?.journalGoals?.placeholder}
                 onChange={(e) => dispatch(setDashboardMoodField("journalGoals.placeholder", e.target.value))}
               />
             </Form.Group>
@@ -1078,7 +1173,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Etichetta Salvataggio</Form.Label>
               <Form.Control
                 type="text"
-                value={data.journalGoals.save}
+                value={data?.journalGoals?.save}
                 onChange={(e) => dispatch(setDashboardMoodField("journalGoals.save", e.target.value))}
               />
             </Form.Group>
@@ -1087,7 +1182,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Etichetta Obiettivo (es. "Obiettivo n. {"{{index}}"}")</Form.Label>
               <Form.Control
                 type="text"
-                value={data.journalGoals.goalLabel}
+                value={data?.journalGoals?.goalLabel}
                 onChange={(e) => dispatch(setDashboardMoodField("journalGoals.goalLabel", e.target.value))}
               />
             </Form.Group>
@@ -1096,14 +1191,14 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="optionalJournalGoals"
               label="Facoltativo"
-              checked={data.journalGoals.optional}
+              checked={data?.journalGoals?.optional}
               onChange={(e) => dispatch(setDashboardMoodField("journalGoals.optional", e.target.checked))}
             />
 
-            {data.journalGoals.goals.map((goal, index) => (
+            {data?.journalGoals?.goals.map((goal, index) => (
               <div key={index} className="border rounded p-3 mb-3">
                 <Form.Group className="mb-2">
-                  <Form.Label>{data.journalGoals.goalLabel.replace("{{index}}", index + 1)}</Form.Label>
+                  <Form.Label>{data?.journalGoals?.goalLabel.replace("{{index}}", index + 1)}</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Obiettivo"
@@ -1136,11 +1231,11 @@ const SingleMood = ({ mood }) => {
               >
                 + Aggiungi Obiettivo
               </Button>
-              {data.journalGoals.goals.length > 0 && (
+              {data?.journalGoals?.goals.length > 0 && (
                 <Button
                   variant="outline-danger"
                   onClick={() =>
-                    dispatch(setDashboardMoodField(`journalGoals.goals`, data.journalGoals.goals.slice(0, -1)))
+                    dispatch(setDashboardMoodField(`journalGoals.goals`, data?.journalGoals?.goals.slice(0, -1)))
                   }
                 >
                   - Rimuovi ultimo
@@ -1161,7 +1256,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="enabledJournalPost"
               label="Abilitato"
-              checked={data.journalPost.enabled}
+              checked={data?.journalPost?.enabled}
               onChange={(e) => dispatch(setDashboardMoodField("journalPost.enabled", e.target.checked))}
               className="mb-2"
             />
@@ -1171,7 +1266,7 @@ const SingleMood = ({ mood }) => {
               <Form.Control
                 as="textarea"
                 rows={2}
-                value={data.journalPost.prompt}
+                value={data?.journalPost?.prompt}
                 onChange={(e) => dispatch(setDashboardMoodField("journalPost.prompt", e.target.value))}
               />
             </Form.Group>
@@ -1180,7 +1275,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Placeholder</Form.Label>
               <Form.Control
                 type="text"
-                value={data.journalPost.placeholder}
+                value={data?.journalPost?.placeholder}
                 onChange={(e) => dispatch(setDashboardMoodField("journalPost.placeholder", e.target.value))}
               />
             </Form.Group>
@@ -1189,7 +1284,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Etichetta Salvataggio</Form.Label>
               <Form.Control
                 type="text"
-                value={data.journalPost.save}
+                value={data?.journalPost?.save}
                 onChange={(e) => dispatch(setDashboardMoodField("journalPost.save", e.target.value))}
               />
             </Form.Group>
@@ -1198,7 +1293,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="optionalJournalPost"
               label="Facoltativo"
-              checked={data.journalPost.optional}
+              checked={data?.journalPost?.optional}
               onChange={(e) => dispatch(setDashboardMoodField("journalPost.optional", e.target.checked))}
             />
           </>
@@ -1215,7 +1310,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="enabledSpiritual"
               label="Abilitato"
-              checked={data.spiritual.enabled}
+              checked={data?.spiritual?.enabled}
               onChange={(e) => dispatch(setDashboardMoodField("spiritual.enabled", e.target.checked))}
               className="mb-2"
             />
@@ -1224,7 +1319,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Tipo</Form.Label>
               <Form.Control
                 type="text"
-                value={data.spiritual.type}
+                value={data?.spiritual?.type}
                 onChange={(e) => dispatch(setDashboardMoodField("spiritual.type", e.target.value))}
               />
             </Form.Group>
@@ -1233,7 +1328,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Versetto</Form.Label>
               <Form.Control
                 type="text"
-                value={data.spiritual.verse}
+                value={data?.spiritual?.verse}
                 onChange={(e) => dispatch(setDashboardMoodField("spiritual.verse", e.target.value))}
               />
             </Form.Group>
@@ -1243,7 +1338,7 @@ const SingleMood = ({ mood }) => {
               <Form.Control
                 as="textarea"
                 rows={3}
-                value={data.spiritual.text}
+                value={data?.spiritual?.text}
                 onChange={(e) => dispatch(setDashboardMoodField("spiritual.text", e.target.value))}
               />
             </Form.Group>
@@ -1261,7 +1356,7 @@ const SingleMood = ({ mood }) => {
               type="switch"
               id="enabledCoach"
               label="Abilitato"
-              checked={data.coach.enabled}
+              checked={data?.coach?.enabled}
               onChange={(e) => dispatch(setDashboardMoodField("coach.enabled", e.target.checked))}
               className="mb-2"
             />
@@ -1271,7 +1366,7 @@ const SingleMood = ({ mood }) => {
               <Form.Control
                 as="textarea"
                 rows={2}
-                value={data.coach.intro}
+                value={data?.coach?.intro}
                 onChange={(e) => dispatch(setDashboardMoodField("coach.intro", e.target.value))}
               />
             </Form.Group>
@@ -1280,7 +1375,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Etichetta ostacolo</Form.Label>
               <Form.Control
                 type="text"
-                value={data.coach.obstacle}
+                value={data?.coach?.obstacle}
                 onChange={(e) => dispatch(setDashboardMoodField("coach.obstacle", e.target.value))}
               />
             </Form.Group>
@@ -1291,7 +1386,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Etichetta “Situazione”</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.coach.situation}
+                    value={data?.coach?.situation}
                     onChange={(e) => dispatch(setDashboardMoodField("coach.situation", e.target.value))}
                   />
                 </Form.Group>
@@ -1301,7 +1396,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Etichetta “Feedback”</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.coach.feedback}
+                    value={data?.coach?.feedback}
                     onChange={(e) => dispatch(setDashboardMoodField("coach.feedback", e.target.value))}
                   />
                 </Form.Group>
@@ -1314,7 +1409,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Pulsante “Avanti”</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.coach.next}
+                    value={data?.coach?.next}
                     onChange={(e) => dispatch(setDashboardMoodField("coach.next", e.target.value))}
                   />
                 </Form.Group>
@@ -1324,7 +1419,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Messaggio finale</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.coach.finished}
+                    value={data?.coach?.finished}
                     onChange={(e) => dispatch(setDashboardMoodField("coach.finished", e.target.value))}
                   />
                 </Form.Group>
@@ -1335,7 +1430,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Messaggio se non ci sono percorsi</Form.Label>
               <Form.Control
                 type="text"
-                value={data.coach.noSteps}
+                value={data?.coach?.noSteps}
                 onChange={(e) => dispatch(setDashboardMoodField("coach.noSteps", e.target.value))}
               />
             </Form.Group>
@@ -1472,14 +1567,14 @@ const SingleMood = ({ mood }) => {
           <>
             <hr />
             <h5 className="mb-4 fs-2">
-              <i className="bi bi-stars me-2"></i> {data.environment.title}
+              <i className="bi bi-stars me-2"></i> {data?.environment?.title}
             </h5>
 
             <Form.Check
               type="switch"
               id="enabledEnvironment"
               label="Abilitato"
-              checked={data.environment.enabled}
+              checked={data?.environment?.enabled}
               onChange={(e) => dispatch(setDashboardMoodField("environment.enabled", e.target.checked))}
               className="mb-2"
             />
@@ -1489,7 +1584,7 @@ const SingleMood = ({ mood }) => {
               <Form.Control
                 as="textarea"
                 rows={2}
-                value={data.environment.suggestion}
+                value={data?.environment?.suggestion}
                 onChange={(e) => dispatch(setDashboardMoodField("environment.suggestion", e.target.value))}
               />
             </Form.Group>
@@ -1498,7 +1593,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Durata in secondi</Form.Label>
               <Form.Control
                 type="number"
-                value={data.environment.duration}
+                value={data?.environment?.duration}
                 onChange={(e) => dispatch(setDashboardMoodField("environment.duration", e.target.value))}
               />
             </Form.Group>
@@ -1507,7 +1602,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Durata consigliata (es. {"{{min}}"} min)</Form.Label>
               <Form.Control
                 type="text"
-                value={data.environment.suggestedDuration}
+                value={data?.environment?.suggestedDuration}
                 onChange={(e) => dispatch(setDashboardMoodField("environment.suggestedDuration", e.target.value))}
               />
             </Form.Group>
@@ -1518,14 +1613,19 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Immagine di sfondo del moood</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.environment.backgroundImage}
+                    value={data?.environment?.backgroundImage}
                     onChange={(e) => dispatch(setDashboardMoodField("environment.backgroundImage", e.target.value))}
                   />
-                  <a href={data.environment.backgroundImage} target="_blank" rel="noreferrer" className="d-block mt-2">
-                    {data.environment.backgroundImage}
+                  <a
+                    href={data?.environment?.backgroundImage}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="d-block mt-2"
+                  >
+                    {data?.environment?.backgroundImage}
                   </a>
                   <Image
-                    src={data.environment.backgroundImage}
+                    src={data?.environment?.backgroundImage}
                     thumbnail
                     className="mt-2"
                     style={{ maxHeight: "26rem" }}
@@ -1537,22 +1637,22 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Video di sfondo</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.environment.backgroundVideo}
+                    value={data?.environment?.backgroundVideo}
                     onChange={(e) => dispatch(setDashboardMoodField("environment.backgroundVideo", e.target.value))}
                   />
-                  {data.environment.backgroundVideo && (
+                  {data?.environment?.backgroundVideo && (
                     <>
                       <a
-                        href={data.environment.backgroundVideo}
+                        href={data?.environment?.backgroundVideo}
                         target="_blank"
                         rel="noreferrer"
                         className="d-block mt-2"
                       >
-                        {data.environment.backgroundVideo}
+                        {data?.environment?.backgroundVideo}
                       </a>
                       <div className="d-flex align-items-center mt-2 img-thumbnail">
                         <video
-                          src={data.environment.backgroundVideo}
+                          src={data?.environment?.backgroundVideo}
                           controls
                           width="100%"
                           className="my-auto rounded shadow-sm"
@@ -1566,13 +1666,13 @@ const SingleMood = ({ mood }) => {
                   <Form.Label className="mt-2">File audio</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.environment.audioSrc}
+                    value={data?.environment?.audioSrc}
                     onChange={(e) => dispatch(setDashboardMoodField("environment.audioSrc", e.target.value))}
                   />
-                  <a href={data.environment.audioSrc} target="_blank" rel="noreferrer" className="d-block mt-2">
-                    {data.environment.audioSrc}
+                  <a href={data?.environment?.audioSrc} target="_blank" rel="noreferrer" className="d-block mt-2">
+                    {data?.environment?.audioSrc}
                   </a>
-                  <audio src={data.environment.audioSrc} controls width="100%" className="mt-2 w-100">
+                  <audio src={data?.environment?.audioSrc} controls width="100%" className="mt-2 w-100">
                     Il tuo browser non supporta il tag audio.
                   </audio>
                 </Form.Group>
@@ -1585,9 +1685,9 @@ const SingleMood = ({ mood }) => {
                 as="textarea"
                 rows={2}
                 value={
-                  Array.isArray(data.environment.soundscape)
-                    ? data.environment.soundscape.join("\n")
-                    : data.environment.soundscape
+                  Array.isArray(data?.environment?.soundscape)
+                    ? data?.environment?.soundscape.join("\n")
+                    : data?.environment?.soundscape
                 }
                 onChange={(e) => dispatch(setDashboardMoodField("environment.soundscape", e.target.value))}
               />
@@ -1597,7 +1697,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Etichetta pulsante "Avvia"</Form.Label>
               <Form.Control
                 type="text"
-                value={data.environment.start}
+                value={data?.environment?.start}
                 onChange={(e) => dispatch(setDashboardMoodField("environment.start", e.target.value))}
               />
             </Form.Group>
@@ -1606,7 +1706,7 @@ const SingleMood = ({ mood }) => {
               <Form.Label>Etichetta pulsante "Ferma"</Form.Label>
               <Form.Control
                 type="text"
-                value={data.environment.stop}
+                value={data?.environment?.stop}
                 onChange={(e) => dispatch(setDashboardMoodField("environment.stop", e.target.value))}
               />
             </Form.Group>
@@ -1617,7 +1717,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Etichetta "Muta musica"</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.environment.mute}
+                    value={data?.environment?.mute}
                     onChange={(e) => dispatch(setDashboardMoodField("environment.mute", e.target.value))}
                   />
                 </Form.Group>
@@ -1627,7 +1727,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Etichetta "Riattiva musica"</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.environment.unmute}
+                    value={data?.environment?.unmute}
                     onChange={(e) => dispatch(setDashboardMoodField("environment.unmute", e.target.value))}
                   />
                 </Form.Group>
@@ -1640,7 +1740,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Etichetta "A tutto schermo"</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.environment.fullscreen}
+                    value={data?.environment?.fullscreen}
                     onChange={(e) => dispatch(setDashboardMoodField("environment.fullscreen", e.target.value))}
                   />
                 </Form.Group>
@@ -1650,7 +1750,7 @@ const SingleMood = ({ mood }) => {
                   <Form.Label>Etichetta "Esci da tutto schermo"</Form.Label>
                   <Form.Control
                     type="text"
-                    value={data.environment.exitFullscreen}
+                    value={data?.environment?.exitFullscreen}
                     onChange={(e) => dispatch(setDashboardMoodField("environment.exitFullscreen", e.target.value))}
                   />
                 </Form.Group>

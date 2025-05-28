@@ -34,7 +34,6 @@ const AdminStats = () => {
       });
       if (!res.ok) throw new Error("Errore nella risposta del server");
       const data = await res.json();
-      console.log("Esempio log ricevuto:", data.slice(0, 5));
       setLogs(data);
     } catch (err) {
       console.error("Errore nel fetch dei log:", err);
@@ -45,6 +44,7 @@ const AdminStats = () => {
 
   useEffect(() => {
     fetchLogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) return <Spinner animation="border" variant="primary" />;
@@ -57,7 +57,6 @@ const AdminStats = () => {
     (logs.filter((l) => l.durationSeconds !== null).length || 1);
   const authenticatedSessions = logs.filter((log) => log.userId !== null).length;
   const anonymousSessions = logs.filter((log) => log.userId === null).length;
-  const uniqueUsers = new Set(logs.map((log) => log.userId).filter((id) => id !== null)).size;
 
   const moodDistribution = logs.reduce((acc, log) => {
     const mood = log.moodSlug || "unknown";
@@ -106,7 +105,7 @@ const AdminStats = () => {
   };
 
   const sessionsByDate = logs.reduce((acc, log) => {
-    const date = new Date(log.startTime).toLocaleDateString("it-IT"); // formato: gg/mm/aaaa
+    const date = new Date(log.startTime).toLocaleDateString("it-IT");
     acc[date] = (acc[date] || 0) + 1;
     return acc;
   }, {});
@@ -130,9 +129,8 @@ const AdminStats = () => {
             value: `${completedSessions} (${Math.round((completedSessions / totalSessions) * 100)}%)`,
           },
           { title: "Sessioni Incomplete", value: incompleteSessions },
-          { title: "Utenti Autenticati", value: authenticatedSessions },
-          { title: "Utenti Anonimi", value: anonymousSessions },
-          { title: "Utenti Unici", value: uniqueUsers },
+          { title: "Sessioni Autenticate", value: authenticatedSessions },
+          { title: "Sessioni Anonime", value: anonymousSessions },
         ].map((stat, i) => (
           <Col md={4} className="mb-3" key={i}>
             <Card className="text-center shadow stat-card">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { EmojiSmile, ClockHistory, GearFill, ArrowLeftCircle } from "react-bootstrap-icons";
+import UserStats from "./stats/UserStats";
 /* import CurrentMood from "./user/CurrentMood";
 import MoodHistory from "./user/MoodHistory";
 import UserPreferences from "./user/UserPreferences"; */
@@ -90,7 +91,7 @@ const UserDashboard = ({ user }) => {
                   Torna alla Dashboard
                 </Button>
               </div>
-              {/*  <MoodHistory /> */}
+              <UserStats />
             </>
           )}
 

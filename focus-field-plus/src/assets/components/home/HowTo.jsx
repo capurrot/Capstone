@@ -11,7 +11,7 @@ const HowTo = () => {
   }
 
   return (
-    <section className="py-5">
+    <section className="py-5" id="howto">
       <Container>
         <h2 className="text-center mb-4">{t("howto.title")}</h2>
         <div className="row row-cols-1 row-cols-md-3 text-center">

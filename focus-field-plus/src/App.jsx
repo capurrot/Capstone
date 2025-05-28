@@ -56,6 +56,7 @@ function App() {
     if (!mood) {
       dispatch(setMood(defaultMood));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, mood]);
 
   useEffect(() => {
@@ -69,6 +70,7 @@ function App() {
     });
 
     root.style.setProperty("--mood-opacity", mood.opacity || defaultMood.opacity || 0.5);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mood]);
 
   useEffect(() => {

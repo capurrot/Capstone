@@ -24,7 +24,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="#" className="text-light text-decoration-none">
+              <a href="#howto" className="text-light text-decoration-none">
                 {t("footer.links.how")}
               </a>
             </li>

@@ -302,7 +302,6 @@ export const fetchMood = (slug, lang) => async (dispatch) => {
       dispatch({ type: SET_DASHBOARD_MOOD, payload: data });
       dispatch({ type: SET_DASHBOARD_MOOD_INFO, payload: "" });
       isUpdate = true;
-      console.log("Dati mood:", data);
     }
   } catch (error) {
     dispatch({ type: SET_DASHBOARD_MOOD_ERROR, payload: error.message });
@@ -483,7 +482,6 @@ export const startMoodLog = (userId, moodSlug, language) => async (dispatch) => 
     if (!res.ok) throw new Error("Errore nell'avvio del log");
 
     const data = await res.json();
-    console.log("Dati del log:", data);
     dispatch({ type: START_LOG, payload: data });
     localStorage.setItem("logId", data.id);
   } catch (error) {

@@ -10,7 +10,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "it",
-    debug: true,
+    debug: false,
     defaultNS: "translation",
     ns: ["translation"], // carica dinamicamente i mood
     backend: {

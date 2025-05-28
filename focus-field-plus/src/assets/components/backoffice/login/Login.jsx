@@ -38,7 +38,6 @@ const Login = () => {
     }
 
     if (token && user) {
-      console.log("user:", user);
       setTimeout(() => {
         if (user.roles?.includes("ROLE_ADMIN")) {
           navigate("/dashboard");

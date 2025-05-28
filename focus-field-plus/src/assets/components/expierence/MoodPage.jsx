@@ -42,7 +42,6 @@ function MoodPage({ moodName, isModal }) {
           setMoodData(null);
         } else {
           setMoodData(json);
-          console.log("Dati mood:", json);
         }
 
         const fullMood = allMoods.find((m) => m.slug === moodName);
@@ -70,7 +69,6 @@ function MoodPage({ moodName, isModal }) {
   };
 
   const handleEnd = () => {
-    console.log("logId", logId);
     if (logId) dispatch(endMoodLog(logId));
   };
 
@@ -113,7 +111,7 @@ function MoodPage({ moodName, isModal }) {
     return value;
   };
 
-  if (!hasStarted && !isModal) {
+  if (!hasStarted && !isModal && !userId === 1) {
     return (
       <Container
         fluid
@@ -197,7 +195,7 @@ function MoodPage({ moodName, isModal }) {
       fluid
       className="mood-page px-0"
       style={{
-        backgroundImage: `url(${moodData.environment.backgroundImage})`,
+        backgroundImage: `url(${moodData?.environment?.backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -206,7 +204,7 @@ function MoodPage({ moodName, isModal }) {
       <Container>
         <header className="mood-header text-white p-5 text-center position-relative">
           <div className="d-flex flex-row">
-            <h1 className="display-1">{moodData.name}</h1>
+            <h1 className="display-1">{moodData?.name}</h1>
             <i
               className="bi bi-question-circle-fill ms-3"
               style={{ cursor: "pointer", fontSize: "1.5rem" }}
@@ -219,18 +217,18 @@ function MoodPage({ moodName, isModal }) {
 
         <section className="mood-section music py-4 px-lg-4 rounded">
           <h2 className="mood-text mb-3 ps-3">
-            <i className="fas fa-music me-1"></i> - {moodData.moodModal.sections.music}
+            <i className="fas fa-music me-1"></i> - {moodData?.moodModal?.sections?.music}
           </h2>
-          <FocusPlayer playlistUrl={moodData.music.playlistUrl} audius={moodData.music.audius} />
+          <FocusPlayer playlistUrl={moodData?.music?.playlistUrl} audius={moodData?.music?.audius} />
         </section>
 
         {moodData.journalPre?.enabled && (
           <section className="mood-section journal p-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <i className="fas fa-pencil-alt me-1"></i> - {moodData.moodModal.sections.journalPre}
+              <i className="fas fa-pencil-alt me-1"></i> - {moodData?.moodModal?.sections?.journalPre}
             </h2>
             {user ? (
-              <FocusJournal journal={moodData.journalPre} moodName={moodName} />
+              <FocusJournal journal={moodData?.journalPre} moodName={moodName} />
             ) : (
               <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
                 <div className="mb-3">
@@ -244,14 +242,14 @@ function MoodPage({ moodName, isModal }) {
                     className="focusfield-btn px-4 fw-semibold text-decoration-none"
                     onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
                   >
-                    "Accedi"
+                    Accedi
                   </Link>
                   <Link
                     to="/register"
                     className="focusfield-btn-outline px-4 fw-semibold text-decoration-none"
                     onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
                   >
-                    "Registrati"
+                    Registrati
                   </Link>
                 </div>
               </div>
@@ -262,10 +260,10 @@ function MoodPage({ moodName, isModal }) {
         {moodData.journalGoals?.enabled && (
           <section className="mood-section journal py-4 px-lg-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <i className="fas fa-pencil-alt me-1"></i> - {moodData.moodModal.sections.goals}
+              <i className="fas fa-pencil-alt me-1"></i> - {moodData?.moodModal?.sections?.goals}
             </h2>
             {user ? (
-              <FocusGoals goals={moodData.journalGoals} moodName={moodName} />
+              <FocusGoals goals={moodData?.journalGoals} moodName={moodName} />
             ) : (
               <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
                 <div className="mb-3">
@@ -279,14 +277,14 @@ function MoodPage({ moodName, isModal }) {
                     className="focusfield-btn px-4 fw-semibold text-decoration-none"
                     onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
                   >
-                    "Accedi"
+                    Accedi
                   </Link>
                   <Link
                     to="/register"
                     className="focusfield-btn-outline px-4 fw-semibold text-decoration-none"
                     onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
                   >
-                    "Registrati"
+                    Registrati
                   </Link>
                 </div>
               </div>
@@ -296,22 +294,22 @@ function MoodPage({ moodName, isModal }) {
 
         <Row className="mt-4">
           <Col xs={12} md={6} xl={4}>
-            {moodData.breathing?.enabled && (
+            {moodData?.breathing?.enabled && (
               <section className="mood-section breathing p-4">
                 <h2 className="mood-text mb-3 ps-3">
-                  <i className="fas fa-lungs me-1"></i> - {moodData.moodModal.sections.breathing}
+                  <i className="fas fa-lungs me-1"></i> - {moodData?.moodModal?.sections?.breathing}
                 </h2>
-                <BreathingExercise config={moodData.breathing} moodName={moodName} />
+                <BreathingExercise config={moodData?.breathing} moodName={moodName} />
               </section>
             )}
           </Col>
           <Col xs={12} md={6} xl={4}>
-            {moodData.relaxBody?.enabled && (
+            {moodData?.relaxBody?.enabled && (
               <section className="mood-section relax-body p-4 mt-4 mt-md-0">
                 <h2 className="mood-text mb-3 ps-3">
-                  <i className="fas fa-running me-1"></i> - {moodData.moodModal.sections.relaxBody}
+                  <i className="fas fa-running me-1"></i> - {moodData?.moodModal?.sections?.relaxBody}
                 </h2>
-                <RelaxBodyExercises config={moodData.relaxBody} moodName={moodName} />
+                <RelaxBodyExercises config={moodData?.relaxBody} moodName={moodName} />
               </section>
             )}
           </Col>
@@ -319,9 +317,9 @@ function MoodPage({ moodName, isModal }) {
             {moodData.coach?.enabled && (
               <section className="mood-section mental-coach p-4 mt-4 mt-md-0">
                 <h2 className="mood-text mb-3 ps-3">
-                  <i className="fas fa-brain me-1"></i> - {moodData.moodModal.sections.coach}
+                  <i className="fas fa-brain me-1"></i> - {moodData?.moodModal?.sections?.coach}
                 </h2>
-                <FocusMentalCoach coach={moodData.coach} moodName={moodName} />
+                <FocusMentalCoach coach={moodData?.coach} moodName={moodName} />
               </section>
             )}
           </Col>
@@ -329,10 +327,10 @@ function MoodPage({ moodName, isModal }) {
 
         <section className="mood-section ambient p-4 mt-4">
           <h2 className="mood-text mb-3 ps-3">
-            <i className="fas fa-leaf"></i> - {moodData.moodModal.sections.ambient}
+            <i className="fas fa-leaf"></i> - {moodData?.moodModal?.sections?.ambient}
           </h2>
           <FocusSoundScape
-            config={moodData.environment}
+            config={moodData?.environment}
             moodName={moodName}
             onIOSFullscreenChange={(active) => setIsIOSFullscreen(active)}
           />
@@ -341,11 +339,11 @@ function MoodPage({ moodName, isModal }) {
         {moodData.spiritual?.enabled && !isIOSFullscreen && (
           <section className="mood-section spiritual p-4 mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <MdAutoStories /> - {moodData.moodModal.sections.spiritual}
+              <MdAutoStories /> - {moodData?.moodModal?.sections?.spiritual}
             </h2>
             <div className="reflection-container p-3 d-flex flex-column">
               <p className="fs-4">{moodData.spiritual.text}</p>
-              <cite className="ms-auto fs-4">{moodData.spiritual.verse}</cite>
+              <cite className="ms-auto fs-4">{moodData?.spiritual?.verse}</cite>
             </div>
           </section>
         )}
@@ -353,10 +351,10 @@ function MoodPage({ moodName, isModal }) {
         {moodData.journalPost?.enabled && !isIOSFullscreen && (
           <section className="mood-section journal p-4 rounded mt-4">
             <h2 className="mood-text mb-3 ps-3">
-              <i className="fas fa-pencil-alt me-1"></i> - {moodData.moodModal.sections.journalPost}
+              <i className="fas fa-pencil-alt me-1"></i> - {moodData?.moodModal?.sections?.journalPost}
             </h2>
             {user ? (
-              <FocusJournal journal={moodData.journalPost} />
+              <FocusJournal journal={moodData?.journalPost} />
             ) : (
               <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
                 <div className="mb-3">
@@ -370,14 +368,14 @@ function MoodPage({ moodName, isModal }) {
                     className="focusfield-btn px-4 fw-semibold text-decoration-none"
                     onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
                   >
-                    "Accedi"
+                    Accedi
                   </Link>
                   <Link
                     to="/register"
                     className="focusfield-btn-outline px-4 fw-semibold text-decoration-none"
                     onClick={() => sessionStorage.setItem("redirectAfterLogin", location.pathname)}
                   >
-                    "Registrati"
+                    Registrati
                   </Link>
                 </div>
               </div>

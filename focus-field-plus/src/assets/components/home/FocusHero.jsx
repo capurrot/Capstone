@@ -35,7 +35,6 @@ const FocusHero = () => {
       });
 
       const data = await response.json();
-      console.log(data);
 
       const found = allMoods.find((mood) => mood.slug === data.mood?.toLowerCase());
 

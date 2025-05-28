@@ -3,25 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllMoods } from "../../../../../redux/actions";
 import { Container, Card, Spinner, Alert, Badge, Row, Col, Button, ButtonGroup, Image } from "react-bootstrap";
 import SingleMood from "./SingleMood";
-// Assicurati che questo file esista
 
 const ListMoods = () => {
   const dispatch = useDispatch();
   const { allMoods, isLoading, hasError } = useSelector((state) => state.mood);
-  const [selectedMood, setSelectedMood] = useState(null); // Mood in modifica
+  const [selectedMood, setSelectedMood] = useState(null);
 
   useEffect(() => {
     dispatch(fetchAllMoods());
   }, [dispatch]);
 
   const handleEdit = (mood) => {
-    setSelectedMood(mood); // mostra il form con il mood selezionato
+    setSelectedMood(mood);
   };
 
   const handleDelete = (moodId) => {
     if (window.confirm("Sei sicuro di voler cancellare questo mood?")) {
       console.log("Mood cancellato:", moodId);
-      // dispatch(deleteMood(moodId));
     }
   };
 
