@@ -1,0 +1,180 @@
+{
+  "choose_mood": "Choose from the most popular moods",
+  "mood": {
+    "energized": "Energized",
+    "creative": "Creative",
+    "ansious": "Anxious",
+    "sad": "Sad",
+    "spiritual": "Spiritual",
+    "overwhelmed": "Overwhelmed",
+    "grateful": "Grateful",
+    "confused": "Confused",
+    "happy": "Happy",
+    "focus": "Focused",
+    "peaceful": "Peaceful",
+    "curious": "Curious",
+    "determined": "Determined",
+    "seeking-inspiration": "Inspired",
+    "reflective": "Reflective",
+    "at-peace": "At peace",
+    "romantic": "Romantic",
+    "celebratory": "Celebratory",
+    "active": "Active",
+    "playful": "Playful",
+    "calm": "Calm"
+  },
+  "desc": {
+    "energized": "You are full of energy and eager to move, act, and get things done.",
+    "creative": "You feel inspired, full of ideas, and want to express yourself.",
+    "ansious": "You feel some anxiety or worry inside.",
+    "sad": "You need comfort and emotional space.",
+    "spiritual": "You seek connection with God or a space for reflection.",
+    "overwhelmed": "Too many thoughts. You need to slow down.",
+    "grateful": "You feel a deep sense of gratitude.",
+    "confused": "You need clarity and direction.",
+    "happy": "You feel uplifted, smiling, positive.",
+    "focus": "You need to maintain focus on a goal.",
+    "peaceful": "You feel a deep calm and lightness inside.",
+    "curious": "You want to discover and learn something new.",
+    "determined": "You have a clear purpose and want to achieve it.",
+    "seeking-inspiration": "You want to reignite your ideas or find motivation.",
+    "reflective": "You need mental space to think and listen to yourself.",
+    "at-peace": "You feel a sense of harmony with yourself and your surroundings.",
+    "romantic": "You desire love, beauty, and emotional connection.",
+    "celebratory": "You want to celebrate, be with others, and rejoice.",
+    "active": "It's time to move: exercise, walk, physical energy.",
+    "playful": "You want lightness, play, and fun.",
+    "calm": "You need patience and tranquility."
+  },
+  "hero": {
+    "title": "Find Your Mental Balance",
+    "subtitle": "Write how you feel. FocusField+ will do the rest.",
+    "placeholder": "E.g.: I'm looking for an ideal environment to concentrate...",
+    "not_found": "No mood recognized. Try another description.",
+    "modal_title": "Suggested Mood",
+    "modal_text": "Based on your search, the most suitable mood for you is",
+    "modal_button": "Go to mood",
+    "loading": "Searching..."
+  },
+  "navbar": {
+    "home": "Home",
+    "login": "Login",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "profile": "User Profile",
+    "preferences": "Preferences"
+  },
+  "testimonials": {
+    "title": "What Users Are Saying",
+    "items": [
+      {
+        "name": "Luca R.",
+        "role": "University Student",
+        "text": "FocusField+ helped me concentrate better during study sessions. The spiritual mode was a true blessing!"
+      },
+      {
+        "name": "Giulia M.",
+        "role": "Freelance Illustrator",
+        "text": "The music recommendations are always spot-on. It feels like the app really understands how I feel!"
+      },
+      {
+        "name": "Davide P.",
+        "role": "Web Developer",
+        "text": "An innovative app. I can get into 'flow' much more easily thanks to the personalized suggestions."
+      },
+      {
+        "name": "Marco T.",
+        "role": "Teacher",
+        "text": "The reflective mode helped me prepare better for my lessons. It's a unique tool."
+      },
+      {
+        "name": "Serena C.",
+        "role": "Musician",
+        "text": "I love how the app captures my mood and provides the perfect sound environment for composing."
+      },
+      {
+        "name": "Alessio V.",
+        "role": "Theology Student",
+        "text": "The spiritual suggestions help me stay centered and deeply focused."
+      },
+      {
+        "name": "Elena B.",
+        "role": "Motivational Coach",
+        "text": "A powerful tool to train concentration and inner awareness."
+      },
+      {
+        "name": "Riccardo N.",
+        "role": "UX Designer",
+        "text": "A well-thought-out user experience. It accompanies me during my most creative moments."
+      },
+      {
+        "name": "Anna F.",
+        "role": "Volunteer",
+        "text": "I appreciate the respect for spiritual values. It's rare to find apps that are so sensitive and useful."
+      }
+    ]
+  },
+  "howto": {
+    "title": "How it works",
+    "steps": [
+      {
+        "title": "✍️ Write Freely",
+        "desc": "The app analyzes your words and understands how you feel."
+      },
+      {
+        "title": "🎵 Receive Suggestions",
+        "desc": "Music, environment, and duration ideal to get into the flow."
+      },
+      {
+        "title": "🙏 Spiritual Mode",
+        "desc": "Cultivate focus through your faith."
+      }
+    ]
+  },
+  "try": {
+    "title": "Try it too",
+    "text": "Discover how FocusField+ can help you improve concentration.",
+    "button": "Start now",
+    "modalTitle": "Choose a Mood"
+  },
+  "cookie": {
+    "title": "Your Privacy Matters",
+    "message": "We use cookies to personalize content and ads, provide social media features, and analyze our traffic. You can choose to accept all cookies or manage your preferences.",
+    "buttons": {
+      "accept": "Accept all",
+      "reject": "Reject",
+      "manage": "Manage preferences"
+    },
+    "linkText": "Read our Cookie Policy",
+    "linkUrl": "/cookie-policy"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": {
+      "title": "Is it free?",
+      "body": "Yes! FocusField+ is free during the launch period. We will consider premium plans in the future, but the basic version will always be accessible."
+    },
+    "q2": {
+      "title": "Do I need to create an account?",
+      "body": "No, you can start right away. If you want to save your preferences, you can create a profile."
+    },
+    "q3": {
+      "title": "How does the spiritual mode work?",
+      "body": "It is designed to help you focus while maintaining a respectful connection with God, through music, guided silences, and uplifting content."
+    },
+    "q4": {
+      "title": "Can I use it on mobile?",
+      "body": "Yes! FocusField+ is optimized for mobile, and soon a dedicated app will be available."
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "links": {
+      "home": "Home",
+      "how": "How it works",
+      "faq": "FAQ",
+      "contact": "Contact"
+    }
+  }
+}

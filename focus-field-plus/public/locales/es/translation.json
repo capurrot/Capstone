@@ -1,0 +1,180 @@
+{
+  "choose_mood": "Elige entre los estados de ánimo más buscados",
+  "mood": {
+    "energized": "Energético",
+    "creative": "Creativo",
+    "ansious": "Ansioso",
+    "sad": "Triste",
+    "spiritual": "Espiritual",
+    "overwhelmed": "Abrumado",
+    "grateful": "Agradecido",
+    "confused": "Confuso",
+    "happy": "Feliz",
+    "focus": "Concentrado",
+    "peaceful": "Sereno",
+    "curious": "Curioso",
+    "determined": "Determinado",
+    "seeking-inspiration": "Inspirado",
+    "reflective": "Reflexivo",
+    "at-peace": "En paz",
+    "romantic": "Romántico",
+    "celebratory": "Celebratorio",
+    "active": "Activo",
+    "playful": "Juguetón",
+    "calm": "Calmo"
+  },
+  "desc": {
+    "energized": "Tienes energía y ganas de moverte, actuar, hacer cosas.",
+    "creative": "Te sientes inspirado, lleno de ideas y con ganas de expresarte.",
+    "ansious": "Sientes cierta ansiedad o preocupación dentro de ti.",
+    "sad": "Necesitas consuelo y espacio emocional.",
+    "spiritual": "Buscas una conexión con Dios o un espacio para reflexionar.",
+    "overwhelmed": "Demasiados pensamientos. Necesitas desacelerar.",
+    "grateful": "Sientes una profunda gratitud.",
+    "confused": "Necesitas claridad y dirección.",
+    "happy": "Te sientes aliviado, sonriente, positivo.",
+    "focus": "Necesitas mantener la atención en un objetivo.",
+    "peaceful": "Sientes una calma profunda y ligereza interior.",
+    "curious": "Tienes ganas de descubrir, aprender algo nuevo.",
+    "determined": "Tienes un propósito claro y deseas alcanzarlo.",
+    "seeking-inspiration": "Quieres reavivar las ideas o encontrar motivación.",
+    "reflective": "Necesitas un espacio mental para pensar y escucharte.",
+    "at-peace": "Sientes un sentido de armonía contigo mismo y con lo que te rodea.",
+    "romantic": "Tienes ganas de amor, belleza y conexión emocional.",
+    "celebratory": "Tienes ganas de celebrar, estar con los demás, alegrarte.",
+    "active": "Es momento de moverse: hacer ejercicio, caminar, energía física.",
+    "playful": "Tienes ganas de ligereza, juego, diversión.",
+    "calm": "Necesitas paciencia y tranquilidad."
+  },
+  "hero": {
+    "title": "Recupera tu equilibrio mental",
+    "subtitle": "Escribe cómo te sientes. FocusField+ hará el resto.",
+    "placeholder": "Ej.: busco un ambiente ideal para concentrarme...",
+    "not_found": "Ningún estado de ánimo reconocido. Intenta con otra descripción.",
+    "modal_title": "Estado de ánimo sugerido",
+    "modal_text": "Según tu búsqueda, el estado de ánimo más adecuado para ti es",
+    "modal_button": "Ir al estado de ánimo",
+    "loading": "Buscando..."
+  },
+  "navbar": {
+    "home": "Inicio",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "dashboard": "Tablero",
+    "settings": "Configuraciones",
+    "profile": "Perfil de usuario",
+    "preferences": "Preferencias"
+  },
+  "testimonials": {
+    "title": "Lo que dicen los usuarios",
+    "items": [
+      {
+        "name": "Luca R.",
+        "role": "Estudiante universitario",
+        "text": "FocusField+ me ayudó a concentrarme mejor durante las sesiones de estudio. ¡El modo espiritual fue una verdadera bendición!"
+      },
+      {
+        "name": "Giulia M.",
+        "role": "Ilustradora freelance",
+        "text": "Las recomendaciones musicales siempre son acertadas. ¡Parece que la app realmente entiende cómo me siento!"
+      },
+      {
+        "name": "Davide P.",
+        "role": "Desarrollador web",
+        "text": "Una app innovadora. Puedo entrar en el 'flow' mucho más fácilmente gracias a las sugerencias personalizadas."
+      },
+      {
+        "name": "Marco T.",
+        "role": "Profesor",
+        "text": "El modo reflexivo me ayudó a preparar mejor mis clases. Es una herramienta única."
+      },
+      {
+        "name": "Serena C.",
+        "role": "Música",
+        "text": "Me encanta cómo la app captura mi estado de ánimo y me propone el ambiente sonoro ideal para componer."
+      },
+      {
+        "name": "Alessio V.",
+        "role": "Estudiante de teología",
+        "text": "Las propuestas espirituales me ayudan a mantenerme centrado y enfocado profundamente."
+      },
+      {
+        "name": "Elena B.",
+        "role": "Coach motivacional",
+        "text": "Una herramienta poderosa para entrenar la concentración y la conciencia interior."
+      },
+      {
+        "name": "Riccardo N.",
+        "role": "Diseñador UX",
+        "text": "Una experiencia de usuario bien pensada. Me acompaña en los momentos de máxima creatividad."
+      },
+      {
+        "name": "Anna F.",
+        "role": "Voluntaria",
+        "text": "Aprecio el respeto por los valores espirituales. Es raro encontrar apps tan sensibles y útiles."
+      }
+    ]
+  },
+  "howto": {
+    "title": "Cómo funciona",
+    "steps": [
+      {
+        "title": "✍️ Escribe libremente",
+        "desc": "La app analiza tus palabras y entiende cómo te sientes."
+      },
+      {
+        "title": "🎵 Recibe sugerencias",
+        "desc": "Música, ambiente y duración ideales para entrar en el flow."
+      },
+      {
+        "title": "🙏 Modo espiritual",
+        "desc": "Cultiva la concentración a través de tu fe."
+      }
+    ]
+  },
+  "try": {
+    "title": "Pruébalo también",
+    "text": "Descubre cómo FocusField+ puede ayudarte a mejorar la concentración.",
+    "button": "Comienza ahora",
+    "modalTitle": "Elige un estado de ánimo"
+  },
+  "cookie": {
+    "title": "Tu privacidad es importante",
+    "message": "Utilizamos cookies para personalizar contenido y anuncios, ofrecer funciones de redes sociales y analizar nuestro tráfico. Puedes elegir aceptar todas las cookies o gestionar tus preferencias.",
+    "buttons": {
+      "accept": "Aceptar todo",
+      "reject": "Rechazar",
+      "manage": "Gestionar preferencias"
+    },
+    "linkText": "Lee nuestra Política de Cookies",
+    "linkUrl": "/cookie-policy"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "q1": {
+      "title": "¿Es gratis?",
+      "body": "¡Sí! FocusField+ es gratuito durante el periodo de lanzamiento. En el futuro evaluaremos planes premium, pero siempre habrá una versión básica accesible."
+    },
+    "q2": {
+      "title": "¿Es necesario crear una cuenta?",
+      "body": "No, puedes comenzar inmediatamente. Si deseas guardar tus preferencias, puedes crear un perfil."
+    },
+    "q3": {
+      "title": "¿Cómo funciona el modo espiritual?",
+      "body": "Está diseñado para ayudarte a concentrarte manteniendo una conexión respetuosa con Dios, a través de música, silencios guiados y contenido edificante."
+    },
+    "q4": {
+      "title": "¿Puedo usarlo también en móvil?",
+      "body": "¡Sí! FocusField+ está optimizado para móvil y pronto estará disponible una app dedicada."
+    }
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "links": {
+      "home": "Inicio",
+      "how": "Cómo funciona",
+      "faq": "FAQ",
+      "contact": "Contactos"
+    }
+  }
+}

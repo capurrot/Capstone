@@ -128,7 +128,7 @@ const FocusHero = () => {
               className="mt-4 shimmer-text text-white fs-4 fw-semibold"
               style={{ letterSpacing: "0.5px", textAlign: "center" }}
             >
-              🎧 {t("hero.loading") || "Analisi in corso..."}
+              🎧 {t("hero.loading")}
             </div>
           </div>
         )}

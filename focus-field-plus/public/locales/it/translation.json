@@ -135,7 +135,8 @@
   "try": {
     "title": "Prova anche tu",
     "text": "Scopri come FocusField+ può aiutarti a migliorare la concentrazione.",
-    "button": "Inizia ora"
+    "button": "Inizia ora",
+    "modalTitle": "Scegli un Mood"
   },
   "cookie": {
     "title": "La tua privacy è importante",

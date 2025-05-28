@@ -25,7 +25,7 @@ const FocusMoodModal = ({ show, onHide }) => {
     >
       <Modal.Header className="border-0 pb-0 flex-column align-items-center">
         <Modal.Title className="w-100 text-center fs-1 fw-bold text-focusfield" style={{ fontFamily: "Fjalla One" }}>
-          {t("try.modalTitle", "Scegli un Mood")}
+          {t("try.modalTitle")}
         </Modal.Title>
         <Button
           variant="close"
