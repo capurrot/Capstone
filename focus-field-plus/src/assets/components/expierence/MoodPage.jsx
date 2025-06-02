@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { endMoodLog, SET_MOOD, startMoodLog } from "../../../redux/actions";
+import { endMoodLog, saveJournalEntryToDb, SET_MOOD, startMoodLog } from "../../../redux/actions";
 import FocusPlayer from "./FocusPlayer";
 import BreathingExercise from "./BreathingExercise";
 import RelaxBodyExercises from "./RelaxBodyExercises";
@@ -27,8 +27,7 @@ function MoodPage({ moodName, isModal }) {
   const userId = useSelector((state) => state.auth.user?.id);
   const logId = localStorage.getItem("logId");
   const [isIOSFullscreen, setIsIOSFullscreen] = useState(false);
-  const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
+  const { journalPre, journalPost } = useSelector((state) => state.journal);
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -71,8 +70,26 @@ function MoodPage({ moodName, isModal }) {
     setHasStarted(true);
   };
 
-  const handleEnd = () => {
-    if (logId) dispatch(endMoodLog(logId));
+  const handleEnd = async () => {
+    if (!logId) return;
+
+    const promises = [];
+
+    if (journalPre?.trim()) {
+      promises.push(dispatch(saveJournalEntryToDb(userId, "pre", journalPre, logId)));
+    }
+
+    if (journalPost?.trim()) {
+      promises.push(dispatch(saveJournalEntryToDb(userId, "post", journalPost, logId)));
+    }
+
+    try {
+      await Promise.all(promises);
+    } catch (error) {
+      console.error("Errore nel salvataggio journal:", error);
+    }
+
+    dispatch(endMoodLog(logId));
   };
 
   if (loading) {
@@ -231,7 +248,7 @@ function MoodPage({ moodName, isModal }) {
               <i className="fas fa-pencil-alt me-1"></i> - {moodData?.moodModal?.sections?.journalPre}
             </h2>
             {user ? (
-              <FocusJournal journal={moodData?.journalPre} moodName={moodName} />
+              <FocusJournal journal={moodData?.journalPre} type="pre" moodName={moodName} />
             ) : (
               <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
                 <div className="mb-3">
@@ -357,7 +374,7 @@ function MoodPage({ moodName, isModal }) {
               <i className="fas fa-pencil-alt me-1"></i> - {moodData?.moodModal?.sections?.journalPost}
             </h2>
             {user ? (
-              <FocusJournal journal={moodData?.journalPost} />
+              <FocusJournal journal={moodData?.journalPost} type="post" />
             ) : (
               <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
                 <div className="mb-3">
@@ -385,44 +402,6 @@ function MoodPage({ moodName, isModal }) {
             )}
           </section>
         )}
-
-        <section className="mood-section rating p-4 mt-4">
-          <h2 className="mood-text mb-3 ps-3">
-            <i className="bi bi-star-half"></i> - {moodData?.moodModal?.sections?.rating || "Valuta l’esperienza"}
-          </h2>
-
-          <div className="d-flex flex-column justify-content-center mb-3 focus-scopes-container align-items-center p-3">
-            <div className="mb-3 me-1">
-              {[1, 2, 3, 4, 5].map((star) => {
-                let color;
-                if (hoverRating >= star) {
-                  color = "var(--mood-color-3)";
-                } else if (rating >= star) {
-                  color = "#ffc107";
-                } else {
-                  color = "var(--mood-color-13)";
-                }
-
-                return (
-                  <FaStar
-                    key={star}
-                    size={40}
-                    className="mx-1"
-                    onClick={() => setRating(star)}
-                    onMouseEnter={() => setHoverRating(star)}
-                    onMouseLeave={() => setHoverRating(0)}
-                    color={color}
-                    style={{ cursor: "pointer", transition: "color 0.2s" }}
-                  />
-                );
-              })}
-            </div>
-
-            <p className="fw-semibold mb-0">
-              {rating > 0 ? `Hai dato ${rating} stell${rating > 1 ? "e" : "a"}` : "Scegli un voto da 1 a 5"}
-            </p>
-          </div>
-        </section>
 
         <footer className="p-4 text-center">
           <button className="focusfield-btn fs-4" onClick={handleEnd}>

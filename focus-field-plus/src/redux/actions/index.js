@@ -1,4 +1,3 @@
-// 🎯 Action Types
 export const SET_MOOD = "SET_MOOD";
 export const SET_SESSION = "SET_SESSION";
 export const SET_USER = "SET_USER";
@@ -41,11 +40,11 @@ export const START_LOG = "START_LOG";
 export const END_LOG = "END_LOG";
 export const SET_LOGS = "SET_LOGS";
 
-// 🌍 API base URL
+export const SAVE_JOURNAL_ENTRY = "SAVE_JOURNAL_ENTRY";
+export const RESET_JOURNAL = "RESET_JOURNAL";
+
 const apiUrl = import.meta.env.VITE_API_URL;
 let isUpdate = false;
-
-// ✅ Action Creators
 
 export const setMood = (mood) => ({
   type: SET_MOOD,
@@ -79,6 +78,15 @@ export const logout = () => ({
 export const setDashboardMoodField = (path, value) => ({
   type: SET_DASHBOARD_MOOD_FIELD,
   payload: { path, value },
+});
+
+export const saveJournalEntry = (payload) => ({
+  type: SAVE_JOURNAL_ENTRY,
+  payload,
+});
+
+export const resetJournal = () => ({
+  type: RESET_JOURNAL,
 });
 
 export const fetchAllMoods = () => {
@@ -501,5 +509,33 @@ export const endMoodLog = (logId) => async (dispatch) => {
     dispatch({ type: END_LOG });
   } catch (error) {
     console.error("Errore durante endMoodLog:", error);
+  }
+};
+
+export const saveJournalEntryToDb = (userId, type, content, logId) => async (dispatch, getState) => {
+  const { auth } = getState();
+  const token = auth.token;
+
+  try {
+    const res = await fetch(`${apiUrl}api/focus-field/journal`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId,
+        logId,
+        type,
+        content,
+      }),
+    });
+
+    if (!res.ok) throw new Error("Errore nel salvataggio del journal");
+
+    const savedData = await res.json();
+    dispatch(saveJournalEntry({ type, content: savedData.content }));
+  } catch (error) {
+    console.error("Errore durante il salvataggio del journal:", error);
   }
 };
