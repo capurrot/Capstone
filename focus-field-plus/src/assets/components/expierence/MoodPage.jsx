@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { endMoodLog, SET_MOOD, startMoodLog } from "../../../redux/actions";
@@ -13,6 +13,7 @@ import FocusSoundScape from "./FocusSoundScape";
 import FocusMentalCoach from "./FocusMentalCoach";
 import { MdAutoStories } from "react-icons/md";
 import { Link } from "react-router";
+import { FaStar } from "react-icons/fa";
 
 function MoodPage({ moodName, isModal }) {
   const [moodData, setMoodData] = useState(null);
@@ -26,6 +27,8 @@ function MoodPage({ moodName, isModal }) {
   const userId = useSelector((state) => state.auth.user?.id);
   const logId = localStorage.getItem("logId");
   const [isIOSFullscreen, setIsIOSFullscreen] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -234,8 +237,8 @@ function MoodPage({ moodName, isModal }) {
                 <div className="mb-3">
                   <i className="bi bi-journal-text fs-1" />
                 </div>
-                <p className="fs-5 fw-semibold mb-2">"Vuoi salvare i tuoi pensieri?"</p>
-                <p className="mb-4 ">"Accedi o registrati per usare il diario personale."</p>
+                <p className="fs-5 fw-semibold mb-2">Vuoi salvare i tuoi pensieri?</p>
+                <p className="mb-4 ">Accedi o registrati per usare il diario personale.</p>
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
                   <Link
                     to="/login"
@@ -269,8 +272,8 @@ function MoodPage({ moodName, isModal }) {
                 <div className="mb-3">
                   <i className="bi bi-journal-text fs-1" />
                 </div>
-                <p className="fs-5 fw-semibold mb-2">"Vuoi salvare i tuoi pensieri?"</p>
-                <p className="mb-4 ">"Accedi o registrati per usare il diario personale."</p>
+                <p className="fs-5 fw-semibold mb-2">Vuoi salvare i tuoi pensieri?</p>
+                <p className="mb-4 ">Accedi o registrati per usare il diario personale.</p>
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
                   <Link
                     to="/login"
@@ -360,8 +363,8 @@ function MoodPage({ moodName, isModal }) {
                 <div className="mb-3">
                   <i className="bi bi-journal-text fs-1" />
                 </div>
-                <p className="fs-5 fw-semibold mb-2">"Vuoi salvare i tuoi pensieri?"</p>
-                <p className="mb-4 ">"Accedi o registrati per usare il diario personale."</p>
+                <p className="fs-5 fw-semibold mb-2">Vuoi salvare i tuoi pensieri?</p>
+                <p className="mb-4 ">Accedi o registrati per usare il diario personale.</p>
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
                   <Link
                     to="/login"
@@ -382,6 +385,44 @@ function MoodPage({ moodName, isModal }) {
             )}
           </section>
         )}
+
+        <section className="mood-section rating p-4 mt-4">
+          <h2 className="mood-text mb-3 ps-3">
+            <i className="bi bi-star-half"></i> - {moodData?.moodModal?.sections?.rating || "Valuta l’esperienza"}
+          </h2>
+
+          <div className="d-flex flex-column justify-content-center mb-3 focus-scopes-container align-items-center p-3">
+            <div className="mb-3 me-1">
+              {[1, 2, 3, 4, 5].map((star) => {
+                let color;
+                if (hoverRating >= star) {
+                  color = "var(--mood-color-3)";
+                } else if (rating >= star) {
+                  color = "#ffc107";
+                } else {
+                  color = "var(--mood-color-13)";
+                }
+
+                return (
+                  <FaStar
+                    key={star}
+                    size={40}
+                    className="mx-1"
+                    onClick={() => setRating(star)}
+                    onMouseEnter={() => setHoverRating(star)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    color={color}
+                    style={{ cursor: "pointer", transition: "color 0.2s" }}
+                  />
+                );
+              })}
+            </div>
+
+            <p className="fw-semibold mb-0">
+              {rating > 0 ? `Hai dato ${rating} stell${rating > 1 ? "e" : "a"}` : "Scegli un voto da 1 a 5"}
+            </p>
+          </div>
+        </section>
 
         <footer className="p-4 text-center">
           <button className="focusfield-btn fs-4" onClick={handleEnd}>

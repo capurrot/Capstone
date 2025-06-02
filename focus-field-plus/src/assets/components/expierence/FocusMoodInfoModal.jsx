@@ -2,9 +2,8 @@ import { Modal, Button } from "react-bootstrap";
 
 const FocusMoodInfoModal = ({ show, handleClose, mood }) => {
   if (!mood) return null;
-
   const {
-    mood: moodTitle,
+    name,
     description,
     imagine,
     helpYou,
@@ -21,7 +20,7 @@ const FocusMoodInfoModal = ({ show, handleClose, mood }) => {
   return (
     <Modal show={show} onHide={handleClose} centered size="xl">
       <Modal.Header closeButton>
-        <Modal.Title>🌿 Il tuo momento "{moodTitle}"</Modal.Title>
+        <Modal.Title>🌿 Il tuo momento "{name}"</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p className="lead">{description}</p>

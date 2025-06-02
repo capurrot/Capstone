@@ -17,7 +17,7 @@ const FocusPlayer = ({ playlistUrl, audius }) => {
   const [duration, setDuration] = useState("0:00");
   const [streamUrl, setStreamUrl] = useState("");
   const [isBuffering, setIsBuffering] = useState(false);
-  const [isFavorited, setIsFavorite] = useState(false);
+  /*   const [isFavorited, setIsFavorite] = useState(false); */
 
   const audioRef = useRef(null);
   const dispatch = useDispatch();
@@ -219,7 +219,7 @@ const FocusPlayer = ({ playlistUrl, audius }) => {
               <p className="m-0 fs-6 song-artist">{currentTrack.data.user.name}</p>
             </div>
           </div>
-          {isFavorited && <i className="fa-solid fa-heart"></i>}
+          {/*  {isFavorited && <i className="fa-solid fa-heart"></i>} */}
         </div>
         <div className="song-duration">
           <div className="song-time" onClick={handleProgressClick} style={isBuffering ? { background: "#ddd" } : {}}>
@@ -307,9 +307,9 @@ const FocusPlayer = ({ playlistUrl, audius }) => {
                     <small>{track.data.user.name}</small>
                   </div>
                   <div className="ms-auto">
-                    <button className="hidden-btn me-2" onClick={() => setIsFavorite(true)}>
+                    {/*                     <button className="hidden-btn me-2" onClick={() => setIsFavorite(true)}>
                       <i className="fa-solid fa-heart"></i>
-                    </button>
+                    </button> */}
                     <span className="d-none d-lg-inline-block me-1" style={{ minWidth: "40px" }}>
                       {trackDuration(track.data.duration)}
                     </span>

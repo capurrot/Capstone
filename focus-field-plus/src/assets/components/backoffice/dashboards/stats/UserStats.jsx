@@ -44,7 +44,7 @@ const UserStats = () => {
       const textColor = mood?.colors?.[1];
 
       return {
-        title: mood?.name || log.moodSlug,
+        title: (mood?.name || log.moodSlug).slice(0, 4) + "...",
         start: log.startTime,
         display: "block",
         backgroundColor: backgroundColor,
@@ -151,6 +151,11 @@ const UserStats = () => {
                 icon.style.fontSize = "1rem";
                 info.el.querySelector(".fc-event-title")?.prepend(icon);
               }
+            }}
+            eventTimeFormat={{
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
             }}
             dayCellDidMount={(info) => {
               // ⛔ Blocca subito i giorni non del mese visibile

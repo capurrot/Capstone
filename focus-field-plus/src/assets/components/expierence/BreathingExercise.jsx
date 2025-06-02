@@ -4,6 +4,7 @@ const BreathingExercise = ({ config }) => {
   const { technique, techniqueLabel, phases, start, stop, totalDuration, totalDurationLabel } = config;
 
   const [phaseName, setPhaseName] = useState("");
+  const [phaseState, setPhaseState] = useState("");
   const [isRunning, setIsRunning] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [step, setStep] = useState(0);
@@ -38,6 +39,7 @@ const BreathingExercise = ({ config }) => {
 
     const current = steps[step % steps.length];
     setPhaseName(current.name);
+    setPhaseState(current.phase);
     setPhaseSecondsLeft(current.duration);
 
     const start = Date.now();
@@ -74,6 +76,7 @@ const BreathingExercise = ({ config }) => {
       setHasStarted(false);
       setStep(0);
       setPhaseName("");
+      setPhaseState("");
       setPhaseSecondsLeft(0);
       setScaleValue(1);
     }, totalDuration * 1000);
@@ -103,6 +106,7 @@ const BreathingExercise = ({ config }) => {
       setHasStarted(false);
       setStep(0);
       setPhaseName("");
+      setPhaseState("");
       setPhaseSecondsLeft(0);
       setScaleValue(1);
       setTotalTimeLeft(totalDuration);
@@ -110,6 +114,7 @@ const BreathingExercise = ({ config }) => {
       setHasStarted(true);
       setStep(0);
       setPhaseName(steps[0]?.name || "");
+      setPhaseState(steps[0]?.phase || "");
       setPhaseSecondsLeft(steps[0]?.duration || 0);
       setScaleValue(1);
       setTotalTimeLeft(totalDuration);
@@ -131,8 +136,8 @@ const BreathingExercise = ({ config }) => {
           style={{
             transform: `scale(${scaleValue})`,
             backgroundColor: "var(--mood-color-6)",
-            filter: phaseName === "hold" ? "blur(2px)" : "none",
-            backdropFilter: phaseName === "hold" ? "blur(2px)" : "none",
+            filter: phaseState === "hold" ? "blur(2px)" : "none",
+            backdropFilter: phaseState === "hold" ? "blur(2px)" : "none",
             transition:
               "transform 0.1s linear, background-color 0.5s ease, filter 0.5s ease, backdrop-filter 0.5s ease",
           }}
