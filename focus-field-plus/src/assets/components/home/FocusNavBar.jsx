@@ -1,16 +1,21 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, NavLink } from "react-router";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Logo from "../../../../public/images/logo.png";
-import { useEffect, useState } from "react";
-import i18n from "i18next";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
+import { logout } from "../../../redux/actions";
 
 function FocusNavBar() {
   const { t } = useTranslation();
   const [scroll, setScroll] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     const handleScroll = () => setScroll(window.scrollY);
@@ -22,10 +27,15 @@ function FocusNavBar() {
     i18n.changeLanguage(lng);
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
   return (
-    <Navbar className={scroll > 76 ? "navbar scrolled sticky-top navbar" : "sticky-top navbar"} expand="md">
+    <Navbar className={`py-1 sticky-top navbar ${scroll > 76 ? "scrolled" : ""}`} expand="md">
       <Container fluid>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand as={NavLink} to="/" className="d-flex align-items-center">
           <img
             src={Logo}
             className="logo"
@@ -35,41 +45,49 @@ function FocusNavBar() {
               transition: "transform 0.05s linear",
             }}
           />
-          <span className="ms-2 fw-bold">FocusField+</span>
+          <span className="ms-2 fw-bold" style={{ fontFamily: "Fjalla One", fontSize: "2rem" }}>
+            FocusField+
+          </span>
         </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto align-items-center">
-            <Link className="nav-link" to="/">
+            <NavLink to="/" className={({ isActive }) => `nav-link nav-link-underline ${isActive && "fw-bold"}`}>
               {t("navbar.home")}
-            </Link>
-            <Link className="nav-link" to="/login">
-              {t("navbar.login")}
-            </Link>
+            </NavLink>
 
-            <Nav.Link href="#link">{t("navbar.history")}</Nav.Link>
-            <NavDropdown title={t("navbar.settings")} id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">{t("navbar.profile")}</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">{t("navbar.preferences")}</NavDropdown.Item>
+            {token ? (
+              <>
+                <NavLink
+                  to="/dashboard"
+                  className={({ isActive }) => `nav-link nav-link-underline ${isActive && " fw-bold"}`}
+                >
+                  {t("navbar.dashboard")}
+                </NavLink>
+
+                <button onClick={handleLogout} className="nav-link  nav-link-underline">
+                  {t("navbar.logout")}
+                </button>
+              </>
+            ) : (
+              <NavLink to="/login" className={({ isActive }) => `nav-link nav-link-underline ${isActive && "fw-bold"}`}>
+                {t("navbar.login")}
+              </NavLink>
+            )}
+
+            <NavDropdown
+              id="language-dropdown"
+              title={<i className="bi bi-globe me-2"></i>}
+              className="ms-3"
+              align="end"
+            >
+              <NavDropdown.Item onClick={() => changeLanguage("it")}>🇮🇹 Italiano</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => changeLanguage("en")}>🇬🇧 English</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => changeLanguage("es")}>🇪🇸 Español</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => changeLanguage("fr")}>🇫🇷 Français</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => changeLanguage("de")}>🇩🇪 Deutsch</NavDropdown.Item>
             </NavDropdown>
-            {/* Selettore lingue */}
-            <div className="d-flex align-items-center ms-3">
-              <button onClick={() => changeLanguage("it")} className="btn btn-sm bg-transparent text-white px-1">
-                🇮🇹
-              </button>
-              <button onClick={() => changeLanguage("en")} className="btn btn-sm bg-transparent text-white px-1">
-                🇬🇧
-              </button>
-              <button onClick={() => changeLanguage("es")} className="btn btn-sm bg-transparent text-white px-1">
-                🇪🇸
-              </button>
-              <button onClick={() => changeLanguage("fr")} className="btn btn-sm bg-transparent text-white px-1">
-                🇫🇷
-              </button>
-              <button onClick={() => changeLanguage("de")} className="btn btn-sm bg-transparent text-white px-1">
-                🇩🇪
-              </button>
-            </div>
           </Nav>
         </Navbar.Collapse>
       </Container>

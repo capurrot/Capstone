@@ -3,141 +3,148 @@
   "mood": {
     "energized": "Energiegeladen",
     "creative": "Kreativ",
-    "anxious": "Ängstlich",
+    "ansious": "Ängstlich",
     "sad": "Traurig",
     "spiritual": "Spirituell",
-    "overwhelmed": "Überfordert",
+    "overwhelmed": "Überwältigt",
     "grateful": "Dankbar",
     "confused": "Verwirrt",
     "happy": "Glücklich",
-    "focus": "Konzentriert",
+    "focus": "Fokussiert",
     "peaceful": "Friedlich",
     "curious": "Neugierig",
-    "determined": "Entschlossen",
-    "seeking-inspiration": "Auf der Suche nach Inspiration",
+    "determined": "Bestimmt",
+    "seeking-inspiration": "Inspiriert",
     "reflective": "Nachdenklich",
     "at-peace": "In Frieden",
     "romantic": "Romantisch",
     "celebratory": "Feierlich",
     "active": "Aktiv",
     "playful": "Verspielt",
-    "calm": "Ruhig"
+    "calm": "Ruhe"
   },
   "desc": {
-    "energized": "Du hast Energie und Lust, dich zu bewegen, zu handeln, aktiv zu sein.",
+    "energized": "Du hast Energie und Lust zu handeln, dich zu bewegen, etwas zu tun.",
     "creative": "Du fühlst dich inspiriert, voller Ideen und möchtest dich ausdrücken.",
-    "anxious": "Du verspürst innere Unruhe oder Sorgen.",
+    "ansious": "Du fühlst eine gewisse Unruhe oder Besorgnis in dir.",
     "sad": "Du brauchst Trost und emotionalen Raum.",
-    "spiritual": "Du suchst Verbindung zu Gott oder einen Moment der Reflexion.",
-    "overwhelmed": "Zu viele Gedanken. Du musst entschleunigen.",
+    "spiritual": "Du suchst eine Verbindung zu Gott oder einen Raum zum Nachdenken.",
+    "overwhelmed": "Zu viele Gedanken. Du brauchst eine Pause.",
     "grateful": "Du fühlst tiefe Dankbarkeit.",
     "confused": "Du brauchst Klarheit und Orientierung.",
     "happy": "Du fühlst dich erleichtert, lächelnd, positiv.",
-    "focus": "Du musst deine Aufmerksamkeit auf ein Ziel richten.",
-    "peaceful": "Du verspürst tiefe Ruhe und innere Leichtigkeit.",
-    "curious": "Du hast Lust, Neues zu entdecken und zu lernen.",
-    "determined": "Du hast ein klares Ziel und willst es erreichen.",
+    "focus": "Du musst die Aufmerksamkeit auf ein Ziel richten.",
+    "peaceful": "Du fühlst tiefe Ruhe und Leichtigkeit in dir.",
+    "curious": "Du hast Lust, etwas Neues zu entdecken, zu lernen.",
+    "determined": "Du hast ein klares Ziel und möchtest es erreichen.",
     "seeking-inspiration": "Du möchtest Ideen neu entfachen oder Motivation finden.",
-    "reflective": "Du brauchst einen mentalen Raum zum Nachdenken und Zuhören.",
-    "at-peace": "Du spürst Harmonie mit dir selbst und deiner Umgebung.",
-    "romantic": "Du sehnst dich nach Liebe, Schönheit und emotionaler Verbindung.",
-    "celebratory": "Du möchtest feiern, Gemeinschaft erleben und Freude teilen.",
-    "active": "Jetzt ist es Zeit, dich zu bewegen: Sport, Spaziergang, körperliche Energie.",
-    "playful": "Du willst Leichtigkeit, Spiel und Spaß erleben.",
+    "reflective": "Du brauchst mentalen Raum, um nachzudenken und dich selbst zu hören.",
+    "at-peace": "Du fühlst ein Gefühl der Harmonie mit dir selbst und deiner Umgebung.",
+    "romantic": "Du hast Lust auf Liebe, Schönheit und emotionale Verbindung.",
+    "celebratory": "Du möchtest feiern, mit anderen zusammen sein und Freude haben.",
+    "active": "Es ist Zeit zu handeln: Sport, Spaziergang, körperliche Energie.",
+    "playful": "Du hast Lust auf Leichtigkeit, Spiel und Spaß.",
     "calm": "Du brauchst Geduld und Ruhe."
   },
   "hero": {
     "title": "Finde dein mentales Gleichgewicht",
-    "subtitle": "Schreibe, wie du dich fühlst. FocusField+ übernimmt den Rest.",
-    "placeholder": "Z. B.: Ich suche eine ideale Umgebung zum Konzentrieren...",
-    "not_found": "Keine Stimmung erkannt. Versuche eine andere Beschreibung."
+    "subtitle": "Schreibe, wie du dich fühlst. FocusField+ wird den Rest erledigen.",
+    "placeholder": "Z.B.: Ich suche eine ideale Umgebung, um mich zu konzentrieren...",
+    "not_found": "Keine Stimmung erkannt. Versuche eine andere Beschreibung.",
+    "modal_title": "Vorgeschlagene Stimmung",
+    "modal_text": "Basierend auf deiner Suche ist die am besten passende Stimmung für dich",
+    "modal_button": "Zur Stimmung gehen",
+    "loading": "Suche läuft..."
   },
   "navbar": {
     "home": "Startseite",
-    "history": "Verlauf",
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "dashboard": "Dashboard",
     "settings": "Einstellungen",
     "profile": "Benutzerprofil",
-    "preferences": "Voreinstellungen"
+    "preferences": "Einstellungen"
   },
   "testimonials": {
-    "title": "Was Nutzer sagen",
+    "title": "Was die Benutzer sagen",
     "items": [
       {
         "name": "Luca R.",
-        "role": "Student",
-        "text": "FocusField+ hat mir geholfen, mich beim Lernen besser zu konzentrieren. Der spirituelle Modus war ein echter Segen!"
+        "role": "Universitätsstudent",
+        "text": "FocusField+ hat mir geholfen, mich besser während meiner Studienzeiten zu konzentrieren. Der spirituelle Modus war ein wahrer Segen!"
       },
       {
         "name": "Giulia M.",
         "role": "Freiberufliche Illustratorin",
-        "text": "Die Musikvorschläge passen immer perfekt. Es fühlt sich an, als würde die App wirklich verstehen, wie ich mich fühle!"
+        "text": "Die Musikempfehlungen sind immer treffend. Es scheint, als würde die App wirklich verstehen, wie ich mich fühle!"
       },
       {
         "name": "Davide P.",
-        "role": "Webentwickler",
-        "text": "Eine innovative App. Ich komme viel leichter in den Flow-Zustand dank der personalisierten Vorschläge."
+        "role": "Web-Entwickler",
+        "text": "Eine innovative App. Ich kann viel leichter in den 'Flow' kommen, dank der personalisierten Vorschläge."
       },
       {
         "name": "Marco T.",
         "role": "Lehrer",
-        "text": "Der reflektierende Modus hat mir geholfen, meine Unterrichtsstunden bewusster vorzubereiten. Ein einzigartiges Werkzeug."
+        "text": "Der reflektierende Modus hat mir geholfen, meine Lektionen besser vorzubereiten. Es ist ein einzigartiges Tool."
       },
       {
         "name": "Serena C.",
         "role": "Musikerin",
-        "text": "Ich liebe es, wie die App meine Stimmung erkennt und die ideale Klangumgebung zum Komponieren schafft."
+        "text": "Ich liebe es, wie die App meine Stimmung erfasst und mir die ideale Klangumgebung zum Komponieren vorschlägt."
       },
       {
         "name": "Alessio V.",
-        "role": "Theologiestudent",
-        "text": "Die spirituellen Vorschläge helfen mir, zentriert und fokussiert zu bleiben."
+        "role": "Theologie-Student",
+        "text": "Die spirituellen Vorschläge helfen mir, mich tief zu fokussieren und zu zentrieren."
       },
       {
         "name": "Elena B.",
         "role": "Motivationscoach",
-        "text": "Ein kraftvolles Tool, um Konzentration und innere Achtsamkeit zu trainieren."
+        "text": "Ein leistungsstarkes Tool, um Konzentration und innere Bewusstheit zu trainieren."
       },
       {
         "name": "Riccardo N.",
         "role": "UX-Designer",
-        "text": "Eine durchdachte Nutzererfahrung. Sie begleitet mich in meinen kreativsten Momenten."
+        "text": "Eine gut durchdachte Benutzererfahrung. Sie begleitet mich in den Momenten höchster Kreativität."
       },
       {
         "name": "Anna F.",
         "role": "Freiwillige",
-        "text": "Ich schätze den Respekt gegenüber spirituellen Werten. Es ist selten, solch achtsame und hilfreiche Apps zu finden."
+        "text": "Ich schätze den Respekt für spirituelle Werte. Es ist selten, eine so sensible und nützliche App zu finden."
       }
     ]
   },
   "howto": {
-    "title": "So funktioniert's",
+    "title": "Wie es funktioniert",
     "steps": [
       {
-        "title": "✍️ Frei schreiben",
+        "title": "✍️ Schreibe frei",
         "desc": "Die App analysiert deine Worte und versteht, wie du dich fühlst."
       },
       {
-        "title": "🎵 Vorschläge erhalten",
-        "desc": "Musik, Umgebung und ideale Dauer, um in den Flow zu kommen."
+        "title": "🎵 Erhalte Vorschläge",
+        "desc": "Musik, Umgebung und Dauer, ideal um in den Flow zu kommen."
       },
       {
         "title": "🙏 Spiritueller Modus",
-        "desc": "Fördere deine Konzentration durch deinen Glauben."
+        "desc": "Kultiviere die Konzentration auch durch deinen Glauben."
       }
     ]
   },
   "try": {
-    "title": "Probiere es selbst aus",
-    "text": "Entdecke, wie dir FocusField+ helfen kann, dich besser zu konzentrieren.",
-    "button": "Jetzt starten"
+    "title": "Probiere es auch",
+    "text": "Entdecke, wie FocusField+ dir helfen kann, deine Konzentration zu verbessern.",
+    "button": "Jetzt starten",
+    "modalTitle": "Wähle eine Stimmung"
   },
   "cookie": {
-    "title": "Deine Privatsphäre ist uns wichtig",
-    "message": "Wir verwenden Cookies, um Inhalte und Anzeigen zu personalisieren, Funktionen für soziale Medien bereitzustellen und unseren Datenverkehr zu analysieren. Du kannst alle Cookies akzeptieren oder deine Präferenzen verwalten.",
+    "title": "Deine Privatsphäre ist wichtig",
+    "message": "Wir verwenden Cookies, um Inhalte und Werbung zu personalisieren, Funktionen für soziale Netzwerke bereitzustellen und unseren Verkehr zu analysieren. Du kannst wählen, alle Cookies zu akzeptieren oder deine Präferenzen zu verwalten.",
     "buttons": {
       "accept": "Alle akzeptieren",
       "reject": "Ablehnen",
-      "manage": "Einstellungen verwalten"
+      "manage": "Präferenzen verwalten"
     },
     "linkText": "Lies unsere Cookie-Richtlinie",
     "linkUrl": "/cookie-policy"
@@ -146,19 +153,19 @@
     "title": "Häufig gestellte Fragen",
     "q1": {
       "title": "Ist es kostenlos?",
-      "body": "Ja! FocusField+ ist während der Einführungsphase kostenlos. Zukünftig könnten Premium-Pläne angeboten werden, wobei eine Basisversion immer zugänglich bleibt."
+      "body": "Ja! FocusField+ ist während der Startphase kostenlos. In Zukunft werden wir Premium-Pläne prüfen, aber die Basisversion bleibt immer zugänglich."
     },
     "q2": {
-      "title": "Muss ich ein Konto erstellen?",
-      "body": "Nein, du kannst sofort loslegen. Wenn du deine Einstellungen speichern möchtest, kannst du ein Profil erstellen."
+      "title": "Muss man ein Konto erstellen?",
+      "body": "Nein, du kannst sofort anfangen. Wenn du deine Präferenzen speichern möchtest, kannst du ein Profil erstellen."
     },
     "q3": {
       "title": "Wie funktioniert der spirituelle Modus?",
-      "body": "Er wurde entwickelt, um dir zu helfen, dich zu konzentrieren und gleichzeitig eine respektvolle Verbindung zu Gott aufrechtzuerhalten – mit Musik, geführten Stillemomenten und aufbauenden Inhalten."
+      "body": "Er wurde entwickelt, um dir zu helfen, dich zu konzentrieren, während du eine respektvolle Verbindung zu Gott aufrechterhältst, durch Musik, geführte Stille und aufbauende Inhalte."
     },
     "q4": {
-      "title": "Kann ich es auch mobil nutzen?",
-      "body": "Ja! FocusField+ ist für Mobilgeräte optimiert und eine App ist in Kürze verfügbar."
+      "title": "Kann ich es auch auf dem Handy verwenden?",
+      "body": "Ja! FocusField+ ist für Mobilgeräte optimiert und bald wird auch eine dedizierte App verfügbar sein."
     }
   },
   "footer": {

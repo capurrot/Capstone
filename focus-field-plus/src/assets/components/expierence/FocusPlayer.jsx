@@ -1,12 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from "react";
 import { Container, Image, ListGroup } from "react-bootstrap";
 import { MdShuffle, MdRepeat, MdRepeatOne } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_VOLUME, SET_PLAYER_PREFERENCE } from "../../../redux/actions";
-import { useTranslation } from "react-i18next";
 
-const FocusPlayer = ({ playlistUrl, moodName }) => {
+const FocusPlayer = ({ playlistUrl, audius }) => {
   const [songIndex, setSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [tracks, setTracks] = useState([]);
@@ -18,13 +16,10 @@ const FocusPlayer = ({ playlistUrl, moodName }) => {
   const [duration, setDuration] = useState("0:00");
   const [streamUrl, setStreamUrl] = useState("");
   const [isBuffering, setIsBuffering] = useState(false);
-  const [isFavorited, setIsFavorite] = useState(false);
 
   const audioRef = useRef(null);
   const dispatch = useDispatch();
-  const { t } = useTranslation(moodName);
 
-  // Redux Persist Preferences
   const { isMuted, isListVisible, isControlsVisible, repeatMode, isShuffled } = useSelector(
     (state) => state.playerPrefs
   );
@@ -221,7 +216,6 @@ const FocusPlayer = ({ playlistUrl, moodName }) => {
               <p className="m-0 fs-6 song-artist">{currentTrack.data.user.name}</p>
             </div>
           </div>
-          {isFavorited && <i className="fa-solid fa-heart"></i>}
         </div>
         <div className="song-duration">
           <div className="song-time" onClick={handleProgressClick} style={isBuffering ? { background: "#ddd" } : {}}>
@@ -309,9 +303,6 @@ const FocusPlayer = ({ playlistUrl, moodName }) => {
                     <small>{track.data.user.name}</small>
                   </div>
                   <div className="ms-auto">
-                    <button className="hidden-btn me-2" onClick={() => setIsFavorite(true)}>
-                      <i className="fa-solid fa-heart"></i>
-                    </button>
                     <span className="d-none d-lg-inline-block me-1" style={{ minWidth: "40px" }}>
                       {trackDuration(track.data.duration)}
                     </span>
@@ -332,7 +323,7 @@ const FocusPlayer = ({ playlistUrl, moodName }) => {
               rel="noopener noreferrer"
               style={{ color: "var(--mood-color-11)" }}
             >
-              {t("audius")}
+              {audius}
             </a>
           </span>
           <button onClick={toggleList} className="list-toggle-btn">

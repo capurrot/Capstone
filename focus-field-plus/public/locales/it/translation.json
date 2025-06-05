@@ -3,7 +3,7 @@
   "mood": {
     "energized": "Energico",
     "creative": "Creativo",
-    "anxious": "Ansioso",
+    "ansious": "Ansioso",
     "sad": "Triste",
     "spiritual": "Spirituale",
     "overwhelmed": "Sopraffatto",
@@ -14,19 +14,19 @@
     "peaceful": "Sereno",
     "curious": "Curioso",
     "determined": "Determinato",
-    "seeking-inspiration": "In cerca di ispirazione",
+    "seeking-inspiration": "Ispirato",
     "reflective": "Riflessivo",
-    "at-peace": "In pace",
+    "at-peace": "Pacifico",
     "romantic": "Romantico",
-    "celebratory": "Festoso",
-    "active": "Sportivo",
+    "celebratory": "Celebrativo",
+    "active": "Attivo",
     "playful": "Giocoso",
     "calm": "Calmo"
   },
   "desc": {
     "energized": "Hai carica e voglia di fare, muoverti, agire.",
     "creative": "Ti senti ispirato, pieno di idee e voglia di esprimerti.",
-    "anxious": "Senti una certa agitazione o preoccupazione dentro di te.",
+    "ansious": "Senti una certa agitazione o preoccupazione dentro di te.",
     "sad": "Hai bisogno di consolazione e spazio emotivo.",
     "spiritual": "Cerchi connessione con Dio o uno spazio per riflettere.",
     "overwhelmed": "Troppi pensieri. Hai bisogno di rallentare.",
@@ -50,12 +50,17 @@
     "title": "Ritrova il tuo equilibrio mentale",
     "subtitle": "Scrivi come ti senti. FocusField+ farà il resto.",
     "placeholder": "Es.: cerco un ambiente ideale per concentrarmi...",
-    "not_found": "Nessun mood riconosciuto. Riprova con un'altra descrizione."
+    "not_found": "Nessun mood riconosciuto. Riprova con un'altra descrizione.",
+    "modal_title": "Mood suggerito",
+    "modal_text": "In base alla tua ricerca, il mood più adatto a te è",
+    "modal_button": "Vai al mood",
+    "loading": "Ricerca in corso..."
   },
   "navbar": {
     "home": "Home",
-    "login": "Login",
-    "history": "Storico",
+    "login": "Accedi",
+    "logout": "Esci",
+    "dashboard": "Dashboard",
     "settings": "Impostazioni",
     "profile": "Profilo utente",
     "preferences": "Impostazioni"
@@ -130,7 +135,8 @@
   "try": {
     "title": "Prova anche tu",
     "text": "Scopri come FocusField+ può aiutarti a migliorare la concentrazione.",
-    "button": "Inizia ora"
+    "button": "Inizia ora",
+    "modalTitle": "Scegli un Mood"
   },
   "cookie": {
     "title": "La tua privacy è importante",

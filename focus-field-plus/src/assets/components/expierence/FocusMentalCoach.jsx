@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
 
-const FocusMentalCoach = ({ coach, moodName }) => {
-  const { t } = useTranslation(moodName, { keyPrefix: "coach" });
+const FocusMentalCoach = ({ coach }) => {
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -34,49 +32,51 @@ const FocusMentalCoach = ({ coach, moodName }) => {
       setSelectedOption(null);
       setShowFeedback(false);
     } else {
-      alert(t("finished", { score, total: steps.length }));
+      alert(coach?.finished?.replace("{{score}}", score)?.replace("{{total}}", steps.length));
     }
   };
 
-  if (!steps.length) return <p>{t("noSteps")}</p>;
+  if (!steps.length) return <p>{coach?.noSteps}</p>;
   if (!currentStep) return null;
 
   return (
     <div className="mental-coach-container">
       <div className="p-4">
-        <h4 className="mb-3">{t("obstacle", { current: currentStepIndex + 1, total: steps.length })}</h4>
+        <h4 className="mb-3">
+          {coach?.obstacle?.replace("{{current}}", currentStepIndex + 1)?.replace("{{total}}", steps.length)}
+        </h4>
         <p>
-          <strong>{t("situation")}:</strong> {currentStep.situation}
+          <strong>{coach?.situation}:</strong> {currentStep.situation}
         </p>
         <div className="d-flex flex-column gap-2">
-          {currentStep.options.map((option, index) => (
+          {currentStep.answers?.map((answer, index) => (
             <Button
               className="focusfield-btn"
               key={index}
               variant={
                 showFeedback
-                  ? option.correct
+                  ? answer.correct
                     ? "success"
-                    : option === selectedOption
+                    : answer === selectedOption
                     ? "danger"
                     : "outline-secondary"
                   : "outline-primary"
               }
-              onClick={() => handleOptionClick(option)}
+              onClick={() => handleOptionClick(answer)}
               disabled={showFeedback}
             >
-              {option.text}
+              {answer.text}
             </Button>
           ))}
         </div>
         {showFeedback && (
-          <div className="position-absolute bottom-0 end-0 p-4">
-            <p className="mb-1">
-              <strong>{t("feedback")}:</strong>
+          <div className="mt-4 text-center">
+            <p className="mb-2">
+              <strong>{coach?.feedback}:</strong>
             </p>
-            <p>{selectedOption?.correct ? currentStep.feedback.correct : currentStep.feedback.wrong}</p>
-            <Button variant="primary" onClick={handleNext} className="focusfield-btn d-block mx-auto">
-              {t("next")}
+            <p>{selectedOption?.feedback}</p>
+            <Button variant="primary" onClick={handleNext} className="focusfield-btn mt-3">
+              {coach?.next}
             </Button>
           </div>
         )}

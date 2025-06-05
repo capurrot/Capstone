@@ -8,8 +8,11 @@ import userReducer from "../reducers/userReducer";
 import moodReducer from "../reducers/moodReducer";
 import soundReducer from "../reducers/soundReducer";
 import playerPreferencesReducer from "../reducers/playerPreferencesReducer";
+import authReducer from "../reducers/authReducer";
+import usersReducer from "../reducers/usersReducer";
+import journalReducer from "../reducers/journalReducer";
+import logReducer from "../reducers/logReducer";
 
-// Root-level persist config
 const persistConfig = {
   key: "root",
   storage: getPersistStorage(),
@@ -27,9 +30,13 @@ const persistConfig = {
 const rootReducer = combineReducers({
   session: sessionReducer,
   user: userReducer,
+  users: usersReducer,
   mood: moodReducer,
   sound: soundReducer,
   playerPrefs: playerPreferencesReducer,
+  auth: authReducer,
+  journal: journalReducer,
+  log: logReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
