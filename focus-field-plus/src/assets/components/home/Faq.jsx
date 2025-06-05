@@ -5,7 +5,7 @@ const Faq = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-5">
+    <section className="py-5" id="faq">
       <Container className="my-5">
         <h2 className="text-center mb-4">{t("faq.title")}</h2>
         <div className="accordion" id="faqAccordion">
