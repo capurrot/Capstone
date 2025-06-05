@@ -997,14 +997,12 @@ body {
   padding: 1.5rem;
 }
 
-/* Toolbar Title */
 .fc-toolbar-title {
   font-size: 1.7rem;
   font-weight: 700;
   color: #222;
 }
 
-/* Toolbar Buttons */
 .fc-button {
   background: #f4f4f6;
   border: none;
@@ -1026,13 +1024,11 @@ body {
   color: white !important;
 }
 
-/* Current Day Highlight */
 .fc-day-today {
   background: #f0f8ff !important;
   border-left: 4px solid #007aff;
 }
 
-/* Day Cells */
 .fc-daygrid-day {
   border: 1px solid #f0f0f0;
   padding: 0.75rem 0.25rem;
@@ -1043,14 +1039,12 @@ body {
   background-color: #f9f9f9;
 }
 
-/* Day Headers */
 .fc-col-header-cell-cushion {
   color: #1a1a1a;
   font-weight: 600;
   text-transform: lowercase;
 }
 
-/* Event */
 .fc-event {
   border: none;
   border-radius: 10px;
@@ -1066,7 +1060,6 @@ body {
   background-color: #ff9500 !important;
 }
 
-/* Scrollbar */
 .fc-scroller::-webkit-scrollbar {
   width: 6px;
 }
@@ -1085,14 +1078,12 @@ body {
   text-decoration: none;
 }
 
-/* ❌ Rimuove sottolineatura dai numeri dei giorni */
 .fc .fc-daygrid-day-number {
   text-decoration: none !important;
-  color: #1c1c1e; /* colore Apple-like */
+  color: #1c1c1e;
   font-weight: 500;
 }
 
-/* ❌ Rimuove sottolineatura dai nomi dei giorni */
 .fc .fc-col-header-cell-cushion {
   text-decoration: none !important;
   color: #1c1c1e;
@@ -1101,7 +1092,6 @@ body {
   text-transform: capitalize;
 }
 
-/* ✅ Evita che <a> in hover li sottolinei */
 .fc a {
   text-decoration: none !important;
 }
@@ -1110,9 +1100,8 @@ body {
   text-decoration: none !important;
 }
 
-/* Intestazione dei giorni con sfondo grigio chiaro */
 .fc .fc-col-header {
-  background-color: #f7f7f7; /* grigio chiaro */
+  background-color: #f7f7f7;
 }
 
 .fc .fc-col-header-cell {
@@ -1127,17 +1116,16 @@ body {
   color: #1c1c1e;
 }
 
-/* Giorni NON del mese corrente (es. 29-30 aprile, 1-2 giugno quando sei a maggio) */
 .fc-daygrid-day.fc-day-other {
-  background-color: #f4f4f4; /* grigio molto chiaro */
-  color: #b0b0b0; /* testo grigio spento */
-  pointer-events: none; /* opzionale: disabilita il click */
-  opacity: 0.7; /* opzionale: effetto visivo disabilitato */
+  background-color: #f4f4f4;
+  color: #b0b0b0;
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 .missed-warning-soft {
   font-size: 1.1rem;
-  color: #fbc02d; /* giallo */
+  color: #fbc02d;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1149,7 +1137,7 @@ body {
 
 .missed-warning-hard {
   font-size: 1.1rem;
-  color: #ef5350; /* rosso chiaro */
+  color: #ef5350;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1159,24 +1147,18 @@ body {
   z-index: 3;
 }
 
-/* Tooltip-friendly icona */
 .tooltip-warning {
-  cursor: pointer; /* mostra la manina */
+  cursor: pointer;
 }
 
-/* Tooltip nativo ben visibile (su alcuni browser supporta questo workaround) */
 .tooltip-warning[title] {
   position: relative;
 }
 
-/* Optional: se vuoi usare un tooltip completamente custom, suggerisco react-tooltip o tippy.js */
-
-/* Container header */
 .fc .fc-toolbar {
   margin-bottom: 1rem;
 }
 
-/* Pulsanti generici */
 .fc .fc-button {
   background: #f4f4f4;
   border: 1px solid #ddd;
@@ -1197,14 +1179,12 @@ body {
   transform: translateY(-1px);
 }
 
-/* Pulsante attivo (Mese, Settimana) */
 .fc .fc-button-active {
   background: #1e88e5;
   color: #fff;
   border-color: #1e88e5;
 }
 
-/* Pulsante disabilitato */
 .fc .fc-button:disabled {
   background: #f0f0f0;
   color: #999;
@@ -1288,4 +1268,130 @@ body {
   .fc-daygrid-day-frame {
     padding: 0.25rem;
   }
+}
+
+@media (max-width: 767px) {
+  .fc .fc-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .fc-toolbar-chunk {
+    margin-bottom: 8px;
+  }
+
+  .fc .fc-daygrid-day-number,
+  .fc .fc-event-title {
+    font-size: 0.85rem;
+    white-space: normal;
+  }
+
+  .fc .fc-list-event-title {
+    font-size: 0.95rem;
+  }
+}
+
+.fc-list-event.mood-energized td {
+  background-color: #b9e100 !important;
+  color: #3c3c3c !important;
+}
+
+.fc-list-event.mood-creative td {
+  background-color: #e9d4ff !important;
+  color: #154015 !important;
+}
+
+.fc-list-event.mood-ansious td {
+  background-color: #94b4c7 !important;
+  color: #ffffff !important;
+}
+
+.fc-list-event.mood-sad td {
+  background-color: #08131f !important;
+  color: #d6e0e0 !important;
+}
+
+.fc-list-event.mood-spiritual td {
+  background-color: #ac9fb4 !important;
+  color: #322a4c !important;
+}
+
+.fc-list-event.mood-overwhelmed td {
+  background-color: #8c8c8c !important;
+  color: #1b1f21 !important;
+}
+
+.fc-list-event.mood-grateful td {
+  background-color: #e0c6a8 !important;
+  color: #524035 !important;
+}
+
+.fc-list-event.mood-confused td {
+  background-color: #f2f4f6 !important;
+  color: #242628 !important;
+}
+
+.fc-list-event.mood-happy td {
+  background-color: #fdd56d !important;
+  color: #5c3d1e !important;
+}
+
+.fc-list-event.mood-focus td {
+  background-color: #f0fbff !important;
+  color: #1f2f3c !important;
+}
+
+.fc-list-event.mood-peaceful td {
+  background-color: #f1f8e9 !important;
+  color: #558b2f !important;
+}
+
+.fc-list-event.mood-curious td {
+  background-color: #e3f2fd !important;
+  color: #0288d1 !important;
+}
+
+.fc-list-event.mood-determined td {
+  background-color: #ede7f6 !important;
+  color: #5e35b1 !important;
+}
+
+.fc-list-event.mood-seeking-inspiration td {
+  background-color: #fff8e1 !important;
+  color: #f57f17 !important;
+}
+
+.fc-list-event.mood-reflective td {
+  background-color: #fbe9e7 !important;
+  color: #6d4c41 !important;
+}
+
+.fc-list-event.mood-at-peace td {
+  background-color: #e8f5e9 !important;
+  color: #1b5e20 !important;
+}
+
+.fc-list-event.mood-romantic td {
+  background-color: #e6c2c6 !important;
+  color: #4c202b !important;
+}
+
+.fc-list-event.mood-celebratory td {
+  background-color: #f1c63a !important;
+  color: #212121 !important;
+}
+
+.fc-list-event.mood-active td {
+  background-color: #f1f8e9 !important;
+  color: #33691e !important;
+}
+
+.fc-list-event.mood-playful td {
+  background-color: #f3e5f5 !important;
+  color: #8e24aa !important;
+}
+
+.fc-list-event.mood-calm td {
+  background-color: #7bbec5 !important;
+  color: #2c3e50 !important;
 }

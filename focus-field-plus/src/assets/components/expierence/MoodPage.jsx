@@ -30,6 +30,8 @@ function MoodPage({ moodName, isModal }) {
   const [isIOSFullscreen, setIsIOSFullscreen] = useState(false);
   const { journalPre, journalPost } = useSelector((state) => state.journal);
   const [showSummary, setShowSummary] = useState(false);
+  const [actualDuration, setActualDuration] = useState(null);
+  const [startTime, setStartTime] = useState(null);
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const password = import.meta.env.VITE_CRYPTO_SECRET;
@@ -70,10 +72,16 @@ function MoodPage({ moodName, isModal }) {
     const moodSlug = moodData?.slug || moodName;
 
     await dispatch(startMoodLog(userId ?? null, moodSlug, lang));
+    setStartTime(Date.now());
     setHasStarted(true);
   };
 
   const handleEnd = async () => {
+    const endTime = Date.now(); // fine sessione
+    const actualDuration = Math.floor((endTime - startTime) / 1000); // in secondi
+    const minutes = Math.floor(actualDuration / 60);
+    const seconds = actualDuration % 60;
+    const formattedDuration = `${minutes}m ${seconds}s`;
     if (typeof window === "undefined" || !window.crypto?.subtle) {
       alert("Web Crypto API non disponibile nel browser.");
       return;
@@ -111,6 +119,7 @@ function MoodPage({ moodName, isModal }) {
 
     dispatch(endMoodLog(logId));
     setShowSummary(true);
+    setActualDuration(formattedDuration);
   };
 
   if (loading) {
@@ -437,7 +446,9 @@ function MoodPage({ moodName, isModal }) {
           journalPre={journalPre}
           journalPost={journalPost}
           duration={moodData?.durationSuggestion}
+          actualDuration={actualDuration}
           userId={user?.id}
+          logId={logId}
         />
 
         <FocusMoodInfoModal show={showInfoModal} handleClose={() => setShowInfoModal(false)} mood={moodData} />

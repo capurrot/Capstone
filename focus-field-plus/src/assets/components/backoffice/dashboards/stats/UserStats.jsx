@@ -7,6 +7,15 @@ import interactionPlugin from "@fullcalendar/interaction";
 import itLocale from "@fullcalendar/core/locales/it";
 import { Tooltip } from "react-tooltip";
 import { decryptContent } from "../../../../../redux/utils/cryptoWeb";
+import listPlugin from "@fullcalendar/list";
+
+const ratingMap = {
+  1: { label: "Triste", icon: "😢" },
+  2: { label: "Così così", icon: "🙁" },
+  3: { label: "Neutro", icon: "😐" },
+  4: { label: "Bene", icon: "🙂" },
+  5: { label: "Ottimamente!", icon: "🤩" },
+};
 
 const UserStats = () => {
   const token = useSelector((state) => state.auth.token);
@@ -19,6 +28,7 @@ const UserStats = () => {
   const [decryptedJournal, setDecryptedJournal] = useState([]);
   const [showJournalModal, setShowJournalModal] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [calendarView, setCalendarView] = useState("dayGridMonth");
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -40,6 +50,16 @@ const UserStats = () => {
     fetchLogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
+
+  useEffect(() => {
+    const updateView = () => {
+      setCalendarView(window.innerWidth < 768 ? "listWeek" : "dayGridMonth");
+    };
+
+    updateView(); // iniziale
+    window.addEventListener("resize", updateView);
+    return () => window.removeEventListener("resize", updateView);
+  }, []);
 
   const handleEventClick = async (info) => {
     const logId = info.event.extendedProps.logId;
@@ -79,13 +99,18 @@ const UserStats = () => {
       const mood = allMoods.find((m) => m.slug === log.moodSlug);
       const backgroundColor = mood?.colors?.[0];
       const textColor = mood?.colors?.[1];
+      const rating = ratingMap[log.rating];
+
+      const emoji = rating?.icon || "";
+      const moodName = mood?.name || log.moodSlug;
 
       return {
-        title: (mood?.name || log.moodSlug).slice(0, 4) + "...",
+        title: `${moodName.slice(0, 4)}... ${emoji}`,
         start: log.startTime,
         display: "block",
         backgroundColor: backgroundColor,
         textColor: textColor,
+        className: `mood-${log.moodSlug}`,
         borderColor: "transparent",
         extendedProps: {
           logId: log.id,
@@ -175,10 +200,10 @@ const UserStats = () => {
         <Card.Body>
           <h5 className="text-center mb-4">Calendario Sessioni</h5>
           <FullCalendar
-            plugins={[dayGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
+            plugins={[dayGridPlugin, interactionPlugin, listPlugin]}
             locale={itLocale}
             events={eventList}
+            initialView={calendarView}
             eventClick={handleEventClick}
             eventDidMount={(info) => {
               const iconClass = info.event.extendedProps.iconClass;
@@ -196,48 +221,6 @@ const UserStats = () => {
               minute: "2-digit",
               hour12: false,
             }}
-            dayCellDidMount={(info) => {
-              if (info.el.classList.contains("fc-day-other")) return;
-
-              const normalize = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-
-              const cellDate = normalize(new Date(info.date));
-              const today = normalize(new Date());
-
-              if (cellDate > today) return;
-
-              const logDates = logs.map((log) => normalize(new Date(log.startTime)));
-
-              const hasLogToday = logDates.some((d) => d.getTime() === cellDate.getTime());
-              if (hasLogToday) return;
-
-              const previousLog = [...logDates].filter((d) => d < cellDate).sort((a, b) => b - a)[0] || null;
-
-              let diff = 999;
-              if (previousLog) {
-                diff = Math.floor((cellDate - previousLog) / (1000 * 60 * 60 * 24));
-              }
-
-              const icon = document.createElement("i");
-
-              icon.className =
-                previousLog && diff <= 2
-                  ? "bi bi-exclamation-triangle-fill missed-warning-soft"
-                  : "bi bi-exclamation-octagon-fill missed-warning-hard";
-
-              icon.setAttribute("data-tooltip-id", "missed-day-tooltip");
-              icon.setAttribute(
-                "data-tooltip-content",
-                previousLog && diff <= 2
-                  ? "Hai saltato questo giorno (recentemente)"
-                  : "Hai saltato il giorno per più di due consecutivi"
-              );
-
-              icon.setAttribute("data-for", "missed-day-tooltip");
-              icon.classList.add("tooltip-warning");
-
-              info.el.querySelector(".fc-daygrid-day-frame")?.appendChild(icon);
-            }}
             dateClick={handleDateClick}
             height="auto"
             contentHeight="auto"
@@ -245,7 +228,7 @@ const UserStats = () => {
             headerToolbar={{
               left: "prev,next today",
               center: "title",
-              right: "dayGridMonth,dayGridWeek",
+              right: "dayGridMonth,dayGridWeek,listDay,listWeek",
             }}
           />
           <Tooltip
@@ -330,6 +313,24 @@ const UserStats = () => {
                   </div>
                 ))
             )}
+            <hr />
+            <div className="mt-4 text-center">
+              <h6 className="text-secondary mb-2">Ricodi come ti sei sentito dopo la sessione?</h6>
+              {(() => {
+                const log = logs.find((l) => l.id === selectedLog?.logId);
+                if (log?.rating && ratingMap[log.rating]) {
+                  const { icon, label } = ratingMap[log.rating];
+                  return (
+                    <div className="fs-4">
+                      <span className="me-2">{icon}</span>
+                      <span>{label}</span>
+                    </div>
+                  );
+                } else {
+                  return <p className="text-muted">Nessuna valutazione registrata.</p>;
+                }
+              })()}
+            </div>
           </Modal.Body>
         </Modal>
       )}

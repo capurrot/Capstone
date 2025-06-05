@@ -1,7 +1,9 @@
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Alert } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { FaRegSadTear, FaRegFrown, FaRegMeh, FaRegSmile, FaRegGrinStars } from "react-icons/fa";
 import { decryptContent } from "../../../redux/utils/cryptoWeb";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const faces = [
   { icon: <FaRegSadTear size={28} />, label: "Triste", value: 1 },
@@ -11,11 +13,25 @@ const faces = [
   { icon: <FaRegGrinStars size={28} />, label: "Ottimo!", value: 5 },
 ];
 const password = import.meta.env.VITE_CRYPTO_SECRET;
+const apiUrl = import.meta.env.VITE_API_URL;
 
-function SessionSummaryModal({ show, onClose, mood, journalPre, journalPost, duration, userId }) {
+function SessionSummaryModal({
+  show,
+  onClose,
+  mood,
+  journalPre,
+  journalPost,
+  duration,
+  userId,
+  actualDuration,
+  logId,
+}) {
   const [rating, setRating] = useState(0);
   const [decryptedPre, setDecryptedPre] = useState(null);
   const [decryptedPost, setDecryptedPost] = useState(null);
+  const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     const decryptAll = async () => {
@@ -41,9 +57,26 @@ function SessionSummaryModal({ show, onClose, mood, journalPre, journalPost, dur
     decryptAll();
   }, [journalPre, journalPost, userId]);
 
-  const handleSubmit = () => {
-    console.log("Valutazione inviata:", rating);
-    onClose();
+  const handleSubmit = async () => {
+    try {
+      const res = await fetch(`${apiUrl}api/focus-field/log/update/${logId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ rating }),
+      });
+      if (!res.ok) throw new Error("Errore nell'invio del rating");
+      console.log("Rating salvato con successo!");
+      setSuccessMessage("✅ La tua valutazione è stata inviata con successo!");
+    } catch (error) {
+      console.error("Errore salvataggio rating:", error);
+    } finally {
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
   };
 
   return (
@@ -56,6 +89,11 @@ function SessionSummaryModal({ show, onClose, mood, journalPre, journalPost, dur
         <p>
           <strong>Durata suggerita:</strong> {duration}
         </p>
+        {actualDuration && (
+          <p>
+            <strong>Durata effettiva:</strong> {actualDuration}
+          </p>
+        )}
 
         {(decryptedPre || decryptedPost) && (
           <>
@@ -98,11 +136,25 @@ function SessionSummaryModal({ show, onClose, mood, journalPre, journalPost, dur
           </div>
         </div>
       </Modal.Body>
+      {successMessage && (
+        <Alert variant="success" className="text-center">
+          {successMessage}
+        </Alert>
+      )}
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
+        <Button
+          onClick={() => navigate("/")}
+          className="focusfield-btn"
+          style={{ backgroundColor: "grey", color: "white" }}
+        >
           Chiudi
         </Button>
-        <Button variant="primary" onClick={handleSubmit} disabled={rating === 0}>
+        <Button
+          onClick={handleSubmit}
+          disabled={rating === 0}
+          className="focusfield-btn"
+          style={{ backgroundColor: "green", color: "white" }}
+        >
           Invia valutazione
         </Button>
       </Modal.Footer>
