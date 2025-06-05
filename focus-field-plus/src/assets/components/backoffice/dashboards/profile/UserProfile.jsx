@@ -26,6 +26,7 @@ const UserProfile = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
+    console.log("user:", user);
     const fetchLogs = async () => {
       try {
         const res = await fetch(`${apiUrl}api/focus-field/log/user/logs`, {
@@ -103,14 +104,17 @@ const UserProfile = () => {
                     roundedCircle
                     className="object-fit-cover shadow-sm mb-2"
                   />
-                  <Button
-                    variant="light"
-                    className="position-absolute border d-flex align-items-center justify-content-center"
-                    style={{ borderRadius: "50%", height: "48px", width: "48px", bottom: 0, right: 0 }}
-                    onClick={() => fileInputRef.current.click()}
-                  >
-                    <FaCamera size={25} />
-                  </Button>
+                  {!user?.googleAccount && !user?.facebookAccount && (
+                    <Button
+                      variant="light"
+                      className="position-absolute border d-flex align-items-center justify-content-center"
+                      style={{ borderRadius: "50%", height: "48px", width: "48px", bottom: 0, right: 0 }}
+                      onClick={() => fileInputRef.current.click()}
+                    >
+                      <FaCamera size={25} />
+                    </Button>
+                  )}
+
                   <Form.Control
                     type="file"
                     ref={fileInputRef}
@@ -127,16 +131,28 @@ const UserProfile = () => {
                   bg={user?.verified ? "success" : "secondary"}
                   className="d-inline-flex align-items-center justify-content-center"
                 >
-                  {user?.verified ? (
+                  {user?.googleAccount || user?.facebookAccount ? (
                     <>
                       <FaCheckCircle className="me-1" />
-                      Verificato
+                      Account collegato con social
                     </>
                   ) : (
-                    <>
-                      <FaTimesCircle className="me-1" />
-                      Non verificato
-                    </>
+                    <Badge
+                      bg={user?.verified ? "success" : "secondary"}
+                      className="d-inline-flex align-items-center justify-content-center"
+                    >
+                      {user?.verified ? (
+                        <>
+                          <FaCheckCircle className="me-1" />
+                          Verificato
+                        </>
+                      ) : (
+                        <>
+                          <FaTimesCircle className="me-1" />
+                          Non verificato
+                        </>
+                      )}
+                    </Badge>
                   )}
                 </Badge>
               </Col>
