@@ -1,8 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router";
-import { loginWithGoogle } from "../../../../redux/actions"; // usa la thunk
-
+import { loginWithGoogle } from "../../../../redux/actions";
 const GoogleLoginButton = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

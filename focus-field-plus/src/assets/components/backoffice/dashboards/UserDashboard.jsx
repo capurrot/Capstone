@@ -4,8 +4,6 @@ import { ClockHistory, GearFill, ArrowLeftCircle } from "react-bootstrap-icons";
 import UserStats from "./stats/UserStats";
 import { FaUser } from "react-icons/fa";
 import UserProfile from "./profile/UserProfile";
-/* import MoodHistory from "./user/MoodHistory";
-import UserPreferences from "./user/UserPreferences"; */
 
 const UserDashboard = ({ user }) => {
   const [view, setView] = useState("dashboard");
@@ -109,7 +107,6 @@ const UserDashboard = ({ user }) => {
                   Torna alla Dashboard
                 </Button>
               </div>
-              {/*   <UserPreferences /> */}
             </>
           )}
         </Container>

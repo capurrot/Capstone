@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from "react";
 import { Container, Image, ListGroup } from "react-bootstrap";
 import { MdShuffle, MdRepeat, MdRepeatOne } from "react-icons/md";
@@ -17,12 +16,10 @@ const FocusPlayer = ({ playlistUrl, audius }) => {
   const [duration, setDuration] = useState("0:00");
   const [streamUrl, setStreamUrl] = useState("");
   const [isBuffering, setIsBuffering] = useState(false);
-  /*   const [isFavorited, setIsFavorite] = useState(false); */
 
   const audioRef = useRef(null);
   const dispatch = useDispatch();
 
-  // Redux Persist Preferences
   const { isMuted, isListVisible, isControlsVisible, repeatMode, isShuffled } = useSelector(
     (state) => state.playerPrefs
   );
@@ -219,7 +216,6 @@ const FocusPlayer = ({ playlistUrl, audius }) => {
               <p className="m-0 fs-6 song-artist">{currentTrack.data.user.name}</p>
             </div>
           </div>
-          {/*  {isFavorited && <i className="fa-solid fa-heart"></i>} */}
         </div>
         <div className="song-duration">
           <div className="song-time" onClick={handleProgressClick} style={isBuffering ? { background: "#ddd" } : {}}>
@@ -307,9 +303,6 @@ const FocusPlayer = ({ playlistUrl, audius }) => {
                     <small>{track.data.user.name}</small>
                   </div>
                   <div className="ms-auto">
-                    {/*                     <button className="hidden-btn me-2" onClick={() => setIsFavorite(true)}>
-                      <i className="fa-solid fa-heart"></i>
-                    </button> */}
                     <span className="d-none d-lg-inline-block me-1" style={{ minWidth: "40px" }}>
                       {trackDuration(track.data.duration)}
                     </span>

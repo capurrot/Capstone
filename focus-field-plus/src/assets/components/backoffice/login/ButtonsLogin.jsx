@@ -22,7 +22,6 @@ const ButtonsLogin = () => {
         if (response.authResponse) {
           const accessToken = response.authResponse.accessToken;
 
-          // NON SERVE più chiamare FB.api qui.
           dispatch(loginWithFacebook({ accessToken }));
         }
       },

@@ -7,7 +7,6 @@ import {
   XCircleFill,
   LockFill,
   Unlock,
-  ClockHistory,
   Google,
   PersonCheck,
   ShieldLock,

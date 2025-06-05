@@ -13,7 +13,6 @@ import usersReducer from "../reducers/usersReducer";
 import journalReducer from "../reducers/journalReducer";
 import logReducer from "../reducers/logReducer";
 
-// Root-level persist config
 const persistConfig = {
   key: "root",
   storage: getPersistStorage(),

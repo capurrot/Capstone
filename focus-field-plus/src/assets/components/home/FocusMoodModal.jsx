@@ -11,6 +11,7 @@ const FocusMoodModal = ({ show, onHide }) => {
 
   const shuffledMoods = useMemo(() => {
     return [...moods].sort(() => Math.random() - 0.5);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
   return (

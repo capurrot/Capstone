@@ -443,12 +443,6 @@ const SingleMood = ({ mood }) => {
             </Row>
 
             <Row className="mb-3">
-              {/*               <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Titolo (specifico per {mood.slug})</Form.Label>
-                  <Form.Control type="text" value={modalTitle} onChange={(e) => setModalTitle(e.target.value)} />
-                </Form.Group>
-              </Col> */}
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Descrizione (specifica per {mood?.slug})</Form.Label>

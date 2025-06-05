@@ -39,7 +39,6 @@ const TestimonialsCarousel = () => {
         position: "relative",
       }}
     >
-      {/* Overlay soft beige sopra l’immagine */}
       <div
         style={{
           position: "absolute",

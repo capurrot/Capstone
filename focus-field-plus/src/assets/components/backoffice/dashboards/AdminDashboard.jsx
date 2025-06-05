@@ -82,7 +82,6 @@ const AdminDashboard = ({ user }) => {
             <>
               <div className="d-flex align-items-center mb-4">
                 <h2 className="fw-bold">Gestione Mood</h2>
-                {/* Link per tornare indietro */}
                 <Button
                   variant="link"
                   className="mb-3 ms-auto text-decoration-none d-flex align-items-center"

@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Headphones, BarChart, GearFill, ArrowLeftCircle } from "react-bootstrap-icons";
-/* import SellerMoods from "./seller/SellerMoods";
-import SellerStats from "./seller/SellerStats";
-import SellerSettings from "./seller/SellerSettings"; */
 
 const SellerDashboard = ({ user }) => {
   const [view, setView] = useState("dashboard");
@@ -73,7 +70,6 @@ const SellerDashboard = ({ user }) => {
                   Torna alla Dashboard
                 </Button>
               </div>
-              {/*  <SellerMoods /> */}
             </>
           )}
 
@@ -90,7 +86,6 @@ const SellerDashboard = ({ user }) => {
                   Torna alla Dashboard
                 </Button>
               </div>
-              {/* <SellerStats /> */}
             </>
           )}
 
@@ -107,7 +102,6 @@ const SellerDashboard = ({ user }) => {
                   Torna alla Dashboard
                 </Button>
               </div>
-              {/*  <SellerSettings /> */}
             </>
           )}
         </Container>
