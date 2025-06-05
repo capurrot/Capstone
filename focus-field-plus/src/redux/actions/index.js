@@ -512,7 +512,7 @@ export const endMoodLog = (logId) => async (dispatch) => {
   }
 };
 
-export const saveJournalEntryToDb = (userId, type, content, logId) => async (dispatch, getState) => {
+export const saveJournalEntryToDb = (userId, type, content, lang, slug, logId) => async (dispatch, getState) => {
   const { auth } = getState();
   const token = auth.token;
 
@@ -528,6 +528,8 @@ export const saveJournalEntryToDb = (userId, type, content, logId) => async (dis
         logId,
         type,
         content,
+        language: lang,
+        moodSlug: slug,
       }),
     });
 

@@ -1203,6 +1203,10 @@ body {
   font-family: "Fjalla One", sans-serif;
 }
 
+.text-dashboard {
+  color: #1c1c1e;
+}
+
 @media (min-width: 768px) {
   .border-md-none {
     border-bottom: none !important;

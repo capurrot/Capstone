@@ -13,7 +13,8 @@ import FocusSoundScape from "./FocusSoundScape";
 import FocusMentalCoach from "./FocusMentalCoach";
 import { MdAutoStories } from "react-icons/md";
 import { Link } from "react-router";
-import { FaStar } from "react-icons/fa";
+import SessionSummaryModal from "./SessionSummaryModal";
+import { encryptContent } from "../../../redux/utils/cryptoWeb";
 
 function MoodPage({ moodName, isModal }) {
   const [moodData, setMoodData] = useState(null);
@@ -28,8 +29,10 @@ function MoodPage({ moodName, isModal }) {
   const logId = localStorage.getItem("logId");
   const [isIOSFullscreen, setIsIOSFullscreen] = useState(false);
   const { journalPre, journalPost } = useSelector((state) => state.journal);
+  const [showSummary, setShowSummary] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL;
+  const password = import.meta.env.VITE_CRYPTO_SECRET;
 
   useEffect(() => {
     const loadData = async () => {
@@ -71,16 +74,33 @@ function MoodPage({ moodName, isModal }) {
   };
 
   const handleEnd = async () => {
-    if (!logId) return;
+    if (typeof window === "undefined" || !window.crypto?.subtle) {
+      alert("Web Crypto API non disponibile nel browser.");
+      return;
+    }
+
+    const lang = i18n.language?.split("-")[0] || "it";
+    const moodSlug = moodData?.slug || moodName;
+    if (!logId || !userId) return;
 
     const promises = [];
 
     if (journalPre?.trim()) {
-      promises.push(dispatch(saveJournalEntryToDb(userId, "pre", journalPre, logId)));
+      try {
+        const encryptedPre = await encryptContent(journalPre, password);
+        promises.push(dispatch(saveJournalEntryToDb(userId, "pre", encryptedPre, lang, moodSlug, logId)));
+      } catch (err) {
+        console.error("Errore nella cifratura del journal pre:", err);
+      }
     }
 
     if (journalPost?.trim()) {
-      promises.push(dispatch(saveJournalEntryToDb(userId, "post", journalPost, logId)));
+      try {
+        const encryptedPost = await encryptContent(journalPost, password);
+        promises.push(dispatch(saveJournalEntryToDb(userId, "post", encryptedPost, lang, moodSlug, logId)));
+      } catch (err) {
+        console.error("Errore nella cifratura del journal post:", err);
+      }
     }
 
     try {
@@ -90,6 +110,7 @@ function MoodPage({ moodName, isModal }) {
     }
 
     dispatch(endMoodLog(logId));
+    setShowSummary(true);
   };
 
   if (loading) {
@@ -131,7 +152,7 @@ function MoodPage({ moodName, isModal }) {
     return value;
   };
 
-  if (!hasStarted && !isModal && !userId === 1) {
+  if (!hasStarted && !isModal /* && !userId === 1 */) {
     return (
       <Container
         fluid
@@ -408,6 +429,16 @@ function MoodPage({ moodName, isModal }) {
             {moodData.cta?.text}
           </button>
         </footer>
+
+        <SessionSummaryModal
+          show={showSummary}
+          onClose={() => setShowSummary(false)}
+          mood={moodData}
+          journalPre={journalPre}
+          journalPost={journalPost}
+          duration={moodData?.durationSuggestion}
+          userId={user?.id}
+        />
 
         <FocusMoodInfoModal show={showInfoModal} handleClose={() => setShowInfoModal(false)} mood={moodData} />
       </Container>

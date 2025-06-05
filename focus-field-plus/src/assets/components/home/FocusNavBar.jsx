@@ -66,15 +66,6 @@ function FocusNavBar() {
                   {t("navbar.dashboard")}
                 </NavLink>
 
-                <NavDropdown title={t("navbar.settings")} id="basic-nav-dropdown nav-link nav-link-underline">
-                  <NavDropdown.Item as={NavLink} to="/profile">
-                    {t("navbar.profile")}
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={NavLink} to="/preferences">
-                    {t("navbar.preferences")}
-                  </NavDropdown.Item>
-                </NavDropdown>
-
                 <button onClick={handleLogout} className="nav-link  nav-link-underline">
                   {t("navbar.logout")}
                 </button>

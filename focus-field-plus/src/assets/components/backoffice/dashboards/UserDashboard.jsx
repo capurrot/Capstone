@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { EmojiSmile, ClockHistory, GearFill, ArrowLeftCircle } from "react-bootstrap-icons";
+import { ClockHistory, GearFill, ArrowLeftCircle } from "react-bootstrap-icons";
 import UserStats from "./stats/UserStats";
-/* import CurrentMood from "./user/CurrentMood";
-import MoodHistory from "./user/MoodHistory";
+import { FaUser } from "react-icons/fa";
+import UserProfile from "./profile/UserProfile";
+/* import MoodHistory from "./user/MoodHistory";
 import UserPreferences from "./user/UserPreferences"; */
 
 const UserDashboard = ({ user }) => {
@@ -24,10 +25,10 @@ const UserDashboard = ({ user }) => {
                 <Col lg={4}>
                   <Card className="text-center border-1 shadow-sm">
                     <Card.Body>
-                      <EmojiSmile size={48} className="mb-3" />
-                      <Card.Title>Mood Attuale</Card.Title>
-                      <Card.Text>Visualizza o aggiorna il tuo stato attuale</Card.Text>
-                      <Button variant="primary" style={{ width: "10rem" }} onClick={() => setView("currentMood")}>
+                      <FaUser size={48} className="mb-3" />
+                      <Card.Title>Profilo Utente</Card.Title>
+                      <Card.Text>Visualizza o aggiorna il tuo profilo</Card.Text>
+                      <Button variant="primary" style={{ width: "10rem" }} onClick={() => setView("profile")}>
                         Vai
                       </Button>
                     </Card.Body>
@@ -61,10 +62,10 @@ const UserDashboard = ({ user }) => {
             </>
           )}
 
-          {view === "currentMood" && (
+          {view === "profile" && (
             <>
               <div className="d-flex align-items-center mb-4">
-                <h2 className="fw-bold">Il tuo Mood</h2>
+                <h2 className="fw-bold">Il tuo Profilo</h2>
                 <Button
                   variant="link"
                   className="mb-3 ms-auto text-decoration-none d-flex align-items-center"
@@ -74,7 +75,7 @@ const UserDashboard = ({ user }) => {
                   Torna alla Dashboard
                 </Button>
               </div>
-              {/*   <CurrentMood /> */}
+              <UserProfile />
             </>
           )}
 

@@ -5,8 +5,9 @@ import react from "@vitejs/plugin-react-swc";
 export default defineConfig({
   plugins: [react()],
   server: {
-    allowedHosts: ["focusfield.infosyscap.net", "www.focusfield.it"],
+    allowedHosts: ["focusfield.infosyscap.net", "www.focusfield.it", "localhost"],
     historyApiFallback: true,
+    port: 5174,
   },
   build: {
     outDir: "dist",
