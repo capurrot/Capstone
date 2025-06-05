@@ -943,6 +943,23 @@ body {
   animation: fadeBlurIn 1s ease-out;
 }
 
+.notfound-wrapper {
+  position: relative;
+  min-height: 100vh;
+  background-image: url("../public/images/not_found.png"); /* metti il path corretto */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* leggero dark overlay per leggibilità */
+  z-index: 0;
+}
+
 @keyframes fadeBlurIn {
   from {
     opacity: 0;
@@ -1201,6 +1218,10 @@ body {
   font-weight: 700;
   color: #1c1c1e;
   font-family: "Fjalla One", sans-serif;
+}
+
+.text-dashboard {
+  color: #1c1c1e;
 }
 
 @media (min-width: 768px) {

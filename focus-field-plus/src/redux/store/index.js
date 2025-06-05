@@ -10,6 +10,8 @@ import soundReducer from "../reducers/soundReducer";
 import playerPreferencesReducer from "../reducers/playerPreferencesReducer";
 import authReducer from "../reducers/authReducer";
 import usersReducer from "../reducers/usersReducer";
+import journalReducer from "../reducers/journalReducer";
+import logReducer from "../reducers/logReducer";
 
 // Root-level persist config
 const persistConfig = {
@@ -34,6 +36,8 @@ const rootReducer = combineReducers({
   sound: soundReducer,
   playerPrefs: playerPreferencesReducer,
   auth: authReducer,
+  journal: journalReducer,
+  log: logReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,11 +1,12 @@
 import { useEffect, useState, useMemo } from "react";
-import { Spinner, Card, Row, Col, ListGroup } from "react-bootstrap";
+import { Spinner, Card, Row, Col, ListGroup, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import itLocale from "@fullcalendar/core/locales/it";
 import { Tooltip } from "react-tooltip";
+import { decryptContent } from "../../../../../redux/utils/cryptoWeb";
 
 const UserStats = () => {
   const token = useSelector((state) => state.auth.token);
@@ -14,6 +15,9 @@ const UserStats = () => {
   const [loading, setLoading] = useState(true);
   const [selectedDateLogs, setSelectedDateLogs] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedLog, setSelectedLog] = useState(null);
+  const [decryptedJournal, setDecryptedJournal] = useState([]);
+  const [showJournalModal, setShowJournalModal] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -25,6 +29,7 @@ const UserStats = () => {
         if (!res.ok) throw new Error("Errore nella risposta del server");
         const data = await res.json();
         setLogs(data);
+        console.log(data);
       } catch (err) {
         console.error("Errore nel caricamento dei log:", err);
       } finally {
@@ -33,7 +38,39 @@ const UserStats = () => {
     };
 
     fetchLogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
+
+  const handleEventClick = async (info) => {
+    const logId = info.event.extendedProps.logId;
+    const moodSlug = info.event.title;
+    setSelectedLog({ logId, moodSlug });
+
+    try {
+      const res = await fetch(`${apiUrl}api/focus-field/journal/by-log/${logId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Errore nel caricamento del journal");
+      const data = await res.json();
+
+      const password = import.meta.env.VITE_CRYPTO_SECRET;
+      const decrypted = await Promise.all(
+        data.map(async (entry) => {
+          try {
+            const decryptedContent = await decryptContent(entry.content, password);
+            return { ...entry, content: decryptedContent };
+          } catch (err) {
+            console.error("Errore nella decrittazione:", err);
+            return { ...entry, content: "[Errore nella decrittazione]" };
+          }
+        })
+      );
+      setDecryptedJournal(decrypted);
+      setShowJournalModal(true);
+    } catch (err) {
+      console.error("Errore nel fetch del journal:", err);
+    }
+  };
 
   const moodLabel = (slug) => allMoods.find((m) => m.slug === slug)?.name || slug;
 
@@ -44,13 +81,14 @@ const UserStats = () => {
       const textColor = mood?.colors?.[1];
 
       return {
-        title: mood?.name || log.moodSlug,
+        title: (mood?.name || log.moodSlug).slice(0, 4) + "...",
         start: log.startTime,
         display: "block",
         backgroundColor: backgroundColor,
         textColor: textColor,
         borderColor: "transparent",
         extendedProps: {
+          logId: log.id,
           iconClass: log.completed ? "bi-check-circle-fill" : "bi-hourglass-split",
         },
       };
@@ -87,7 +125,6 @@ const UserStats = () => {
     return acc;
   }, {});
   const mostUsedMood = Object.entries(moodCount).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/D";
-
   const latestLogs = [...logs].sort((a, b) => new Date(b.startTime) - new Date(a.startTime)).slice(0, 5);
 
   return (
@@ -122,7 +159,7 @@ const UserStats = () => {
           <h5 className="mb-3">Ultime sessioni</h5>
           <ListGroup variant="flush">
             {latestLogs.map((log, i) => (
-              <ListGroup.Item key={i} className="d-flex justify-content-between align-items-center">
+              <ListGroup.Item key={i} className="d-flex justify-content-between align-items-center text-dashboard">
                 <div>
                   <span className="fw-semibold">{moodLabel(log.moodSlug)}</span>
                   <small className="d-block text-muted">{new Date(log.startTime).toLocaleString("it-IT")}</small>
@@ -142,8 +179,10 @@ const UserStats = () => {
             initialView="dayGridMonth"
             locale={itLocale}
             events={eventList}
+            eventClick={handleEventClick}
             eventDidMount={(info) => {
               const iconClass = info.event.extendedProps.iconClass;
+              info.el.style.cursor = "pointer";
               if (iconClass) {
                 const icon = document.createElement("i");
                 icon.className = `bi ${iconClass}`;
@@ -152,8 +191,12 @@ const UserStats = () => {
                 info.el.querySelector(".fc-event-title")?.prepend(icon);
               }
             }}
+            eventTimeFormat={{
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            }}
             dayCellDidMount={(info) => {
-              // ⛔ Blocca subito i giorni non del mese visibile
               if (info.el.classList.contains("fc-day-other")) return;
 
               const normalize = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -161,19 +204,15 @@ const UserStats = () => {
               const cellDate = normalize(new Date(info.date));
               const today = normalize(new Date());
 
-              // ⛔ Blocca i giorni futuri
               if (cellDate > today) return;
 
               const logDates = logs.map((log) => normalize(new Date(log.startTime)));
 
-              // ⛔ Blocca se c’è già un evento quel giorno
               const hasLogToday = logDates.some((d) => d.getTime() === cellDate.getTime());
               if (hasLogToday) return;
 
-              // 🔍 Trova l’ultimo giorno con attività prima della cella attuale
               const previousLog = [...logDates].filter((d) => d < cellDate).sort((a, b) => b - a)[0] || null;
 
-              // 🧠 Calcola i giorni dal precedente log
               let diff = 999;
               if (previousLog) {
                 diff = Math.floor((cellDate - previousLog) / (1000 * 60 * 60 * 24));
@@ -186,7 +225,6 @@ const UserStats = () => {
                   ? "bi bi-exclamation-triangle-fill missed-warning-soft"
                   : "bi bi-exclamation-octagon-fill missed-warning-hard";
 
-              // Aggiungi attributi per react-tooltip
               icon.setAttribute("data-tooltip-id", "missed-day-tooltip");
               icon.setAttribute(
                 "data-tooltip-content",
@@ -196,7 +234,7 @@ const UserStats = () => {
               );
 
               icon.setAttribute("data-for", "missed-day-tooltip");
-              icon.classList.add("tooltip-warning"); // per il cursore
+              icon.classList.add("tooltip-warning");
 
               info.el.querySelector(".fc-daygrid-day-frame")?.appendChild(icon);
             }}
@@ -221,7 +259,7 @@ const UserStats = () => {
               borderRadius: "8px",
               padding: "6px 10px",
               boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
-              zIndex: 9999, // ✅ qui lo alzi
+              zIndex: 9999,
             }}
           />
         </Card.Body>
@@ -249,6 +287,51 @@ const UserStats = () => {
             </ListGroup>
           </Card.Body>
         </Card>
+      )}
+
+      {showJournalModal && (
+        <Modal size="lg" show onHide={() => setShowJournalModal(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <i className="bi bi-journal-text me-2"></i>
+              Diario della sessione
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {decryptedJournal.length === 0 ? (
+              <p className="text-muted text-center">Nessun contenuto registrato per questa sessione.</p>
+            ) : (
+              decryptedJournal
+                .sort((a) => (a.type === "pre" ? -1 : 1))
+                .map((entry, i) => (
+                  <div key={i} className="mb-4 border-start border-3 ps-3 position-relative">
+                    <div className="d-flex align-items-center mb-2">
+                      <span className="me-2 fs-5">{entry.type === "pre" ? "📝" : "🪞"}</span>
+                      <h6 className="mb-0 text-secondary fw-semibold">
+                        {entry.type === "pre" ? "Prima della sessione" : "Dopo la sessione"}
+                      </h6>
+                    </div>
+
+                    <small className="text-muted d-block mb-2">
+                      {entry.type === "pre"
+                        ? `🕒 Inizio: ${new Date(
+                            logs?.find((l) => l.id === selectedLog?.logId)?.startTime
+                          ).toLocaleString("it-IT")}`
+                        : `🕓 Fine: ${new Date(logs?.find((l) => l.id === selectedLog?.logId)?.endTime).toLocaleString(
+                            "it-IT"
+                          )}`}
+                    </small>
+
+                    <div className="p-3 bg-light rounded border">
+                      <p className="mb-0 text-dark" style={{ whiteSpace: "pre-line" }}>
+                        {entry.content}
+                      </p>
+                    </div>
+                  </div>
+                ))
+            )}
+          </Modal.Body>
+        </Modal>
       )}
     </div>
   );

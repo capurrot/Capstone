@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { endMoodLog, SET_MOOD, startMoodLog } from "../../../redux/actions";
+import { endMoodLog, saveJournalEntryToDb, SET_MOOD, startMoodLog } from "../../../redux/actions";
 import FocusPlayer from "./FocusPlayer";
 import BreathingExercise from "./BreathingExercise";
 import RelaxBodyExercises from "./RelaxBodyExercises";
@@ -13,6 +13,8 @@ import FocusSoundScape from "./FocusSoundScape";
 import FocusMentalCoach from "./FocusMentalCoach";
 import { MdAutoStories } from "react-icons/md";
 import { Link } from "react-router";
+import SessionSummaryModal from "./SessionSummaryModal";
+import { encryptContent } from "../../../redux/utils/cryptoWeb";
 
 function MoodPage({ moodName, isModal }) {
   const [moodData, setMoodData] = useState(null);
@@ -26,8 +28,11 @@ function MoodPage({ moodName, isModal }) {
   const userId = useSelector((state) => state.auth.user?.id);
   const logId = localStorage.getItem("logId");
   const [isIOSFullscreen, setIsIOSFullscreen] = useState(false);
+  const { journalPre, journalPost } = useSelector((state) => state.journal);
+  const [showSummary, setShowSummary] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL;
+  const password = import.meta.env.VITE_CRYPTO_SECRET;
 
   useEffect(() => {
     const loadData = async () => {
@@ -68,8 +73,44 @@ function MoodPage({ moodName, isModal }) {
     setHasStarted(true);
   };
 
-  const handleEnd = () => {
-    if (logId) dispatch(endMoodLog(logId));
+  const handleEnd = async () => {
+    if (typeof window === "undefined" || !window.crypto?.subtle) {
+      alert("Web Crypto API non disponibile nel browser.");
+      return;
+    }
+
+    const lang = i18n.language?.split("-")[0] || "it";
+    const moodSlug = moodData?.slug || moodName;
+    if (!logId || !userId) return;
+
+    const promises = [];
+
+    if (journalPre?.trim()) {
+      try {
+        const encryptedPre = await encryptContent(journalPre, password);
+        promises.push(dispatch(saveJournalEntryToDb(userId, "pre", encryptedPre, lang, moodSlug, logId)));
+      } catch (err) {
+        console.error("Errore nella cifratura del journal pre:", err);
+      }
+    }
+
+    if (journalPost?.trim()) {
+      try {
+        const encryptedPost = await encryptContent(journalPost, password);
+        promises.push(dispatch(saveJournalEntryToDb(userId, "post", encryptedPost, lang, moodSlug, logId)));
+      } catch (err) {
+        console.error("Errore nella cifratura del journal post:", err);
+      }
+    }
+
+    try {
+      await Promise.all(promises);
+    } catch (error) {
+      console.error("Errore nel salvataggio journal:", error);
+    }
+
+    dispatch(endMoodLog(logId));
+    setShowSummary(true);
   };
 
   if (loading) {
@@ -111,7 +152,7 @@ function MoodPage({ moodName, isModal }) {
     return value;
   };
 
-  if (!hasStarted && !isModal && !userId === 1) {
+  if (!hasStarted && !isModal /* && !userId === 1 */) {
     return (
       <Container
         fluid
@@ -228,14 +269,14 @@ function MoodPage({ moodName, isModal }) {
               <i className="fas fa-pencil-alt me-1"></i> - {moodData?.moodModal?.sections?.journalPre}
             </h2>
             {user ? (
-              <FocusJournal journal={moodData?.journalPre} moodName={moodName} />
+              <FocusJournal journal={moodData?.journalPre} type="pre" moodName={moodName} />
             ) : (
               <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
                 <div className="mb-3">
                   <i className="bi bi-journal-text fs-1" />
                 </div>
-                <p className="fs-5 fw-semibold mb-2">"Vuoi salvare i tuoi pensieri?"</p>
-                <p className="mb-4 ">"Accedi o registrati per usare il diario personale."</p>
+                <p className="fs-5 fw-semibold mb-2">Vuoi salvare i tuoi pensieri?</p>
+                <p className="mb-4 ">Accedi o registrati per usare il diario personale.</p>
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
                   <Link
                     to="/login"
@@ -269,8 +310,8 @@ function MoodPage({ moodName, isModal }) {
                 <div className="mb-3">
                   <i className="bi bi-journal-text fs-1" />
                 </div>
-                <p className="fs-5 fw-semibold mb-2">"Vuoi salvare i tuoi pensieri?"</p>
-                <p className="mb-4 ">"Accedi o registrati per usare il diario personale."</p>
+                <p className="fs-5 fw-semibold mb-2">Vuoi salvare i tuoi pensieri?</p>
+                <p className="mb-4 ">Accedi o registrati per usare il diario personale.</p>
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
                   <Link
                     to="/login"
@@ -354,14 +395,14 @@ function MoodPage({ moodName, isModal }) {
               <i className="fas fa-pencil-alt me-1"></i> - {moodData?.moodModal?.sections?.journalPost}
             </h2>
             {user ? (
-              <FocusJournal journal={moodData?.journalPost} />
+              <FocusJournal journal={moodData?.journalPost} type="post" />
             ) : (
               <div className="p-4 rounded-4 shadow-sm mt-2 focus-scopes-container text-center">
                 <div className="mb-3">
                   <i className="bi bi-journal-text fs-1" />
                 </div>
-                <p className="fs-5 fw-semibold mb-2">"Vuoi salvare i tuoi pensieri?"</p>
-                <p className="mb-4 ">"Accedi o registrati per usare il diario personale."</p>
+                <p className="fs-5 fw-semibold mb-2">Vuoi salvare i tuoi pensieri?</p>
+                <p className="mb-4 ">Accedi o registrati per usare il diario personale.</p>
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
                   <Link
                     to="/login"
@@ -388,6 +429,16 @@ function MoodPage({ moodName, isModal }) {
             {moodData.cta?.text}
           </button>
         </footer>
+
+        <SessionSummaryModal
+          show={showSummary}
+          onClose={() => setShowSummary(false)}
+          mood={moodData}
+          journalPre={journalPre}
+          journalPost={journalPost}
+          duration={moodData?.durationSuggestion}
+          userId={user?.id}
+        />
 
         <FocusMoodInfoModal show={showInfoModal} handleClose={() => setShowInfoModal(false)} mood={moodData} />
       </Container>
