@@ -17,6 +17,7 @@ import DashboardWrapper from "./assets/components/backoffice/dashboards/Dashboar
 import RegisterPage from "./assets/components/backoffice/login/RegisterPage.jsx";
 import NotFound from "./assets/components/home/NotFound.jsx";
 import ForgotPasswordPage from "./assets/components/backoffice/login/ForgotPage.jsx";
+import VerifyEmailPage from "./assets/components/backoffice/login/VerifyEmailPage.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -90,6 +91,7 @@ function App() {
         <Route path="/" element={<FocusField />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/mood/:moodName" element={<MoodPageWrapper />} />
         <Route path="/dashboard" element={<DashboardWrapper />} />
