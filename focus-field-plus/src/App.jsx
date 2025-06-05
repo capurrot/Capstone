@@ -15,6 +15,7 @@ import MoodPageWrapper from "./assets/components/expierence/MoodPageWrapper.jsx"
 import Login from "./assets/components/backoffice/login/Login.jsx";
 import DashboardWrapper from "./assets/components/backoffice/dashboards/DashboardWrapper.jsx";
 import RegisterPage from "./assets/components/backoffice/login/RegisterPage.jsx";
+import NotFound from "./assets/components/home/NotFound.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -90,6 +91,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/mood/:moodName" element={<MoodPageWrapper />} />
         <Route path="/dashboard" element={<DashboardWrapper />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
