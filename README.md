@@ -2,8 +2,8 @@
 
 **FocusField+** è un'applicazione web e mobile progettata per aiutare l’utente a entrare nello stato mentale ideale per svolgere un’attività, partendo da come si sente. L'app propone una combinazione personalizzata di musica, respirazione, journaling, ambiente e contenuti spirituali per guidare ogni sessione.
 
-🌐 <a href="https://www.focusfield.it" target="_blank"><strong>Demo online</strong></a>  
-🔗 <a href="https://github.com/capurrot/focusField_be" target="_blank"><strong>Backend GitHub</strong></a>
+🌐 **Demo online**: [www.focusfield.it](https://www.focusfield.it)  
+🔗 **Backend GitHub**: [https://github.com/capurrot/focusField_be](https://github.com/capurrot/focusField_be)
 
 ## 🌟 Funzionalità principali
 
